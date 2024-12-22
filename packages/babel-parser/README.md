@@ -9,11 +9,6 @@
 > [!CAUTION]
 > This is a work in progress. The syntax and the semantic of the extension to JavaScript presented below is not yet fully defined and tested. The [packages](https://github.com/orgs/ULL-ESIT-PL/packages?repo_name=babel-tanhauhau) are published in the GitHub registry, but they are not ready for production.
 
-## Hello 
-
-```
-npm run hello
-```
 
 This is a fork of [tanhauhau/babel](https://github.com/tanhauhau/babel) which is a fork of the original Babel repo at version 7.10.  
 The packages [published in the GitHub registry](https://github.com/orgs/ULL-ESIT-PL/packages) from branch [pablo-tfg](https://github.com/ULL-ESIT-PL/babel-tanhauhau/tree/pablo-tfg) are being written by Pablo Santana inside the GitHub organization [ull-esit-pl](https://github.com/ULL-ESIT-PL/) organization as part of his Bachellor Thesis (Trabajo Fin de Grado). 

@@ -1,26 +1,13 @@
 {
-  "name": "@ull-esit-pl/parser-left-side-crguezl",
+  "name": "@ull-esit-pl/parser-left-side",
   "version": "1.0.0",
   "description": "A JavaScript parser",
-  "author": "Pablo Santana <alu0101480541@ull.edu.es>",
-  "contributors": [
-    {
-      "name": "Casiano Rodriguez-Leon",
-      "email": "crguezl@ull.edu.es"
-    },
-    {
-      "name": "Adrian Mora",
-      "email": "alu0101465883@ull.edu.es"
-    }
-  ],
-  "homepage": "https://github.com/ULL-ESIT-PL/babel-tanhauhau/tree/pablo-tfg",
+  "author": "Sebastian McKenzie <sebmck@gmail.com>",
+  "homepage": "https://babeljs.io/",
   "license": "MIT",
   "publishConfig": {
     "access": "public",
     "registry": "https://npm.pkg.github.com"
-  },
-  "scripts": {
-    "hello": "bin/babel-parser.js test/input/hello.js"
   },
   "keywords": [
     "babel",
@@ -32,10 +19,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ULL-ESIT-PL/babel-tanhauhau.git#pablo-tfg",
-    "directory": "packages/babel-parser"
+    "url": "https://github.com/ULL-ESIT-PL/babel-tanhauhau/tree/pablo-tfg",
+    "directory": "packages/babel-parser"    
   },
-  "main": "index.js",
+  "main": "lib/index.js",
   "types": "typings/babel-parser.d.ts",
   "files": [
     "bin",
@@ -52,18 +39,7 @@
     "charcodes": "^0.2.0"
   },
   "bin": {
-    "parser": "bin/babel-parser.js"
+    "parser": "./bin/babel-parser.js"
   },
-  "directories": {
-    "lib": "lib",
-    "test": "test"
-  },
-  "dependencies": {
-    "js-tokens": "^4.0.0",
-    "picocolors": "^1.1.1",
-    "semver": "^6.3.1"
-  },
-  "bugs": {
-    "url": "https://github.com/ULL-ESIT-PL/babel-tanhauhau/issues"
-  }
+  "gitHead": "df1dbf5d265ad3170234dff2e06cb385e08effc8"
 }

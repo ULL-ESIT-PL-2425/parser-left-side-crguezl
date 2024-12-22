@@ -1,4 +1,4 @@
-> [IMPORTANT!]
+> [!CAUTION]
 > This repo is a toy/conceptual  experiment to have a minimal monorepo having the parser and the plugin(s).
 
 

@@ -1,6 +1,8 @@
-const parser = require("@ull-esit-pl/parser-left-side");
+const parser = require("../../babel-parser");
 const types = require("@babel/types");
-import template from "@babel/template";
+//import template from "@babel/template";
+const template = require("@babel/template").default;
+
 // TODO: Switch to the scoped name when publishing the package.
 const SUPPORT_TEMPLATE = template(
   'const {assign, functionObject} = require("@ull-esit-pl/babel-plugin-left-side-support");',

@@ -6,7 +6,7 @@
   "contributors": [
     {
       "name": "Casiano Rodriguez-Leon",
-      "email":  "crguezl@ull.edu.es"
+      "email": "crguezl@ull.edu.es"
     },
     {
       "name": "Adrian Mora",
@@ -35,7 +35,7 @@
     "url": "git+https://github.com/ULL-ESIT-PL/babel-tanhauhau.git#pablo-tfg",
     "directory": "packages/babel-parser"
   },
-  "main": "lib/index.js",
+  "main": "index.js",
   "types": "typings/babel-parser.d.ts",
   "files": [
     "bin",

@@ -1,0 +1,15 @@
+{
+  "name": "examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "hello.js",
+  "scripts": {
+    "test": "babel hello.js --out-file hello.cjs && node hello.cjs"
+  },
+  "keywords": [],
+  "author": "Casiano Rodriguez Leon <crguezl@ull.edu.es> (https://crguezl.github.io/)",
+  "license": "ISC",
+  "dependencies": {
+    "@ull-esit-pl/babel-plugin-left-side-support": "^1.0.0"
+  }
+}

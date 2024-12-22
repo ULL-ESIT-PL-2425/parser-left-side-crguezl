@@ -49,7 +49,7 @@
   ```
 - The packages/babel-parser is substituted by the generated from the Pablo's branch (lib). Awful!. **Future work: how to make the build**
 - The final user installs the (now separated) package `babel-plugin-left-side-support` and uses it in his/her project. See [examples/package.json](examples/package.json).
-- The babel.config.js in the examples is relative to the root of the project.
+- The babel.config.js in this example is relative to the root of the project but the final will use the package:
 
   ```js
   ➜  babel-left-side-crguezl git:(main) cat examples/babel.config.json 

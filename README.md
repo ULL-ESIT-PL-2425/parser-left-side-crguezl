@@ -85,6 +85,8 @@ console.log(foo(5)); // 10
 
 ## Parser
 
+The parser also works:
+
 ```js
 ➜  examples git:(main) ✗ ../packages/babel-parser/bin/babel-parser.js hello.js 
 {

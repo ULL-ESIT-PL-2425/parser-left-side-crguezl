@@ -8,11 +8,12 @@
   },
   "scripts": {
     "test": "cd examples && npm test",
-    "clean": "rm -fR node_modules; rm package-lock.json; npm i"
+    "clean": "rm -fR node_modules; rm package-lock.json; npm i",
+    "save": "git ci -am save; git push"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.1",
-    "@babel/core": "^7.10.2"
+    "@babel/cli": "7.26",
+    "@babel/core": "7.26"
   },
   "keywords": [],
   "author": "Casiano Rodriguez Leon <crguezl@ull.edu.es> (https://crguezl.github.io/)",

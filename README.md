@@ -1,17 +1,32 @@
 ```
-➜  babel-parser npm init --help
-Create a package.json file
+➜  babel-left-side-crguezl git:(main) tree -I node_modules 
+.
+├── README.md
+├── examples
+│   ├── README.md
+│   ├── babel.config.json
+│   ├── hello.cjs
+│   ├── hello.js
+│   ├── package-lock.json
+│   └── package.json
+├── package-lock.json
+├── package.json
+└── packages
+    ├── babel-parser
+    │   ├── README.md
+    │   ├── babel.config.json
+    │   ├── bin
+    │   │   └── babel-parser.js
+    │   ├── index.js
+    │   ├── package-lock.json
+    │   └── package.json
+    └── babel-plugin-left-side
+        ├── README.md
+        ├── lib
+        │   └── plugin.js
+        ├── package.json
+        └── src
+            └── plugin.js
 
-Usage:
-npm init <package-spec> (same as `npx create-<package-spec>`)
-npm init <@scope> (same as `npx <@scope>/create`)
-
-Options:
-[--init-author-name <name>] [--init-author-url <url>] [--init-license <license>]
-[--init-module <module>] [--init-version <version>] [-y|--yes] [-f|--force]
-[--scope <@scope>]
-[-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
-[-ws|--workspaces] [--no-workspaces-update] [--include-workspace-root]
-
-aliases: create, innit
+7 directories, 19 files
 ```

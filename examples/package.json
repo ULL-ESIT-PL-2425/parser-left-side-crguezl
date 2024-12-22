@@ -4,7 +4,7 @@
   "description": "",
   "main": "hello.js",
   "scripts": {
-    "test": "babel hello.js --out-file hello.cjs && node hello.cjs"
+    "test": "npm i && babel hello.js --out-file hello.cjs && node hello.cjs"
   },
   "keywords": [],
   "author": "Casiano Rodriguez Leon <crguezl@ull.edu.es> (https://crguezl.github.io/)",

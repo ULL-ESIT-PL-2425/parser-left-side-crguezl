@@ -37,7 +37,7 @@
 7 directories, 19 files
 ```
 
-The final user installs the (now separated) package `babel-plugin-left-side-support` and uses it in his/her project. See [examples/package.json](examples/package.json).
+
 
 ## Tricks 
 
@@ -48,7 +48,7 @@ The final user installs the (now separated) package `babel-plugin-left-side-supp
       const template = require("@babel/template").default;
   ```
 - The packages/babel-parser is substituted by the generated from the Pablo's branch (lib). Awful!. **Future work: how to make the build**
-- The final user installs the support package from the github registry `@ull-esit-pl/babel-plugin-left-side-support`
+- The final user installs the (now separated) package `babel-plugin-left-side-support` and uses it in his/her project. See [examples/package.json](examples/package.json).
 - The babel.config.js in the examples is relative to the root of the project.
 
   ```js

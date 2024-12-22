@@ -1,3 +1,5 @@
+## Tree  hierarchy
+
 ```
 ➜  babel-left-side-crguezl git:(main) tree -I node_modules 
 .
@@ -30,3 +32,5 @@
 
 7 directories, 19 files
 ```
+
+The final user installs the package `babel-plugin-left-side-support` and uses it in his/her project. See [examples/package.json](examples/package.json).. 

@@ -28,8 +28,6 @@
     │   └── package.json
     └── babel-plugin-left-side
         ├── README.md
-        ├── lib
-        │   └── plugin.js
         ├── package.json
         └── src
             └── plugin.js

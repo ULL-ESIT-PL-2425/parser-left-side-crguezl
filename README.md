@@ -43,7 +43,7 @@ The final user installs the (now separated) package `babel-plugin-left-side-supp
       //import template from "@babel/template";
       const template = require("@babel/template").default;
   ```
-- The packages/babel-parser is substituted by the generated from the Pablo's branch (lib). Awful.
+- The packages/babel-parser is substituted by the generated from the Pablo's branch (lib). Awful!. Future work: how to make the build
 - The final user installs the support package from the github registry `@ull-esit-pl/babel-plugin-left-side-support`
 - The babel.config.js in the examples is relative to the root of the project.
 

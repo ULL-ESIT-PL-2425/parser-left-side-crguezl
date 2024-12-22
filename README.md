@@ -45,6 +45,16 @@ The final user installs the (now separated) package `babel-plugin-left-side-supp
   ```
 - The packages/babel-parser is substituted by the generated from the Pablo's branch (lib). Awful.
 - The final user installs the support package from the github registry `@ull-esit-pl/babel-plugin-left-side-support`
+- The babel.config.js in the examples is relative to the root of the project.
+
+  ```js
+  ➜  babel-left-side-crguezl git:(main) cat examples/babel.config.json 
+  {
+    "plugins": [
+      "../packages/babel-plugin-left-side/"
+    ]
+  }
+  ```
 
 ## Compiling 
 

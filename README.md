@@ -2,42 +2,16 @@
 > This repo is a toy/conceptual  experiment to have a minimal monorepo having the parser and the plugin(s).
 
 
-## Tree  hierarchy
+## Goal
 
-```
-➜  babel-left-side-crguezl git:(main) tree -I node_modules 
-.
-├── README.md
-├── examples
-│   ├── README.md
-│   ├── babel.config.json
-│   ├── hello.cjs
-│   ├── hello.js
-│   ├── package-lock.json
-│   └── package.json
-├── package-lock.json
-├── package.json
-└── packages
-    ├── babel-parser
-    │   ├── README.md
-    │   ├── babel.config.json
-    │   ├── bin
-    │   │   └── babel-parser.js
-    │   ├── index.js
-    │   ├── package-lock.json
-    │   └── package.json
-    └── babel-plugin-left-side
-        ├── README.md
-        ├── package.json
-        └── src
-            └── plugin.js
+To be able to have a minimal monorepo with the parser and the plugin(s) of the TFGs.
 
-7 directories, 19 files
-```
+We have to use a Babel configured for flow to transpile the TFG babel parser at `packages/babel-parser` and leave 
+a JS parser at `packages/babel-parser/lib`  ready to be used.
 
 
 
-## Tricks 
+## A Few Tricks to Make it Work
 
 - In `packages/babel-plugin-left-side/`, I  substituted the `import` in Pablo's version of the plugin by a `require`:
 
@@ -45,7 +19,8 @@
       //import template from "@babel/template";
       const template = require("@babel/template").default;
   ```
-- The packages/babel-parser is substituted by the generated from the Pablo's branch (lib). Awful!. **Future work: how to make the build using flow**
+- The packages/babel-parser is substituted by the generated from the Pablo's branch (lib). Awful!. 
+  - **Work to do: how to make the build using flow to transpile the TFG babel parser at `packages/babel-parser` and leave a JS parser at `packages/babel-parser/lib`  ready to be used.**
 - The final user installs the (now separated) package `babel-plugin-left-side-support` and uses it in his/her project. See [examples/package.json](examples/package.json).
 - The babel.config.js in this example is relative to the root of the project but the final will use the package:
 
@@ -60,7 +35,7 @@
 
 ## Compiling 
 
-First, copy Pablo's generated parser `lin/index.js` to the `packages/babel-parser/lib`:
+First, copy Pablo's generated parser `lib/index.js` to the `packages/babel-parser/lib`. Assuming you are in the `examples` directory and have a file hierarchy like mine:
 
 ``` 
 ➜  examples git:(main) ✗ pwd -P   

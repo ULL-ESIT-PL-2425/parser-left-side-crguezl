@@ -9,7 +9,8 @@
     "flow": "flow",
     "build": "babel src/ -d lib/",
     "rt": "flow-remove-types src/ -d lib/",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "compile": "../../node_modules/.bin/babel src -d lib"
   },
   "publishConfig": {
     "access": "public",

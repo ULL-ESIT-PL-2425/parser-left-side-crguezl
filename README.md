@@ -81,7 +81,7 @@ We have previously installed the support for the plugin:
 
 ## Parser
 
-The parser also works:
+The parser works since uses the `lib/index.js` :
 
 ```js
 ➜  examples git:(main) ✗ ../packages/babel-parser/bin/babel-parser.js hello.js 

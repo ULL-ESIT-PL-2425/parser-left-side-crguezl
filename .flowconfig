@@ -7,7 +7,9 @@
 <PROJECT_ROOT>/node_modules/module-deps/
 
 [include]
-packages/*/src
+packages/babel-parser/src
+packages/babel-types/src
+
 
 [libs]
 lib/file.js

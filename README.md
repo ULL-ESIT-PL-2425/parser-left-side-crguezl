@@ -97,3 +97,51 @@ The parser works since uses the `lib/index.js` :
 
 ## Attempting to build the parser with flow 
 
+First, we explicit the flow dependencies in root  `package.json`
+
+```json 
+➜  parser-left-side-crguezl git:(main) jq '.devDependencies' package.json
+{
+  "@babel/cli": "7.26",
+  "@babel/core": "7.26",
+  "@babel/preset-flow": "^7.25.9",
+  "babel-plugin-syntax-hermes-parser": "^0.26.0",
+  "flow-bin": "^0.257.1",
+  "flow-remove-types": "^2.257.1"
+}
+```
+
+Then, we copy Pablo's flow configuration in the root of the project:
+
+`cat .flowconfig`
+```json
+[ignore]
+<PROJECT_ROOT>/build/.*
+<PROJECT_ROOT>/packages/.*/lib
+<PROJECT_ROOT>/packages/.*/test
+<PROJECT_ROOT>/codemods/.*/lib
+<PROJECT_ROOT>/codemods/.*/test
+<PROJECT_ROOT>/node_modules/module-deps/
+
+[include]
+packages/*/src
+
+[libs]
+lib/file.js
+lib/parser.js
+lib/third-party-libs.js.flow
+lib/preset-modules.js.flow
+packages/babel-types/lib/index.js.flow
+
+[options]
+include_warnings=true
+suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
+suppress_comment= \\(.\\|\n\\)*\\$FlowIssue
+suppress_comment= \\(.\\|\n\\)*\\$FlowIgnore
+suppress_type=$FlowFixMe
+suppress_type=$FlowSubtype
+esproposal.export_star_as=enable
+esproposal.optional_chaining=enable
+esproposal.nullish_coalescing=enable
+module.name_mapper='^@babel\/\([a-zA-Z0-9_\-]+\)$' -> '<PROJECT_ROOT>/packages/babel-\1/src/index'
+```

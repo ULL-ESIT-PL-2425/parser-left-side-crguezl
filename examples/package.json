@@ -4,7 +4,9 @@
   "description": "",
   "main": "hello.js",
   "scripts": {
-    "test": "npm i && babel hello.js --out-file hello.cjs && node hello.cjs"
+    "test": "npm i && babel hello.js --out-file hello.cjs && node hello.cjs",
+    "cppabloparser": " cp ../../pablo-santana-gonzalez/babel-tanhauhau-pablo/packages/babel-parser/lib/index.js ../packages/babel-parser/lib",
+    "save": " cd .. && npm run save"
   },
   "keywords": [],
   "author": "Casiano Rodriguez Leon <crguezl@ull.edu.es> (https://crguezl.github.io/)",

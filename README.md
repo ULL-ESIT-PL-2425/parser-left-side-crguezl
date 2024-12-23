@@ -21,6 +21,8 @@ a JS parser at `packages/babel-parser/lib`  ready to be used.
   ```
 - The packages/babel-parser is substituted by the generated from the Pablo's branch (lib). Awful!. 
   - **Work to do: how to make the build using flow to transpile the TFG babel parser at `packages/babel-parser` and leave a JS parser at `packages/babel-parser/lib`  ready to be used.**
+- The code in the plugin `packages/babel-plugin-left-side/src/plugin.js` has been modified to use 
+  `const parser = require("../../babel-parser/lib");`
 - The final user installs the (now separated) package `babel-plugin-left-side-support` and uses it in his/her project. See [examples/package.json](examples/package.json).
 - The babel.config.js in this example is relative to the root of the project but the final will use the package:
 
@@ -726,4 +728,8 @@ The parser works since uses the `lib/index.js` :
     }
   ]
 }
+```
+
+```
+ ../../node_modules/.bin/babel src -d lib
 ```

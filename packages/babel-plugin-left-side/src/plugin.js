@@ -1,4 +1,4 @@
-const parser = require("../../babel-parser");
+const parser = require("../../babel-parser/lib");
 const types = require("@babel/types");
 //import template from "@babel/template";
 const template = require("@babel/template").default;

@@ -5,6 +5,12 @@
   "author": "Sebastian McKenzie <sebmck@gmail.com>",
   "homepage": "https://babeljs.io/",
   "license": "MIT",
+  "scripts": {
+    "flow": "flow",
+    "build": "babel src/ -d lib/",
+    "rt": "flow-remove-types src/ -d lib/",
+    "prepublishOnly": "npm run build"
+  },
   "publishConfig": {
     "access": "public",
     "registry": "https://npm.pkg.github.com"

@@ -45,7 +45,7 @@
       //import template from "@babel/template";
       const template = require("@babel/template").default;
   ```
-- The packages/babel-parser is substituted by the generated from the Pablo's branch (lib). Awful!. **Future work: how to make the build**
+- The packages/babel-parser is substituted by the generated from the Pablo's branch (lib). Awful!. **Future work: how to make the build using flow**
 - The final user installs the (now separated) package `babel-plugin-left-side-support` and uses it in his/her project. See [examples/package.json](examples/package.json).
 - The babel.config.js in this example is relative to the root of the project but the final will use the package:
 
@@ -60,9 +60,20 @@
 
 ## Compiling 
 
+First, copy Pablo's generated parser `lin/index.js` to the `packages/babel-parser/lib`:
+
+``` 
+➜  examples git:(main) ✗ pwd -P   
+/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/examples
+➜  examples git:(main) ✗ cp ../../pablo-santana-gonzalez/babel-tanhauhau-pablo/packages/babel-parser/lib/index.js ../packages/babel-parser/lib 
+```
+
+The compile the example. The plugin will override the parser for the babel transpiler:
 
 ```js 
-➜  examples git:(main) ✗ npx babel  hello.js       
+➜  examples git:(main) ✗ npx babel hello.js 
+(node:30127) ExperimentalWarning: Support for loading ES Module in require() is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
 const {
   assign,
   functionObject
@@ -75,10 +86,22 @@ console.log(foo(10)); //  5
 console.log(foo(5)); // 10
 ```
 
+Now run it:
+
 ```
-➜  examples git:(main) ✗ npx babel  hello.js | node                       
+➜  examples git:(main) ✗ npx babel  hello.js | node 
+(node:41665) ExperimentalWarning: Support for loading ES Module in require() is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
 5
-10
+```
+
+We have previously installed the support for the plugin:
+
+```
+➜  examples git:(main) ✗ jq '.dependencies' package.json 
+{
+  "@ull-esit-pl/babel-plugin-left-side-support": "^1.0.0"
+}
 ```
 
 ## Parser

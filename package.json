@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "cd examples && npm test",
-    "clean": "rm -fR node_modules; rm package-lock.json; npm i",
+    "cleanlib": "cd packages/babel-parser/lib && rm -fR rm index.js options.js plugin-utils.js types.js plugins util tokenizer parser",
+    "clean": "npm run cleanlib; rm -fR node_modules; rm package-lock.json; npm i",
     "save": "git ci -am save; git push",
     "flow": "flow",
     "build": "babel packages/babel-parser/src/ -d packages/babel-parser/lib/",

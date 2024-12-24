@@ -1,5 +1,5 @@
 > [!CAUTION]
-> This repo is a toy/conceptual  experiment to have a minimal monorepo having the parser and the plugin(s).
+> This repo is a toy/conceptual  experiment to have a minimal monorepo having the extended parser and the plugin(s) for testing and publishing.
 
 
 ## Goal

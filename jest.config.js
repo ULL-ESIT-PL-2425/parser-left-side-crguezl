@@ -66,10 +66,10 @@ module.exports = {
     "<rootDir>/packages/babel-parser/test/index.js",
      // WARNING CASIANO!!! OUR TESTS
     //"<rootDir>/packages/babel-parser/test/left-side.js",    
-    "<rootDir>/packages/babel-parser/test/left-side-original.mjs",
-    "<rootDir>/packages/babel-parser/test/in",
-    "<rootDir>/packages/babel-parser/test/out",
-    "<rootDir>/packages/babel-parser/test/exec_out",
+    "<rootDir>/packages/babel-parser/test/left-side/in",
+    "<rootDir>/packages/babel-parser/test/left-side/out",
+    "<rootDir>/packages/babel-parser/test/left-side/exec_out",
+    "<rootDir>/packages/babel-parser/test/left-side/babel.config.js",
 
   ],
   moduleNameMapper: {

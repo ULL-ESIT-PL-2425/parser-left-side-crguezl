@@ -6,6 +6,7 @@
   "homepage": "https://babeljs.io/",
   "license": "MIT",
   "scripts": {
+    "test": "jest test",
     "flow": "flow",
     "build": "cd ../../ && npm run build",
     "rt": "flow-remove-types src/ -d lib/",

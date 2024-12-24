@@ -138,7 +138,7 @@ found 0 vulnerabilities
 I have simplified the tests to the minimum. 
 
 ```
-➜  parser-left-side-crguezl git:(main) ✗ npm test
+ parser-left-side-crguezl git:(main) npm test      
 
 > @ull-esit-pl/babel-left-side-crguezl@1.0.0 test
 > jest
@@ -147,18 +147,14 @@ I have simplified the tests to the minimum.
  PASS  packages/babel-parser/test/unit/util/location.js
  PASS  packages/babel-parser/test/left-side/left-side.js
  PASS  packages/babel-parser/test/plugin-options.js
-(node:65981) ExperimentalWarning: Support for loading ES Module in require() is an experimental feature and might change at any time
+(node:33564) ExperimentalWarning: Support for loading ES Module in require() is an experimental feature and might change at any time
 (Use `node --trace-warnings ...` to show where the warning was created)
  PASS  packages/babel-parser/test/left-side/test-left-side-wrapper.test.js
 
-Snapshot Summary
- › 1 snapshot file obsolete from 1 test suite. To remove it, run `npm test -- -u`.
-   ↳   • packages/babel-parser/test/__snapshots__/left-side.js.snap
-
 Test Suites: 5 passed, 5 total
 Tests:       14 passed, 14 total
-Snapshots:   1 file obsolete, 0 total
-Time:        3.836 s
+Snapshots:   0 total
+Time:        3.962 s, estimated 4 s
 Ran all test suites.
 ```
 

@@ -64,7 +64,7 @@ module.exports = {
     "<rootDir>/packages/babel-parser/test/unit/util/identifier*",
     "<rootDir>/packages/babel-parser/test/estree*",
     "<rootDir>/packages/babel-parser/test/index.js",
-
+     // WARNING CASIANO!!! OUR TESTS
     "<rootDir>/packages/babel-parser/test/left-side.js",    
     "<rootDir>/packages/babel-parser/test/left-side-original.mjs",
   ],

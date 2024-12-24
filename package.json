@@ -8,7 +8,7 @@
     "packages/babel-plugin-left-side"
   ],
   "engines": {
-    "node": ">= 23.0.0",
+    "node": ">= 23.5.0",
     "npm": ">= 10.9.0"
   },
   "scripts": {

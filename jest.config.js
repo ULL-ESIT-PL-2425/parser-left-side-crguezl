@@ -69,6 +69,8 @@ module.exports = {
     "<rootDir>/packages/babel-parser/test/left-side-original.mjs",
     "<rootDir>/packages/babel-parser/test/in",
     "<rootDir>/packages/babel-parser/test/out",
+    "<rootDir>/packages/babel-parser/test/exec_out",
+
   ],
   moduleNameMapper: {
     [monorepoPackagePattern]: "<rootDir>/packages/babel-parser/",

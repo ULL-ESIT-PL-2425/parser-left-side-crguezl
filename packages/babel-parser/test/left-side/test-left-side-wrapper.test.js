@@ -6,8 +6,10 @@ const execOut = new Set(fs.readdirSync(path.join(__dirname, "exec_out"), {encodi
 
 for (let testFile of input) {
   test(testFile, () => {
+    let fullPath = path.join(__dirname, "in", testFile);
+    console.log(fullPath);
     expect(execOut.has(testFile)).toBeTruthy();
-    const output = execSync(`npx babel ./in/${testFile}`);
+    const output = execSync(`npx babel ${fullPath}`);
     const outputPath = path.join(__dirname, "out", testFile);
     fs.writeFileSync(outputPath, output, {encoding: "utf-8"});
     let execResult = execSync(`node ${outputPath}`);

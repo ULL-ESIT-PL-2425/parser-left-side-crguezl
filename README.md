@@ -133,6 +133,68 @@ found 0 vulnerabilities
 10
 ```
 
+## Tests 
+
+```
+➜  parser-left-side-crguezl git:(main) ✗ npm test
+
+> @ull-esit-pl/babel-left-side-crguezl@1.0.0 test
+> jest
+
+ PASS  packages/babel-parser/test/unit/tokenizer/types.js
+ PASS  packages/babel-parser/test/unit/util/location.js
+ PASS  packages/babel-parser/test/left-side/left-side.js
+ PASS  packages/babel-parser/test/plugin-options.js
+(node:65981) ExperimentalWarning: Support for loading ES Module in require() is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ PASS  packages/babel-parser/test/left-side/test-left-side-wrapper.test.js
+
+Snapshot Summary
+ › 1 snapshot file obsolete from 1 test suite. To remove it, run `npm test -- -u`.
+   ↳   • packages/babel-parser/test/__snapshots__/left-side.js.snap
+
+Test Suites: 5 passed, 5 total
+Tests:       14 passed, 14 total
+Snapshots:   1 file obsolete, 0 total
+Time:        3.836 s
+Ran all test suites.
+➜  parser-left-side-crguezl git:(main) ✗ git ci -am 'test for left-side are now working'
+[main 395a556] test for left-side are now working
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+➜  parser-left-side-crguezl git:(main) git push
+Enumerando objetos: 13, listo.
+Contando objetos: 100% (13/13), listo.
+Compresión delta usando hasta 16 hilos
+Comprimiendo objetos: 100% (7/7), listo.
+Escribiendo objetos: 100% (7/7), 587 bytes | 587.00 KiB/s, listo.
+Total 7 (delta 6), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (6/6), completed with 6 local objects.
+To https://github.com/ULL-ESIT-PL/parser-left-side-crguezl.git
+   d7dda97..395a556  main -> main
+➜  parser-left-side-crguezl git:(main) npm test
+
+> @ull-esit-pl/babel-left-side-crguezl@1.0.0 test
+> jest
+
+ PASS  packages/babel-parser/test/unit/tokenizer/types.js
+ PASS  packages/babel-parser/test/unit/util/location.js
+ PASS  packages/babel-parser/test/left-side/left-side.js
+ PASS  packages/babel-parser/test/plugin-options.js
+(node:5329) ExperimentalWarning: Support for loading ES Module in require() is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ PASS  packages/babel-parser/test/left-side/test-left-side-wrapper.test.js
+
+Snapshot Summary
+ › 1 snapshot file obsolete from 1 test suite. To remove it, run `npm test -- -u`.
+   ↳   • packages/babel-parser/test/__snapshots__/left-side.js.snap
+
+Test Suites: 5 passed, 5 total
+Tests:       14 passed, 14 total
+Snapshots:   1 file obsolete, 0 total
+Time:        4.865 s
+Ran all test suites.
+```
+
 ## Changes I remember I did
 
 - In `packages/babel-plugin-left-side/`, I  substituted the `import` in Pablo's version of the plugin by a `require`:

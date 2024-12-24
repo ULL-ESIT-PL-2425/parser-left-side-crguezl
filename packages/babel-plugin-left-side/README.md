@@ -1,44 +1,107 @@
-<p align="center">
-  <a href="https://babeljs.io/">
-    <img alt="babel" src="https://raw.githubusercontent.com/babel/logo/master/babel.png" width="546">
-  </a>
-</p>
-
-## What is this?
-
 > [!CAUTION]
-> This is a work in progress. The syntax and the semantic of the extension to JavaScript presented below is not yet fully defined and tested. The [packages](https://github.com/orgs/ULL-ESIT-PL/packages?repo_name=babel-tanhauhau) are published in the GitHub registry, but they are not ready for production.
+> This repo is a toy/conceptual  experiment to have a minimal monorepo having the extended Babel parser and the plugin(s) for testing and publishing. It is work in progress.
 
 
-This is a fork of [tanhauhau/babel](https://github.com/tanhauhau/babel) which is a fork of the original Babel repo at version 7.10.  
-The packages [published in the GitHub registry](https://github.com/orgs/ULL-ESIT-PL/packages) from branch [pablo-tfg](https://github.com/ULL-ESIT-PL/babel-tanhauhau/tree/pablo-tfg) are being written by Pablo Santana inside the GitHub organization [ull-esit-pl](https://github.com/ULL-ESIT-PL/) organization as part of his Bachellor Thesis (Trabajo Fin de Grado). 
+## Goal
 
-These packages extend the JavaScript language with a new kind of functions. The packages are:
+To be able to have a minimal monorepo with the parser and the plugin(s) of the TFGs.
 
-- The JS parser modified: [@ull-esit-pl/parser-left-side](https://github.com/orgs/ULL-ESIT-PL/packages/npm/package/parser-left-side)
-- The AST transformation plugin: [@ull-esit-pl/babel-plugin-left-side-plugin ](https://github.com/orgs/ULL-ESIT-PL/packages/npm/package/babel-plugin-left-side-plugin) 
-- The support library: [@ull-esit-pl/babel-plugin-left-side-support](https://github.com/orgs/ULL-ESIT-PL/packages/npm/package/babel-plugin-left-side-support) 
+We have to use a Babel configured for flow to transpile the TFG babel parser at [packages/babel-parser](https://github.com/ULL-ESIT-PL/babel-tanhauhau/tree/pablo-tfg) and leave 
+a JS parser at `packages/babel-parser/lib`  ready to be used. 
 
-### The proposed Syntax and Semantic
+## Building the parser
 
-These packages extend JS  with a new kind of functions, the `@@` functions (we lack by now of a name for this class of functions: *assignable*? *pure*?). Here is an example of declaring an *assignable* function:
-
-```js 
-function @@ foo(bar) {
-  return bar * 2;
+`➜  parser-left-side-crguezl git:(main) ✗ jq '.scripts' package.json`
+```json
+{
+  "test": "jest packages/babel-parser/test",
+  "example": "cd examples && npm test",
+  "cleanlib": "cd packages/babel-parser/lib && rm -fR index.js options.js plugin-utils.js types.js plugins util tokenizer parser",
+  "clean": "npm run cleanlib; rm -fR node_modules; rm -fR packages/babel-parser/node_modules; rm package-lock.json; npm i",
+  "save": "git ci -am save; git push",
+  "flow": "flow",
+  "buildflow": "babel packages/babel-parser/src/ -d packages/babel-parser/lib/",
+  "rollup": "gulp build-rollup && npm run cleanbuild",
+  "build": "npm run buildflow && npm run rollup",
+  "cleanbuild": "cd packages/babel-parser/lib && rm -fR options.js plugin-utils.js types.js plugins util tokenizer parser",
+  "rt": "flow-remove-types packages/babel-parser/src/ -d packages/babel-parser/lib/",
+  "prepublishOnly": "npm run build"
 }
 ```
 
-These *assignable* functions can be later modified  using the assign expression:
+To compile the parser, we use `npm run build`. This is going to compile the parser with Babel-Flow 
 
-```js
-foo(10) = 5;
+```
+babel packages/babel-parser/src/ -d packages/babel-parser/lib/
 ```
 
-Here is the full code for our "hello assignable functions!" left-side-plugin example:
+and then is going to call `gulp build-rollup` to bundle all the files in the final `lib/index.js`.
+Here is the output:
 
-`➜  babel-npm-test git:(main) cat example.js`
-```js
+```bash
+➜  parser-left-side-crguezl git:(main) ✗ npm run build
+
+> @ull-esit-pl/babel-left-side-crguezl@1.0.0 build
+> npm run buildflow && npm run rollup
+
+
+> @ull-esit-pl/babel-left-side-crguezl@1.0.0 buildflow
+> babel packages/babel-parser/src/ -d packages/babel-parser/lib/
+
+@babel/preset-env: `DEBUG` option
+
+Using targets:
+{
+  "node": "23"
+}
+
+Using modules transform: false
+
+Using plugins:
+  syntax-class-static-block
+  syntax-private-property-in-object
+  syntax-class-properties
+  syntax-numeric-separator
+  syntax-nullish-coalescing-operator
+  syntax-optional-chaining
+  syntax-json-strings
+  syntax-optional-catch-binding
+  syntax-async-generators
+  syntax-object-rest-spread
+  syntax-export-namespace-from
+  syntax-dynamic-import
+  syntax-top-level-await
+  syntax-import-meta
+  syntax-import-attributes
+
+Using polyfills: No polyfills were added, since the `useBuiltIns` option was not set.
+Successfully compiled 33 files with Babel (1368ms).
+
+> @ull-esit-pl/babel-left-side-crguezl@1.0.0 rollup
+> gulp build-rollup && npm run cleanbuild
+
+[08:49:45] Using gulpfile ~/campus-virtual/2324/research/parser-left-side-crguezl/gulpfile.js
+[08:49:45] Starting 'build-rollup'...
+[08:49:45] Compiling 'packages/babel-parser/src/index.js' with rollup ...
+[08:49:47] Skipped minification of 'parser-left-side-crguezl/packages/babel-parser/lib/index.js' because not publishing
+[08:49:47] Finished 'build-rollup' after 1.82 s
+
+> @ull-esit-pl/babel-left-side-crguezl@1.0.0 cleanbuild
+> cd packages/babel-parser/lib && rm -fR options.js plugin-utils.js types.js plugins util tokenizer parser
+```
+
+This is leaving the following files in `packages/babel-parser/lib`:
+
+```bash
+➜  parser-left-side-crguezl git:(main) ✗ ls -l packages/babel-parser/lib 
+total 768
+-rwxr-xr-x@ 1 casianorodriguezleon  staff  391324 24 dic 09:13 index.js
+```
+
+In the folder `examples` we have the simplest example to test the extension:
+
+```bash
+➜  parser-left-side-crguezl git:(main) ✗ cat examples/hello.js
 function @@ foo(bar) {
   return bar * 2;
 }
@@ -48,238 +111,147 @@ console.log(foo(10)); //  5
 console.log(foo(5));  // 10
 ```
 
-You can fork the example repo [ULL-ESIT-PL/babel-left-side-npm-test](https://github.com/ULL-ESIT-PL/babel-left-side-npm-test) and test the packages in your own workspace or follow the instructions below.
-
-## Install
-
-Here are the node and npm versions I have used to test the packages:
+To compile and run the example, we use `npm run example`:
 
 ```bash
-➜  babel-npm-test node --version
-v20.5.0
-➜  babel-npm-test npm --version
-9.8.0
+➜  parser-left-side-crguezl git:(main) ✗ npm run example
+
+> @ull-esit-pl/babel-left-side-crguezl@1.0.0 example
+> cd examples && npm test
+
+
+> examples@1.0.0 test
+> npm i && babel hello.js --out-file hello.cjs && node hello.cjs
+
+(node:65183) ExperimentalWarning: Support for loading ES Module in require() is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+up to date, audited 3 packages in 1s
+
+found 0 vulnerabilities
+5
+10
 ```
 
-These packages use the GitHub registry instead of the npm registry. Therefore, remember
-to set the registry entry in your `.npmrc` file:
+## Changes I remember I did
 
-```bash
-➜  babel-npm-test git:(main) ✗ cat ~/.npmrc | grep '@ull-esit-pl:'
-@ull-esit-pl:registry=https://npm.pkg.github.com
-```
+- In `packages/babel-plugin-left-side/`, I  substituted the `import` in Pablo's version of the plugin by a `require`:
 
-or set an entry `registry` in your `package.json` file:
+   ```js
+      //import template from "@babel/template";
+      const template = require("@babel/template").default;
+  ```
+- The code in the plugin `packages/babel-plugin-left-side/src/plugin.js` has been modified to use 
+  `const parser = require("../../babel-parser/lib");`
 
-```bash
-➜  babel-npm-test git:(main) ✗ jq '.registry' package.json 
-"https://npm.pkg.github.com"
-```
+- The final user installs the (now separated) package `babel-plugin-left-side-support` and uses it in his/her project. See [examples/package.json](examples/package.json). This will change in the future.
+- The babel.config.js in the `example` folder is relative to the root of the project but the final will use the package:
 
-Then you can proceed to install the packages:
+  ```js
+  ➜  babel-left-side-crguezl git:(main) cat examples/babel.config.json 
+  {
+    "plugins": [
+      "../packages/babel-plugin-left-side/"
+    ]
+  }
+  ```
 
-```
-npm i -D @babel/cli@7.10 @ull-esit-pl/babel-plugin-left-side-plugin @ull-esit-pl/babel-plugin-left-side-support @ull-esit-pl/parser-left-side 
-```
+When attempting to build the parser with flow,
+we have explicited the flow dependencies in root  `package.json`. 
+These have been taken from Pablo's `package.json`. 
+Only those required to make the parser work have been included.
 
-Your package.json `devDependencies` section will look similar to this:
 
-`➜  babel-left-side-npm-test git:(main) ✗ jq '.devDependencies' package.json`
-```json
+`➜  parser-left-side-crguezl git:(main) ✗ jq '.devDependencies' package.json`
+```json 
 {
   "@babel/cli": "^7.10.1",
-  "@ull-esit-pl/babel-plugin-left-side-plugin": "latest",
-  "@ull-esit-pl/babel-plugin-left-side-support": "latest",
-  "@ull-esit-pl/parser-left-side": "latest"
+  "@babel/core": "^7.10.2",
+  "@babel/preset-flow": "^7.10.1",
+  "babel-plugin-syntax-hermes-parser": "^0.26.0",
+  "flow-bin": "^0.257.1",
+  "flow-remove-types": "^2.257.1",
+  "@babel/plugin-proposal-class-properties": "^7.10.1",
+  "@babel/plugin-proposal-dynamic-import": "^7.10.1",
+  "@babel/plugin-proposal-export-namespace-from": "^7.10.1",
+  "@babel/plugin-proposal-object-rest-spread": "^7.10.1",
+  "@babel/plugin-transform-flow-strip-types": "^7.10.1",
+  "@babel/plugin-transform-for-of": "^7.10.1",
+  "@babel/plugin-transform-modules-commonjs": "^7.10.1",
+  "@babel/plugin-transform-runtime": "^7.10.1",
+  "@babel/preset-env": "^7.10.2",
+  "@babel/register": "^7.10.1",
+  "@babel/runtime": "^7.10.2",
+  "@rollup/plugin-json": "4.0.1",
+  "babel-eslint": "^11.0.0-beta.2",
+  "babel-jest": "^24.9.0",
+  "babel-plugin-transform-charcodes": "^0.2.0",
+  "browserify": "^16.2.3",
+  "bundle-collapser": "^1.2.1",
+  "chalk": "^2.4.2",
+  "charcodes": "^0.2.0",
+  "derequire": "^2.0.2",
+  "enhanced-resolve": "^3.0.0",
+  "gulp": "^4.0.2",
+  "gulp-babel": "^8.0.0",
+  "gulp-filter": "^5.1.0",
+  "gulp-newer": "^1.0.0",
+  "gulp-plumber": "^1.2.1",
+  "rollup-plugin-babel": "^4.4.0",
+  "rollup-plugin-commonjs": "^10.1.0",
+  "rollup-plugin-node-builtins": "^2.1.2",
+  "rollup-plugin-node-globals": "^1.4.0",
+  "rollup-plugin-node-resolve": "^5.0.0",
+  "rollup-plugin-replace": "^2.2.0",
+  "rollup-plugin-terser": "^5.3.0",
+  "test262-stream": "^1.3.0",
+  "jest": "^29.7.0"
 }
 ```
 
+Then, we copy Pablo's flow configuration in the root of the project:
 
-## Compiling the code
+`➜  parser-left-side-crguezl git:(main) ✗ cat .flowconfig`
+```ini
+[ignore]
+<PROJECT_ROOT>/build/.*
+<PROJECT_ROOT>/packages/.*/lib
+<PROJECT_ROOT>/packages/.*/test
+<PROJECT_ROOT>/codemods/.*/lib
+<PROJECT_ROOT>/codemods/.*/test
+<PROJECT_ROOT>/node_modules/module-deps/
 
-To compile the example above add a `babel.config.js` to your workspace folder:
+[include]
+packages/babel-parser/src
+packages/babel-types/src
 
-`➜  babel-npm-test git:(main) cat babel.config.js`
-```js
-module.exports = {
-  "plugins": [
-    "@ull-esit-pl/babel-plugin-left-side-plugin"
-  ],
-}
+
+[libs]
+lib/file.js
+lib/parser.js
+lib/third-party-libs.js.flow
+lib/preset-modules.js.flow
+packages/babel-types/lib/index.js.flow
+
+[options]
+include_warnings=true
+suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
+suppress_comment= \\(.\\|\n\\)*\\$FlowIssue
+suppress_comment= \\(.\\|\n\\)*\\$FlowIgnore
+suppress_type=$FlowFixMe
+suppress_type=$FlowSubtype
+esproposal.export_star_as=enable
+esproposal.optional_chaining=enable
+esproposal.nullish_coalescing=enable
+module.name_mapper='^@babel\/\([a-zA-Z0-9_\-]+\)$' -> '<PROJECT_ROOT>/packages/babel-\1/src/index'
 ```
 
-and then compile it using the installed packages:
+Then I did s.t. similar with Rollup.
 
-```js
-➜  babel-npm-test npx babel  example.js
-```
-This will output the compiled code to the console:
+## Monorepos
 
-```js                                                      
-const {
-  assign,
-  functionObject
-} = require("@ull-esit-pl/babel-plugin-left-side-support");
-const foo = functionObject(function (bar) {
-  return bar * 2;
-});
-assign(foo, [10], 5);
-console.log(foo(10));
-console.log(foo(5));
-```
+See
 
-If you want to save it to a file, use the `-o` option.
-
-## Running
-
-You can pipe the output to `node`:
-
-```bash
-➜  babel-npm-test npx babel  example.js | node  -
-5
-10
-```
-
-or alternatively, use the `-o` option to save the output to a file and then run it:
-
-```
-➜  babel-left-side-npm-test git:(main) npx babel  example.js -o example.cjs
-➜  babel-left-side-npm-test git:(main) ✗ node example.cjs 
-5
-10
-```
-
-## References
-
-- Our tutorial on babel: https://github.com/ULL-ESIT-PL/babel-learning/tree/main
-- Section of the former tutorial describing how the packages were published: https://github.com/ULL-ESIT-PL/babel-learning/blob/main/doc/building-publishing.md
-- Branch pablo-tfg with the actual code implementation: https://github.com/ULL-ESIT-PL/babel-tanhauhau/tree/pablo-tfg
-- The original idea of the project is based on what is explained in this draft: https://www.authorea.com/users/147476/articles/1235078-function-expressions-on-the-left-side-of-assignments (submitted now to Science of Computer Programming
- journal)
-
-## License
-
-Same as Babel itself: [MIT](LICENSE)
-
--------------------
-
-# Follows the Original Babel Readme (v7.10)
-
-<p align="center">
-  The compiler for writing next generation JavaScript.
-</p>
-
-<p align="center">
-  <a href="https://gitpod.io/#https://github.com/babel/babel"><img alt="Gitpod ready-to-code" src="https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod"></a>
-</p>
-<p align="center">
-    <a href="https://www.npmjs.com/package/@babel/core"><img alt="v7 npm Downloads" src="https://img.shields.io/npm/dm/@babel/core.svg?maxAge=43200&label=v7%20downloads"></a>
-  <a href="https://www.npmjs.com/package/babel-core"><img alt="v6 npm Downloads" src="https://img.shields.io/npm/dm/babel-core.svg?maxAge=43200&label=v6%20downloads"></a>
-</p>
-<p align="center">
-  <a href="https://travis-ci.com/babel/babel"><img alt="Travis Status" src="https://img.shields.io/travis/com/babel/babel/master.svg?label=travis&maxAge=43200"></a>
-  <a href="https://circleci.com/gh/babel/babel"><img alt="CircleCI Status" src="https://img.shields.io/circleci/project/github/babel/babel/master.svg?label=circle&maxAge=43200"></a>
-  <a href="https://codecov.io/github/babel/babel"><img alt="Coverage Status" src="https://img.shields.io/codecov/c/github/babel/babel/master.svg?maxAge=43200"></a>
-  <a href="https://slack.babeljs.io/"><img alt="Slack Status" src="https://slack.babeljs.io/badge.svg"></a>
-  <a href="https://twitter.com/intent/follow?screen_name=babeljs"><img alt="Follow on Twitter" src="https://img.shields.io/twitter/follow/babeljs.svg?style=social&label=Follow"></a>
-</p>
-
-<h2 align="center">Supporting Babel</h2>
-
-<p align="center">
-  <a href="#backers"><img alt="Backers on Open Collective" src="https://opencollective.com/babel/backers/badge.svg" /></a>
-  <a href="#sponsors"><img alt="Sponsors on Open Collective" src="https://opencollective.com/babel/sponsors/badge.svg" /></a>
-  <a href="https://medium.com/friendship-dot-js/i-peeked-into-my-node-modules-directory-and-you-wont-believe-what-happened-next-b89f63d21558"><img alt="Business Strategy Status" src="https://img.shields.io/badge/business%20model-flavortown-green.svg"></a>
-</p>
-
-Babel (pronounced ["babble"](https://soundcloud.com/sebmck/how-to-pronounce-babel))  is a community-driven project used by many companies and projects, and is maintained by a group of [volunteers](https://babeljs.io/team). If you'd like to help support the future of the project, please consider:
-
-- Giving developer time on the project. (Message us on [Twitter](https://twitter.com/babeljs) or [Slack](https://slack.babeljs.io/) for guidance!)
-- Giving funds by becoming a sponsor on [Open Collective](https://opencollective.com/babel) or [Patreon](https://www.patreon.com/henryzhu)!
-
-## Sponsors
-
-Our top sponsors are shown below! [[Become a sponsor](https://opencollective.com/babel#sponsor)]
-
-<a href="https://opencollective.com/babel/sponsor/0/website" target="_blank"><img src="https://opencollective.com/babel/sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/babel/sponsor/1/website" target="_blank"><img src="https://opencollective.com/babel/sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/babel/sponsor/2/website" target="_blank"><img src="https://opencollective.com/babel/sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/babel/sponsor/3/website" target="_blank"><img src="https://opencollective.com/babel/sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/babel/sponsor/4/website" target="_blank"><img src="https://opencollective.com/babel/sponsor/4/avatar.svg"></a>
- <a href="https://opencollective.com/babel/sponsor/5/website" target="_blank"><img src="https://opencollective.com/babel/sponsor/5/avatar.svg"></a>
-  <a href="https://opencollective.com/babel/sponsor/6/website" target="_blank"><img src="https://opencollective.com/babel/sponsor/6/avatar.svg"></a>
-  <a href="https://opencollective.com/babel/sponsor/7/website" target="_blank"><img src="https://opencollective.com/babel/sponsor/7/avatar.svg"></a>
-  <a href="https://opencollective.com/babel/sponsor/8/website" target="_blank"><img src="https://opencollective.com/babel/sponsor/8/avatar.svg"></a>
-  <a href="https://opencollective.com/babel/sponsor/9/website" target="_blank"><img src="https://opencollective.com/babel/sponsor/9/avatar.svg"></a>
-  <a href="https://opencollective.com/babel/sponsor/10/website" target="_blank"><img src="https://opencollective.com/babel/sponsor/10/avatar.svg"></a>
-  <a href="https://opencollective.com/babel/sponsor/11/website" target="_blank"><img src="https://opencollective.com/babel/sponsor/11/avatar.svg"></a>
-  <a href="https://opencollective.com/babel/sponsor/12/website" target="_blank"><img src="https://opencollective.com/babel/sponsor/12/avatar.svg"></a>
-  <a href="https://opencollective.com/babel/sponsor/13/website" target="_blank"><img src="https://opencollective.com/babel/sponsor/13/avatar.svg"></a>
-  <a href="https://opencollective.com/babel/sponsor/14/website" target="_blank"><img src="https://opencollective.com/babel/sponsor/14/avatar.svg"></a>
-
-## Intro
-
-Babel is a tool that helps you write code in the latest version of JavaScript. When your supported environments don't support certain features natively, Babel will help you compile those features down to a supported version.
-
-**In**
-
-```js
-// ES2015 arrow function
-[1, 2, 3].map((n) => n + 1);
-```
-
-**Out**
-
-```js
-[1, 2, 3].map(function(n) {
-  return n + 1;
-});
-```
-
-Try it out at our [REPL](https://babeljs.io/repl/build/master#?code_lz=NoRgNATGDMC6B0BbAhgBwBQDsAEBeAfNjgNTYgCUA3EA&lineWrap=true&presets=es2015%2Ces2016%2Ces2017&version=7.0.0-beta.2).
-
-## FAQ
-
-### Who maintains Babel?
-
-Mostly a handful of volunteers, funded by you! Please check out our [team page](https://babeljs.io/team)!
-
-### Is there a Babel song?
-
-I'm so glad you asked: [Hallelujah —— In Praise of Babel](SONG.md) by [@angus-c](https://github.com/angus-c), [audio version](https://youtu.be/40abpedBKK8) by [@swyx](https://twitter.com/@swyx). Tweet us your recordings!
-
-### Looking for support?
-
-For questions and support please join our [Slack Community](https://slack.babeljs.io/) (you can sign-up [here](https://slack.babeljs.io/) for an invite), ask a question on [Stack Overflow](https://stackoverflow.com/questions/tagged/babeljs), or ping us on [Twitter](https://twitter.com/babeljs).
-
-### Where are the docs?
-
-Check out our website: [babeljs.io](https://babeljs.io/), and report issues/features at [babel/website](https://github.com/babel/website/issues).
-
-### Want to report a bug or request a feature?
-
-Please read through our [CONTRIBUTING.md](CONTRIBUTING.md) and fill out the issue template at [babel/issues](https://github.com/babel/babel/issues)!
-
-### Want to contribute to Babel?
-
-Check out:
-
-- Our [#development](https://babeljs.slack.com/messages/development) Slack channel and say hi ([signup](https://slack.babeljs.io))!
-- Issues with the [good first issue](https://github.com/babel/babel/labels/good%20first%20issue) and [help wanted](https://github.com/babel/babel/labels/help%20wanted) label. We suggest also looking at the [closed ones](https://github.com/babel/babel/issues?utf8=%E2%9C%93&q=is%3Aclosed+label%3A%22good+first+issue%22) to get a sense of the kinds of issues you can tackle.
-
-Some resources:
-
-- Our [CONTRIBUTING.md](CONTRIBUTING.md) to get started with setting up the repo.
-- Our discussions/notes/roadmap: [babel/notes](https://github.com/babel/notes)
-- Our progress on TC39 proposals: [babel/proposals](https://github.com/babel/proposals)
-- Our blog which contains release posts and explanations: [/blog](https://babeljs.io/blog)
-- Our videos page with talks about open source and Babel: [/videos](https://babeljs.io/videos)
-- Our [podcast](https://podcast.babeljs.io)
-
-### How is the repo structured?
-
-The Babel repo is managed as a [monorepo](doc/design/monorepo.md) that is composed of many [npm packages](packages/README.md).
-
-## License
-
-[MIT](LICENSE)
+- [npm workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces)
+- [SYTWS monorepo notes](https://ull-mii-sytws.github.io/temas/web/nextra/nextra-monorepo.html#introduction-to-monorepos-nextra-as-an-example)
+- the tutorial <a href="https://youtu.be/KEkRy4q_0oI?si=cF419bnZBWBR159V" target="_blank">💥 Monorepo multipaquete con NPM Workspaces 📦 (FullStack Bootcamp JavaScript)</a> by Midudev.

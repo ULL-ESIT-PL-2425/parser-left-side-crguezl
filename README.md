@@ -94,6 +94,8 @@ lrwxr-xr-x@ 1 casianorodriguezleon  staff      42 24 dic 05:08 babel-left-side-p
 lrwxr-xr-x@ 1 casianorodriguezleon  staff      42 24 dic 05:08 plugin.js -> ../../babel-plugin-left-side/src/plugin.js
 ```
 
+The symbolic  are pre-populated links to the plugin.
+
 In the folder `examples` we have the simplest example to test the extension:
 
 ```bash

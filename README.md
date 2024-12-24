@@ -7,7 +7,7 @@
 To be able to have a minimal monorepo with the parser and the plugin(s) of the TFGs.
 
 We have to use a Babel configured for flow to transpile the TFG babel parser at `packages/babel-parser` and leave 
-a JS parser at `packages/babel-parser/lib`  ready to be used.
+a JS parser at `packages/babel-parser/lib`  ready to be used. It is work in progress.
 
 ## Building the parser
 

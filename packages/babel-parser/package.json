@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "flow": "flow",
-    "build": "babel src/ -d lib/",
+    "build": "cd ../../ && npm run build",
     "rt": "flow-remove-types src/ -d lib/",
     "prepublishOnly": "npm run build",
     "compile": "../../node_modules/.bin/babel src -d lib"

@@ -1,13 +1,13 @@
 > [!CAUTION]
-> This repo is a toy/conceptual  experiment to have a minimal monorepo having the extended parser and the plugin(s) for testing and publishing.
+> This repo is a toy/conceptual  experiment to have a minimal monorepo having the extended Babel parser and the plugin(s) for testing and publishing. It is work in progress.
 
 
 ## Goal
 
 To be able to have a minimal monorepo with the parser and the plugin(s) of the TFGs.
 
-We have to use a Babel configured for flow to transpile the TFG babel parser at `packages/babel-parser` and leave 
-a JS parser at `packages/babel-parser/lib`  ready to be used. It is work in progress.
+We have to use a Babel configured for flow to transpile the TFG babel parser at [packages/babel-parser](https://github.com/ULL-ESIT-PL/babel-tanhauhau/tree/pablo-tfg) and leave 
+a JS parser at `packages/babel-parser/lib`  ready to be used. 
 
 ## Building the parser
 

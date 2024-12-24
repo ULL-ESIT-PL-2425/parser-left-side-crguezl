@@ -208,7 +208,7 @@ Only those required to make the parser work have been included.
 Then, we copy Pablo's flow configuration in the root of the project:
 
 `➜  parser-left-side-crguezl git:(main) ✗ cat .flowconfig`
-```json
+```ini
 [ignore]
 <PROJECT_ROOT>/build/.*
 <PROJECT_ROOT>/packages/.*/lib

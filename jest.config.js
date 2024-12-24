@@ -67,6 +67,8 @@ module.exports = {
      // WARNING CASIANO!!! OUR TESTS
     //"<rootDir>/packages/babel-parser/test/left-side.js",    
     "<rootDir>/packages/babel-parser/test/left-side-original.mjs",
+    "<rootDir>/packages/babel-parser/test/in",
+    "<rootDir>/packages/babel-parser/test/out",
   ],
   moduleNameMapper: {
     [monorepoPackagePattern]: "<rootDir>/packages/babel-parser/",

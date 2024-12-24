@@ -87,14 +87,9 @@ This is leaving the following files in `packages/babel-parser/lib`:
 
 ```bash
 ➜  parser-left-side-crguezl git:(main) ✗ ls -l packages/babel-parser/lib 
-total 776
-lrwxr-xr-x@ 1 casianorodriguezleon  staff      42 24 dic 05:08 babel-left-side-plugin.cjs -> ../../babel-plugin-left-side/src/plugin.js
--rw-r--r--@ 1 casianorodriguezleon  staff      41 23 dic 14:19 babel.config.json
--rwxr-xr-x@ 1 casianorodriguezleon  staff  391324 24 dic 08:49 index.js
-lrwxr-xr-x@ 1 casianorodriguezleon  staff      42 24 dic 05:08 plugin.js -> ../../babel-plugin-left-side/src/plugin.js
+total 768
+-rwxr-xr-x@ 1 casianorodriguezleon  staff  391324 24 dic 09:13 index.js
 ```
-
-The symbolic  are pre-populated links to the plugin.
 
 In the folder `examples` we have the simplest example to test the extension:
 

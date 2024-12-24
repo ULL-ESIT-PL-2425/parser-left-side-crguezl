@@ -35,7 +35,8 @@ To compile the parser, we use `npm run build`. This is going to compile the pars
 babel packages/babel-parser/src/ -d packages/babel-parser/lib/
 ```
 
-and then is going to call `gulp build-rollup` to bundle all the files in the final `lib/index.js`:
+and then is going to call `gulp build-rollup` to bundle all the files in the final `lib/index.js`.
+Here is the output:
 
 ```bash
 ➜  parser-left-side-crguezl git:(main) ✗ npm run build

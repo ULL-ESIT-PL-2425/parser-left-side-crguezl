@@ -135,6 +135,8 @@ found 0 vulnerabilities
 
 ## Tests 
 
+I have simplified the tests to the minimum. 
+
 ```
 ➜  parser-left-side-crguezl git:(main) ✗ npm test
 

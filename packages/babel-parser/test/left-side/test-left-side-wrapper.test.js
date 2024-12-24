@@ -4,6 +4,7 @@ const path = require("path");
 const input = fs.readdirSync(path.join(__dirname, "in"), {encoding:"utf-8"});
 const execOut = new Set(fs.readdirSync(path.join(__dirname, "exec_out"), {encoding:"utf-8"}));
 let configFile = path.join(__dirname, "babel.config.js");
+const ansiRegex = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/ug;
 
 for (let testFile of input) {
   test(testFile, () => {
@@ -18,12 +19,14 @@ for (let testFile of input) {
     fs.writeFileSync(outputPath, output, {encoding: "utf-8"}); // Save the output program in out/
 
     // Execute the compiled program
-    let execResult = execSync(`node ${outputPath}`).toString().replace(/\s+/g,"");
+    let execResult = execSync(`node ${outputPath}`).toString().replace(ansiRegex,"").replace(/\s+/uig,"");
   
     // Compare the output with the expected output
     const execPath = path.join(__dirname, "exec_out", testFile); 
-    const expectedResult = fs.readFileSync(execPath, {encoding: "utf-8"}).replace(/\s+/g,"");
-    console.log(`execResult = "${execResult}" ${typeof execResult} ${execResult.length} expectedResult = "${expectedResult}" ${expectedResult.length} ${typeof execResult} ${expectedResult === execResult}`);
+    const expectedResult = fs.readFileSync(execPath, {encoding: "utf-8"}).toString().replace(/\s+/uig,"");
+    console.log(`\nexecResult is "${execResult}" ${typeof execResult} length=${execResult.length}
+expectedResult is "${expectedResult}" length=${expectedResult.length} ${typeof execResult} 
+${expectedResult[0] === execResult[0] ? "First characters are equal" : "First characters are different"}`);
     expect(execResult).toEqual(expectedResult);
   })
 }

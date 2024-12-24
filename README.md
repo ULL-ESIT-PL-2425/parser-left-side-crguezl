@@ -246,4 +246,7 @@ Then I did s.t. similar with Rollup.
 
 ## Monorepos
 
-See the tutorial <a href="https://youtu.be/KEkRy4q_0oI?si=cF419bnZBWBR159V" target="_blank">💥 Monorepo multipaquete con NPM Workspaces 📦 (FullStack Bootcamp JavaScript)</a> by Midudev.
+See
+
+- [SYTWS monorepo notes](https://ull-mii-sytws.github.io/temas/web/nextra/nextra-monorepo.html#introduction-to-monorepos-nextra-as-an-example)
+- the tutorial <a href="https://youtu.be/KEkRy4q_0oI?si=cF419bnZBWBR159V" target="_blank">💥 Monorepo multipaquete con NPM Workspaces 📦 (FullStack Bootcamp JavaScript)</a> by Midudev.

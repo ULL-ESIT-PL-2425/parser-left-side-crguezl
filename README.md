@@ -9,9 +9,127 @@ To be able to have a minimal monorepo with the parser and the plugin(s) of the T
 We have to use a Babel configured for flow to transpile the TFG babel parser at `packages/babel-parser` and leave 
 a JS parser at `packages/babel-parser/lib`  ready to be used.
 
+## Building the parser
+
+`➜  parser-left-side-crguezl git:(main) ✗ jq '.scripts' package.json`
+```json
+{
+  "test": "jest packages/babel-parser/test",
+  "example": "cd examples && npm test",
+  "cleanlib": "cd packages/babel-parser/lib && rm -fR index.js options.js plugin-utils.js types.js plugins util tokenizer parser",
+  "clean": "npm run cleanlib; rm -fR node_modules; rm -fR packages/babel-parser/node_modules; rm package-lock.json; npm i",
+  "save": "git ci -am save; git push",
+  "flow": "flow",
+  "buildflow": "babel packages/babel-parser/src/ -d packages/babel-parser/lib/",
+  "rollup": "gulp build-rollup && npm run cleanbuild",
+  "build": "npm run buildflow && npm run rollup",
+  "cleanbuild": "cd packages/babel-parser/lib && rm -fR options.js plugin-utils.js types.js plugins util tokenizer parser",
+  "rt": "flow-remove-types packages/babel-parser/src/ -d packages/babel-parser/lib/",
+  "prepublishOnly": "npm run build"
+}
+```
+
+To compile the parser, we use `npm run build`:
+
+```bash
+➜  parser-left-side-crguezl git:(main) ✗ npm run build
+
+> @ull-esit-pl/babel-left-side-crguezl@1.0.0 build
+> npm run buildflow && npm run rollup
 
 
-## A Few Tricks to Make it Work (but not an acceptable solution)
+> @ull-esit-pl/babel-left-side-crguezl@1.0.0 buildflow
+> babel packages/babel-parser/src/ -d packages/babel-parser/lib/
+
+@babel/preset-env: `DEBUG` option
+
+Using targets:
+{
+  "node": "23"
+}
+
+Using modules transform: false
+
+Using plugins:
+  syntax-class-static-block
+  syntax-private-property-in-object
+  syntax-class-properties
+  syntax-numeric-separator
+  syntax-nullish-coalescing-operator
+  syntax-optional-chaining
+  syntax-json-strings
+  syntax-optional-catch-binding
+  syntax-async-generators
+  syntax-object-rest-spread
+  syntax-export-namespace-from
+  syntax-dynamic-import
+  syntax-top-level-await
+  syntax-import-meta
+  syntax-import-attributes
+
+Using polyfills: No polyfills were added, since the `useBuiltIns` option was not set.
+Successfully compiled 33 files with Babel (1368ms).
+
+> @ull-esit-pl/babel-left-side-crguezl@1.0.0 rollup
+> gulp build-rollup && npm run cleanbuild
+
+[08:49:45] Using gulpfile ~/campus-virtual/2324/research/parser-left-side-crguezl/gulpfile.js
+[08:49:45] Starting 'build-rollup'...
+[08:49:45] Compiling 'packages/babel-parser/src/index.js' with rollup ...
+[08:49:47] Skipped minification of 'parser-left-side-crguezl/packages/babel-parser/lib/index.js' because not publishing
+[08:49:47] Finished 'build-rollup' after 1.82 s
+
+> @ull-esit-pl/babel-left-side-crguezl@1.0.0 cleanbuild
+> cd packages/babel-parser/lib && rm -fR options.js plugin-utils.js types.js plugins util tokenizer parser
+```
+
+This is leaving the following files in `packages/babel-parser/lib`:
+
+```bash
+➜  parser-left-side-crguezl git:(main) ✗ ls -l packages/babel-parser/lib 
+total 776
+lrwxr-xr-x@ 1 casianorodriguezleon  staff      42 24 dic 05:08 babel-left-side-plugin.cjs -> ../../babel-plugin-left-side/src/plugin.js
+-rw-r--r--@ 1 casianorodriguezleon  staff      41 23 dic 14:19 babel.config.json
+-rwxr-xr-x@ 1 casianorodriguezleon  staff  391324 24 dic 08:49 index.js
+lrwxr-xr-x@ 1 casianorodriguezleon  staff      42 24 dic 05:08 plugin.js -> ../../babel-plugin-left-side/src/plugin.js
+```
+
+In the folder `examples` we have the simplest example to test the extension:
+
+```bash
+➜  parser-left-side-crguezl git:(main) ✗ cat examples/hello.js
+function @@ foo(bar) {
+  return bar * 2;
+}
+foo(10) = 5;
+
+console.log(foo(10)); //  5
+console.log(foo(5));  // 10
+```
+
+To compile and run the example, we use `npm run example`:
+
+```bash
+➜  parser-left-side-crguezl git:(main) ✗ npm run example
+
+> @ull-esit-pl/babel-left-side-crguezl@1.0.0 example
+> cd examples && npm test
+
+
+> examples@1.0.0 test
+> npm i && babel hello.js --out-file hello.cjs && node hello.cjs
+
+(node:65183) ExperimentalWarning: Support for loading ES Module in require() is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+up to date, audited 3 packages in 1s
+
+found 0 vulnerabilities
+5
+10
+```
+
+## Changes
 
 - In `packages/babel-plugin-left-side/`, I  substituted the `import` in Pablo's version of the plugin by a `require`:
 
@@ -19,12 +137,11 @@ a JS parser at `packages/babel-parser/lib`  ready to be used.
       //import template from "@babel/template";
       const template = require("@babel/template").default;
   ```
-- The packages/babel-parser is substituted by the generated from the Pablo's branch (lib). Awful!. 
-  - **Work to do: how to make the build using flow to transpile the TFG babel parser at `packages/babel-parser` and leave a JS parser at `packages/babel-parser/lib`  ready to be used.**
 - The code in the plugin `packages/babel-plugin-left-side/src/plugin.js` has been modified to use 
   `const parser = require("../../babel-parser/lib");`
-- The final user installs the (now separated) package `babel-plugin-left-side-support` and uses it in his/her project. See [examples/package.json](examples/package.json).
-- The babel.config.js in this example is relative to the root of the project but the final will use the package:
+
+- The final user installs the (now separated) package `babel-plugin-left-side-support` and uses it in his/her project. See [examples/package.json](examples/package.json). This will change in the future.
+- The babel.config.js in the `example` folder is relative to the root of the project but the final will use the package:
 
   ```js
   ➜  babel-left-side-crguezl git:(main) cat examples/babel.config.json 
@@ -35,85 +152,62 @@ a JS parser at `packages/babel-parser/lib`  ready to be used.
   }
   ```
 
-## Compiling with Pablo's generated Parser
+When attempting to build the parser with flow,
+we have explicited the flow dependencies in root  `package.json`. 
+These have been taken from Pablo's `package.json`. 
+Only those required to make the parser work have been included.
 
-First, copy Pablo's generated parser `lib/index.js` to the `packages/babel-parser/lib`. Assuming you are in the `examples` directory and have a file hierarchy like mine:
 
-``` 
-➜  examples git:(main) ✗ pwd -P   
-/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/examples
-➜  examples git:(main) ✗ cp ../../pablo-santana-gonzalez/babel-tanhauhau-pablo/packages/babel-parser/lib/index.js ../packages/babel-parser/lib 
-```
-
-The compile the example. The plugin will override the parser for the babel transpiler:
-
-```js 
-➜  examples git:(main) ✗ npx babel hello.js 
-(node:30127) ExperimentalWarning: Support for loading ES Module in require() is an experimental feature and might change at any time
-(Use `node --trace-warnings ...` to show where the warning was created)
-const {
-  assign,
-  functionObject
-} = require("@ull-esit-pl/babel-plugin-left-side-support");
-const foo = functionObject(function (bar) {
-  return bar * 2;
-});
-assign(foo, [10], 5);
-console.log(foo(10)); //  5
-console.log(foo(5)); // 10
-```
-
-Now run it:
-
-```
-➜  examples git:(main) ✗ npx babel  hello.js | node 
-(node:41665) ExperimentalWarning: Support for loading ES Module in require() is an experimental feature and might change at any time
-(Use `node --trace-warnings ...` to show where the warning was created)
-5
-```
-
-We have previously installed the support for the plugin:
-
-```
-➜  examples git:(main) ✗ jq '.dependencies' package.json 
-{
-  "@ull-esit-pl/babel-plugin-left-side-support": "^1.0.0"
-}
-```
-
-### Parsing with Pablo's generated Parser
-
-The parser works since uses the `lib/index.js` :
-
-```js
-➜  examples git:(main) ✗ ../packages/babel-parser/bin/babel-parser.js hello.js 
-{
-  "type": "File",
-  "start": 0,
-  "end": 112,
-  ...
-}
-```
-
-## Attempting to build the parser with flow 
-
-First, we explicit the flow dependencies in root  `package.json`
-
+`➜  parser-left-side-crguezl git:(main) ✗ jq '.devDependencies' package.json`
 ```json 
-➜  parser-left-side-crguezl git:(main) jq '.devDependencies' package.json
 {
-  "@babel/cli": "7.26",
-  "@babel/core": "7.26",
-  "@babel/preset-flow": "^7.25.9",
+  "@babel/cli": "^7.10.1",
+  "@babel/core": "^7.10.2",
+  "@babel/preset-flow": "^7.10.1",
   "babel-plugin-syntax-hermes-parser": "^0.26.0",
   "flow-bin": "^0.257.1",
-  "flow-remove-types": "^2.257.1"
+  "flow-remove-types": "^2.257.1",
+  "@babel/plugin-proposal-class-properties": "^7.10.1",
+  "@babel/plugin-proposal-dynamic-import": "^7.10.1",
+  "@babel/plugin-proposal-export-namespace-from": "^7.10.1",
+  "@babel/plugin-proposal-object-rest-spread": "^7.10.1",
+  "@babel/plugin-transform-flow-strip-types": "^7.10.1",
+  "@babel/plugin-transform-for-of": "^7.10.1",
+  "@babel/plugin-transform-modules-commonjs": "^7.10.1",
+  "@babel/plugin-transform-runtime": "^7.10.1",
+  "@babel/preset-env": "^7.10.2",
+  "@babel/register": "^7.10.1",
+  "@babel/runtime": "^7.10.2",
+  "@rollup/plugin-json": "4.0.1",
+  "babel-eslint": "^11.0.0-beta.2",
+  "babel-jest": "^24.9.0",
+  "babel-plugin-transform-charcodes": "^0.2.0",
+  "browserify": "^16.2.3",
+  "bundle-collapser": "^1.2.1",
+  "chalk": "^2.4.2",
+  "charcodes": "^0.2.0",
+  "derequire": "^2.0.2",
+  "enhanced-resolve": "^3.0.0",
+  "gulp": "^4.0.2",
+  "gulp-babel": "^8.0.0",
+  "gulp-filter": "^5.1.0",
+  "gulp-newer": "^1.0.0",
+  "gulp-plumber": "^1.2.1",
+  "rollup-plugin-babel": "^4.4.0",
+  "rollup-plugin-commonjs": "^10.1.0",
+  "rollup-plugin-node-builtins": "^2.1.2",
+  "rollup-plugin-node-globals": "^1.4.0",
+  "rollup-plugin-node-resolve": "^5.0.0",
+  "rollup-plugin-replace": "^2.2.0",
+  "rollup-plugin-terser": "^5.3.0",
+  "test262-stream": "^1.3.0",
+  "jest": "^29.7.0"
 }
 ```
 
 Then, we copy Pablo's flow configuration in the root of the project:
 
-`cat .flowconfig`
+`➜  parser-left-side-crguezl git:(main) ✗ cat .flowconfig`
 ```json
 [ignore]
 <PROJECT_ROOT>/build/.*
@@ -124,7 +218,9 @@ Then, we copy Pablo's flow configuration in the root of the project:
 <PROJECT_ROOT>/node_modules/module-deps/
 
 [include]
-packages/*/src
+packages/babel-parser/src
+packages/babel-types/src
+
 
 [libs]
 lib/file.js
@@ -145,6 +241,8 @@ esproposal.optional_chaining=enable
 esproposal.nullish_coalescing=enable
 module.name_mapper='^@babel\/\([a-zA-Z0-9_\-]+\)$' -> '<PROJECT_ROOT>/packages/babel-\1/src/index'
 ```
+
+Then I did s.t. similar with Rollup.
 
 ## Monorepos
 

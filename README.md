@@ -234,7 +234,7 @@ Only those required to make the parser work have been included.
 }
 ```
 
-Then, we copy Pablo's flow configuration in the root of the project:
+Then, we copy Pablo's flow [configuration in the root](.flowconfig) of the project:
 
 `➜  parser-left-side-crguezl git:(main) ✗ cat .flowconfig`
 ```ini
@@ -278,5 +278,6 @@ Then I did s.t. similar with Rollup.
 See
 
 - [npm workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces)
+- [npm workspaces and overrides #DemoDays](https://www.youtube.com/watch?v=LJaLwlS0mj4)
 - [SYTWS monorepo notes](https://ull-mii-sytws.github.io/temas/web/nextra/nextra-monorepo.html#introduction-to-monorepos-nextra-as-an-example)
 - the tutorial <a href="https://youtu.be/KEkRy4q_0oI?si=cF419bnZBWBR159V" target="_blank">💥 Monorepo multipaquete con NPM Workspaces 📦 (FullStack Bootcamp JavaScript)</a> by Midudev.

@@ -77,8 +77,5 @@
   "keywords": [],
   "author": "Casiano Rodriguez Leon <crguezl@ull.edu.es> (https://crguezl.github.io/)",
   "contributors": [],
-  "license": "ISC",
-  "dependencies": {
-    "@ull-esit-pl-2425/babel-plugin-left-side-support": "^1.0.1"
-  }
+  "license": "ISC"
 }

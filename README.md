@@ -105,6 +105,8 @@ total 768
 -rwxr-xr-x@ 1 casianorodriguezleon  staff  391324 24 dic 09:13 index.js
 ```
 
+## Folder examples
+
 In the folder `examples` we have the simplest example to test the extension:
 
 ```bash
@@ -138,6 +140,14 @@ up to date, audited 3 packages in 1s
 found 0 vulnerabilities
 5
 10
+```
+
+In the folder you can find other examples:
+
+```bash
+➜  examples git:(main) ✗ ls *.js
+example-method.js             example-multiparameter2.js    example-multiparameter4.js    example-nested-assignation.js
+example-multiparameter.js     example-multiparameter3.js    example-multiparameter5.js    hello.js
 ```
 
 ## Tests 

@@ -199,9 +199,6 @@ Ran all test suites.
 
 ## Publishing the packages
 
-See [docs/publishing.md](docs/publishing.md) for the steps to publish the packages.
-# Publishing the packages
-
 To avoid collision with Pablos packages with the same names:
 
 - I created a branch `publish` to publish the packages 

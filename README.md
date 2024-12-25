@@ -29,7 +29,7 @@ a JS parser at `packages/babel-parser/lib`  ready to be used.
 }
 ```
 
-To compile the parser, we use `npm run build`. This is going to compile the parser with Babel-Flow 
+To compile the parser, we use `npm run build`. This is going to compile the parser with Babel-Flow. In my laptop takes less than 9 seconds
 
 ```
 babel packages/babel-parser/src/ -d packages/babel-parser/lib/

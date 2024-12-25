@@ -8,6 +8,10 @@
     "packages/babel-plugin-left-side",
     "packages/babel-plugin-left-side-support"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com"
+  },
   "engines": {
     "node": ">= 23.5.0",
     "npm": ">= 10.9.0"

@@ -135,7 +135,8 @@ found 0 vulnerabilities
 
 ## Tests 
 
-I have simplified the tests to the minimum. 
+I have simplified the tests to the minimum. See the [Jest config file](jest.config.js) to see the tests that are being ignored.
+A goal for the future is to have all the tests passing.
 
 ```
  parser-left-side-crguezl git:(main) npm test      

@@ -1,6 +1,18 @@
 ## Compiling 
 
+Given the source:
 
+`➜  examples git:(main) cat hello.js`
+```js 
+function @@ foo(bar) {
+  return bar * 2;
+}
+foo(10) = 5;
+
+console.log(foo(10)); //  5
+console.log(foo(5));  // 10
+```
+We can compile it with:
 
 ```js 
 ➜  examples git:(main) ✗ npx babel  hello.js       
@@ -16,14 +28,18 @@ console.log(foo(10)); //  5
 console.log(foo(5)); // 10
 ```
 
-The final user installs the support package from the github registry `@ull-esit-pl/babel-plugin-left-side-support`:
-
+The final user (currently) installs the support package from the github registry `@ull-esit-pl/babel-plugin-left-side-support`:
 
 ```
 ➜  examples git:(main) npm pkg get dependencies
 {
   "@ull-esit-pl/babel-plugin-left-side-support": "^1.0.0"
 }
+```
+
+and runs the compiled code with `node`:
+
+```
 ➜  examples git:(main) ✗ npx babel  hello.js | node                       
 5
 10

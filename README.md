@@ -175,6 +175,10 @@ Time:        7.215 s
 Ran all test suites with tests matching "left-side".
 ```
 
+## Publishing the packages
+
+See [docs/publishing.md](docs/publishing.md) for the steps to publish the packages.
+
 ### All tests
 
 To run all the tests, use `npm run alltest`:

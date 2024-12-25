@@ -6,12 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "repository": {
     "type": "git",
-    "url": "https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl",
-    "directory": "packages/babel-plugin-left-side"    
+    "url": "git+https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl.git",
+    "directory": "packages/babel-plugin-left-side"
   },
   "publishConfig": {
     "access": "public",

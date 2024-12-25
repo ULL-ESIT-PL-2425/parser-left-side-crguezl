@@ -8,7 +8,6 @@
   "scripts": {
     "test": "jest",
     "flow": "flow",
-    "build": "cd ../../ && npm run build",
     "rt": "flow-remove-types src/ -d lib/",
     "prepublishOnly": "npm run build",
     "compile": "../../node_modules/.bin/babel src -d lib"
@@ -27,7 +26,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl",
+    "url": "git+https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl.git",
     "directory": "packages/babel-parser"
   },
   "main": "lib/index.js",
@@ -47,7 +46,7 @@
     "charcodes": "^0.2.0"
   },
   "bin": {
-    "parser": "./bin/babel-parser.js"
+    "parser": "bin/babel-parser.js"
   },
   "gitHead": "df1dbf5d265ad3170234dff2e06cb385e08effc8"
 }

@@ -1,15 +1,5 @@
-## Tricks 
-
-- In `packages/babel-plugin-left-side/`, I  substituted the `import` in Pablo's version of the plugin by a `require`:
-
-   ```js
-      //import template from "@babel/template";
-      const template = require("@babel/template").default;
-  ```
-- The packages/babel-parser is substituted by the generated from the Pablo's branch (lib). Awful.
-- The final user installs the support package from the github registry `@ull-esit-pl/babel-plugin-left-side-support`
-
 ## Compiling 
+
 
 
 ```js 
@@ -26,7 +16,14 @@ console.log(foo(10)); //  5
 console.log(foo(5)); // 10
 ```
 
+The final user installs the support package from the github registry `@ull-esit-pl/babel-plugin-left-side-support`:
+
+
 ```
+➜  examples git:(main) npm pkg get dependencies
+{
+  "@ull-esit-pl/babel-plugin-left-side-support": "^1.0.0"
+}
 ➜  examples git:(main) ✗ npx babel  hello.js | node                       
 5
 10
@@ -44,7 +41,7 @@ console.log(foo(5)); // 10
   ``` 
   npx babel example-multiparameter.js | node -
   ```
-  
+
 ## Parser
 
 ```js
@@ -691,3 +688,5 @@ console.log(foo(5)); // 10
   ]
 }
 ```
+
+

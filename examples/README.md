@@ -32,6 +32,14 @@ console.log(foo(5)); // 10
 10
 ```
 
+## TODO
+
+Nested assignation is not working.
+
+``` 
+examples git:(main) npx babel example-nested-assignation.js  
+```
+
 ## Parser
 
 ```js

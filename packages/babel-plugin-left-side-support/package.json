@@ -1,6 +1,6 @@
 {
   "name": "@ull-esit-pl-2425/babel-plugin-left-side-support",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Support for the left side plugin",
   "main": "lib/index.js",
   "scripts": {

@@ -9,14 +9,15 @@ To be able to have a minimal monorepo with the parser and the plugin(s) of the T
 We have to use a Babel configured for flow to transpile the TFG babel parser at [packages/babel-parser](https://github.com/ULL-ESIT-PL/babel-tanhauhau/tree/pablo-tfg) and leave 
 a JS parser at `packages/babel-parser/lib`  ready to be used. 
 
-## Building the parser
+## Scripts
 
-Here is the list of project scripts:
+Here is the list of project [scripts](package.json):
 
-`➜  parser-left-side-crguezl git:(main) ✗ jq '.scripts' package.json`
+`➜  parser-left-side-crguezl git:(main) npm pkg get scripts`
 ```json
 {
-  "test": "jest packages/babel-parser/test",
+  "test": "npx jest -t 'left-side'",
+  "alltest": "jest",
   "example": "cd examples && npm test",
   "cleanlib": "cd packages/babel-parser/lib && rm -fR index.js options.js plugin-utils.js types.js plugins util tokenizer parser",
   "clean": "npm run cleanlib; rm -fR node_modules; rm -fR packages/babel-parser/node_modules; rm package-lock.json; npm i",
@@ -31,18 +32,14 @@ Here is the list of project scripts:
 }
 ```
 
-To compile the parser, we use `npm run build`. This is going to 
+## Building the parser
+
+To compile the parser, we use `npm run build`. In my laptop takes less than 9 seconds. This is going to 
+
 1. Compile the parser with Babel-Flow: `babel packages/babel-parser/src/ -d packages/babel-parser/lib/`. 
-2. Bundle all the files in the final `lib/index.js` with Rollup.  
+2. Call `gulp build-rollup` to bundle all the files in the final `lib/index.js`.
 3. Clean the intermediate files.
-   
-In my laptop takes less than 9 seconds:
 
-```
-babel packages/babel-parser/src/ -d packages/babel-parser/lib/
-```
-
-and then is going to call `gulp build-rollup` to bundle all the files in the final `lib/index.js`.
 Here is the output:
 
 ```bash
@@ -155,24 +152,45 @@ example-multiparameter.js     example-multiparameter3.js    example-multiparamet
 I have simplified the tests to the minimum. See the [Jest config file](jest.config.js#L53-L74) to see the tests that are being ignored.
 A goal for the future is to have all the tests passing.
 
-```
- parser-left-side-crguezl git:(main) npm test      
+### Left Side tests
+
+By default `npm test` only runs the tests that have the string `left-side` in their name:
+
+```bash
+➜  parser-left-side-crguezl git:(main) npm test
 
 > @ull-esit-pl/babel-left-side-crguezl@1.0.0 test
+> npx jest -t 'left-side'
+
+ PASS  packages/babel-parser/test/left-side/left-side.js
+ PASS  packages/babel-parser/test/left-side/test-left-side-wrapper.test.js (5.296 s)
+
+Test Suites: 3 skipped, 2 passed, 2 of 5 total
+Tests:       12 skipped, 3 passed, 15 total
+Snapshots:   0 total
+Time:        7.215 s
+Ran all test suites with tests matching "left-side".
+```
+
+### All tests
+
+To run all the tests, use `npm run alltest`:
+```
+➜  parser-left-side-crguezl git:(main) ✗ npm run alltest
+
+> @ull-esit-pl/babel-left-side-crguezl@1.0.0 alltest
 > jest
 
  PASS  packages/babel-parser/test/unit/tokenizer/types.js
  PASS  packages/babel-parser/test/unit/util/location.js
  PASS  packages/babel-parser/test/left-side/left-side.js
  PASS  packages/babel-parser/test/plugin-options.js
-(node:33564) ExperimentalWarning: Support for loading ES Module in require() is an experimental feature and might change at any time
-(Use `node --trace-warnings ...` to show where the warning was created)
- PASS  packages/babel-parser/test/left-side/test-left-side-wrapper.test.js
+ PASS  packages/babel-parser/test/left-side/test-left-side-wrapper.test.js (5.173 s)
 
 Test Suites: 5 passed, 5 total
-Tests:       14 passed, 14 total
+Tests:       15 passed, 15 total
 Snapshots:   0 total
-Time:        3.962 s, estimated 4 s
+Time:        6.871 s
 Ran all test suites.
 ```
 

@@ -154,7 +154,8 @@ A goal for the future is to have all the tests passing.
 
 ### Left Side tests
 
-By default `npm test` only runs the tests that have the string `left-side` in their name:
+By default `npm test` only runs the tests that have the string `left-side` in their name. See 
+folder [packages/babel-parser/test/left-side](packages/babel-parser/test/left-side) for the tests that are being run:
 
 ```bash
 ➜  parser-left-side-crguezl git:(main) npm test

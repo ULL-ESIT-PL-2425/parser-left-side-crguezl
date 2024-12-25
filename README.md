@@ -11,6 +11,8 @@ a JS parser at `packages/babel-parser/lib`  ready to be used.
 
 ## Building the parser
 
+Here is the list of project scripts:
+
 `➜  parser-left-side-crguezl git:(main) ✗ jq '.scripts' package.json`
 ```json
 {
@@ -29,7 +31,12 @@ a JS parser at `packages/babel-parser/lib`  ready to be used.
 }
 ```
 
-To compile the parser, we use `npm run build`. This is going to compile the parser with Babel-Flow. In my laptop takes less than 9 seconds
+To compile the parser, we use `npm run build`. This is going to 
+1. Compile the parser with Babel-Flow: `babel packages/babel-parser/src/ -d packages/babel-parser/lib/`. 
+2. Bundle all the files in the final `lib/index.js` with Rollup.  
+3. Clean the intermediate files.
+   
+In my laptop takes less than 9 seconds:
 
 ```
 babel packages/babel-parser/src/ -d packages/babel-parser/lib/

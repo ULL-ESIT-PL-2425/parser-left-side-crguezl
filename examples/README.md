@@ -31,8 +31,9 @@ The final user installs the support package from the github registry `@ull-esit-
 
 ## Assignable Methods
 
-`➜  examples git:(main) ✗ cat example-method.js`
+This example shows a simple example of an assignable method:
 
+`➜  examples git:(main) ✗ cat example-method.js`
 ```js
 let a = {foo: function @@ something(a) {return a}};
 a.foo("bar") = "fighter";

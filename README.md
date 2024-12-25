@@ -204,7 +204,7 @@ To avoid collision with Pablo's packages with the same names:
 - I created a branch [publish](https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl/tree/publish?tab=readme-ov-file) in this repo 
   to publish the packages 
 - I set a remote [pl2425](https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl) to https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl
-- We set all the scopes in all the `package.json` files to `@ull-esit-pl-2425`
+- We renamed all the scopes in all the `package.json` workspaces to `@ull-esit-pl-2425`
 - We used workspaces option `npm version -ws patch` to update the version of the packages
 - We used the workspaces option `npm publish -ws` to publish all the packages
  

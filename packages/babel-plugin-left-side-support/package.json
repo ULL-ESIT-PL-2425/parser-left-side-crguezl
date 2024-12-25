@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ULL-ESIT-PL/babel-tanhauhau/tree/pablo-tfg",
+    "url": "https://github.com/ULL-ESIT-PL-2425/babel-tanhauhau/tree/pablo-tfg",
     "directory": "packages/babel-plugin-left-side-support"    
   },
   "publishConfig": {

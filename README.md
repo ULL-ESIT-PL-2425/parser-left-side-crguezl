@@ -107,7 +107,7 @@ total 768
 
 ## Folder examples
 
-[In the folder `examples`](/examples/README.md) we have the simplest example to test the extension:
+[In the folder `examples`](/examples/) we have the simplest example to test the extension:
 
 ```bash
 ➜  parser-left-side-crguezl git:(main) ✗ cat examples/hello.js

@@ -157,7 +157,7 @@ A goal for the future is to have all the tests passing.
 By default `npm test` only runs the tests that have the string `left-side` in their name. See 
 folder [packages/babel-parser/test/left-side](/packages/babel-parser/test/left-side) for the tests that are being run.
 The driver at [test-left-side-wrapper.test.js](/packages/babel-parser/test/left-side/test-left-side-wrapper.test.js) 
-compiles the files inside the folder [in/](/packages/babel-parser/test/left-side/in), runs them  and compares the output with the expected output in the folder  
+compiles the files inside the folder [in/](/packages/babel-parser/test/left-side/in), runs them  and compares the output with the expected output in the folder [exec_out/](/packages/babel-parser/test/left-side/exec_out).
 
 ```bash
 ➜  parser-left-side-crguezl git:(main) npm test

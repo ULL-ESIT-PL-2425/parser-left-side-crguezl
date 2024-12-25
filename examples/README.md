@@ -29,6 +29,24 @@ The final user installs the support package from the github registry `@ull-esit-
 10
 ```
 
+## Assignable Methods
+
+`➜  examples git:(main) ✗ cat example-method.js`
+
+```js
+let a = {foo: function @@ something(a) {return a}};
+a.foo("bar") = "fighter";
+console.log(a.foo("x")); // x
+console.log(a.foo("bar")); // fighter
+```
+
+```bash 
+➜  examples git:(main) ✗ npx babel example-method.js | node
+x
+fighter
+```
+
+
 ## TODO
 
 - Nested assignation is not working.

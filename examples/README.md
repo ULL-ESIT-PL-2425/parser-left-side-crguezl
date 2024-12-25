@@ -34,12 +34,17 @@ console.log(foo(5)); // 10
 
 ## TODO
 
-Nested assignation is not working.
+- Nested assignation is not working.
 
-``` 
-examples git:(main) npx babel example-nested-assignation.js  
-```
+  ``` 
+  examples git:(main) npx babel example-nested-assignation.js  
+  ```
+- Multiparameter not working:
 
+  ``` 
+  npx babel example-multiparameter.js | node -
+  ```
+  
 ## Parser
 
 ```js

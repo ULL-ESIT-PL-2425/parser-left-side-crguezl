@@ -205,7 +205,7 @@ To avoid collision with Pablo's packages with the same names:
   to publish the packages 
 - I set a remote [pl2425](https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl) to https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl
 - We renamed all the scopes in all the `package.json` workspaces to `@ull-esit-pl-2425`
-- We used workspaces option `npm version -ws patch` to update the version of the packages
+- We used `-ws` workspaces option `npm version -ws patch` to update the version of all the packages
 - We used the workspaces option `npm publish -ws` to publish all the packages
  
     The `prepublishOnly` script in the `package.json` file of the packages runs `npm run build`:

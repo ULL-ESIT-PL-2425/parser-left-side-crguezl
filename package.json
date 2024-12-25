@@ -1,5 +1,5 @@
 {
-  "name": "@ull-esit-pl/babel-left-side-crguezl",
+  "name": "@ull-esit-pl-2425/babel-left-side-crguezl",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -75,6 +75,6 @@
   "contributors": [],
   "license": "ISC",
   "dependencies": {
-    "@ull-esit-pl/babel-plugin-left-side-support": "^1.0.1"
+    "@ull-esit-pl-2425/babel-plugin-left-side-support": "^1.0.1"
   }
 }

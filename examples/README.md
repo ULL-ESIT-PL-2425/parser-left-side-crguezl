@@ -81,6 +81,8 @@ Notice that the `package.json` in the examples folder has no dependencies:
 }
 ```
 
+## Babel Configuration
+
 Also see that if you use the JSON format for the Babel configuration, you have to use the relative path:
 
 `➜  examples git:(main) ✗ git -P show HEAD:examples/babel.config.json`
@@ -89,7 +91,7 @@ Also see that if you use the JSON format for the Babel configuration, you have t
   "plugins": [
     "../packages/babel-plugin-left-side/"
   ]
-}%
+}
 ```
 
 But if you use the JavaScript format, you can use the workspace trick:

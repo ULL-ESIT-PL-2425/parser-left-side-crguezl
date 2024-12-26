@@ -149,7 +149,7 @@ example-multiparameter.js     example-multiparameter3.js    example-multiparamet
 
 ## npm workspaces
 
-See 
+This repo uses npm workspaces. See 
 - [npm workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces)
 - [npm workspaces and overrides #DemoDays](https://www.youtube.com/watch?v=LJaLwlS0mj4)
 

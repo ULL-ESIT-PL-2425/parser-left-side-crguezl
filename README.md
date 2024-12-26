@@ -340,7 +340,7 @@ module.name_mapper='^@babel\/\([a-zA-Z0-9_\-]+\)$' -> '<PROJECT_ROOT>/packages/b
 
 Then I did s.t. similar with Rollup.
 
-## Monorepos
+## References to Monorepos
 
 See
 

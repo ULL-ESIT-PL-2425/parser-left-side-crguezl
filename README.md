@@ -175,7 +175,7 @@ Time:        7.215 s
 Ran all test suites with tests matching "left-side".
 ```
 
-# Publishing the packages
+##Publishing the packages
 
 To avoid collision with Pablos packages with the same names:
 

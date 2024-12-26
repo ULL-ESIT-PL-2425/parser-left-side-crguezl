@@ -139,6 +139,15 @@ fighter
 
 ## Parser
 
+As it was explained in the section [Installation](#Installation), the parser is installed in the workspace, so I can use `npx parser` to run it:
+
+```bash
+➜  examples git:(main) ✗ npx parser hello.js | jq '.type'
+"File"
+```
+
+or we can use the parser directly:
+
 ```js
 ➜  examples git:(main) ✗ ../packages/babel-parser/bin/babel-parser.js hello.js 
 {

@@ -202,7 +202,7 @@ To avoid collision with Pablos packages with the same names in ULL-ESIT-PL, we h
 - We used the workspaces option `npm publish -ws` to publish all the packages
  
     The `prepublishOnly` script in the `package.json` file of the packages runs `npm run build`:
-- See the branch [crguezl](https://github.com/ULL-ESIT-PL/babel-left-side-npm-test/tree/crguezl) of the repo https://github.com/ULL-ESIT-PL/babel-left-side-npm-test/tree/crguezl to see an example of use of the published packages.
+- See the branch [crguezl](https://github.com/ULL-ESIT-PL/babel-left-side-npm-test/tree/crguezl) of the repo repo https://github.com/ULL-ESIT-PL/babel-left-side-npm-test/tree/crguezl used to test that the published npm packages work. You will see there an example of use of the published packages.
 
 ### All tests
 

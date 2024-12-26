@@ -29,15 +29,6 @@ console.log(foo(10)); //  5
 console.log(foo(5)); // 10
 ```
 
-The final user (currently) installs the support package from the github registry `@ull-esit-pl/babel-plugin-left-side-support`:
-
-```
-➜  examples git:(main) npm pkg get dependencies
-{
-  "@ull-esit-pl/babel-plugin-left-side-support": "^1.0.0"
-}
-```
-
 and runs the compiled code with `node`:
 
 ```

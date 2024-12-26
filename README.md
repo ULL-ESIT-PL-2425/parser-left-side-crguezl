@@ -177,7 +177,7 @@ Ran all test suites with tests matching "left-side".
 
 ## Publishing the packages
 
-To avoid collision with Pablos packages with the same names:
+To avoid collision with Pablos packages with the same names in ULL-ESIT-PL, we have to publish the packages with a different scope.
 
 - I forked the repo to https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl
 - I created a branch `publish` to publish the packages 

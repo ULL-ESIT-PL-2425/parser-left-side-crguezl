@@ -147,6 +147,21 @@ example-method.js             example-multiparameter2.js    example-multiparamet
 example-multiparameter.js     example-multiparameter3.js    example-multiparameter5.js    hello.js
 ```
 
+## npm workspaces
+
+See 
+- [npm workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces)
+- [npm workspaces and overrides #DemoDays](https://www.youtube.com/watch?v=LJaLwlS0mj4)
+  
+```json
+➜  parser-left-side-crguezl git:(main) npm pkg get workspaces
+[
+  "packages/babel-parser",
+  "packages/babel-plugin-left-side",
+  "packages/babel-plugin-left-side-support"
+]
+```
+
 ## Tests 
 
 I have simplified the tests to the minimum. See the [Jest config file](jest.config.js#L53-L74) to see the tests that are being ignored.

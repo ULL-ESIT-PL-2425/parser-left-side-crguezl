@@ -152,9 +152,9 @@ example-multiparameter.js     example-multiparameter3.js    example-multiparamet
 See 
 - [npm workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces)
 - [npm workspaces and overrides #DemoDays](https://www.youtube.com/watch?v=LJaLwlS0mj4)
-  
+
+`➜  parser-left-side-crguezl git:(main) npm pkg get workspaces`  
 ```json
-➜  parser-left-side-crguezl git:(main) npm pkg get workspaces
 [
   "packages/babel-parser",
   "packages/babel-plugin-left-side",

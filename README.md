@@ -214,7 +214,7 @@ Ran all test suites.
 
 ## Publishing the packages
 
-To avoid collision with Pablos packages with the same names in ULL-ESIT-PL, we have to publish the packages with a different scope.
+To avoid collision with Pablo's packages with the same names at ULL-ESIT-PL, we have to publish the packages with a different scope.
 
 - I forked the repo to https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl
 - I set a remote `pl2425` to https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl

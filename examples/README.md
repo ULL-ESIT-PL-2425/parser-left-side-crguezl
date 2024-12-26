@@ -1,3 +1,4 @@
+
 ## Compiling 
 
 Given the source:
@@ -43,6 +44,50 @@ and runs the compiled code with `node`:
 ➜  examples git:(main) ✗ npx babel  hello.js | node                       
 5
 10
+```
+
+## Installation
+
+Notice, that due to the use of the workspaces in this project, in the root `node_modules` folder, 
+we find symbolic links to the packages to the workspace packages:
+
+```bash
+➜  parser-left-side-crguezl git:(main) ✗ ls -l node_modules/@ull-esit-pl-2425 
+total 0
+lrwxr-xr-x@ 1 casianorodriguezleon  staff  27 25 dic 16:48 babel-parser -> ../../packages/babel-parser
+lrwxr-xr-x@ 1 casianorodriguezleon  staff  37 25 dic 15:33 babel-plugin-left-side -> ../../packages/babel-plugin-left-side
+lrwxr-xr-x@ 1 casianorodriguezleon  staff  45 25 dic 15:33 babel-plugin-left-side-support -> ../../packages/babel-plugin-left-side-support
+```
+
+This is why the  `require("@ull-esit-pl/babel-plugin-left-side-support")` in the generated example `hello.cjs` works:
+
+```js 
+const {
+  assign,
+  functionObject
+} = require("@ull-esit-pl/babel-plugin-left-side-support");
+...
+```
+
+Notice that the `package.json` in the examples folder has no dependencies:
+
+```json 
+➜  parser-left-side-crguezl git:(main) ✗ cat examples/package.json 
+{
+  "name": "examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "hello.js",
+  "scripts": {
+    "test": "npm i && babel hello.js --out-file hello.cjs && node hello.cjs",
+    "cppabloparser": " cp ../../pablo-santana-gonzalez/babel-tanhauhau-pablo/packages/babel-parser/lib/index.js ../packages/babel-parser/lib",
+    "testparser": "../packages/babel-parser/bin/babel-parser.js hello.js",
+    "save": " cd .. && npm run save"
+  },
+  "keywords": [],
+  "author": "Casiano Rodriguez Leon <crguezl@ull.edu.es> (https://crguezl.github.io/)",
+  "license": "ISC"
+}
 ```
 
 ## Assignable Methods

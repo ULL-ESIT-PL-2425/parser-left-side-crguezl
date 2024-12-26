@@ -175,12 +175,13 @@ Time:        7.215 s
 Ran all test suites with tests matching "left-side".
 ```
 
-##Publishing the packages
+## Publishing the packages
 
 To avoid collision with Pablos packages with the same names:
 
+- I forked the repo to https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl
 - I created a branch `publish` to publish the packages 
-- I set a remote `pl2425` to `https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl`
+- I set a remote `pl2425` to https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl
 - We set all the scopes in all the `package.json` files to `@ull-esit-pl-2425`
 - We used workspaces option `npm version -ws patch` to update the version of the packages
 - We used the workspaces option `npm publish -ws` to publish all the packages

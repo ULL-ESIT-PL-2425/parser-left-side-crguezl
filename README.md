@@ -182,7 +182,7 @@ To avoid collision with Pablos packages with the same names in ULL-ESIT-PL, we h
 - I forked the repo to https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl
 - I created a branch `publish` to publish the packages whose upstream remote is https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl
 - I set a remote `pl2425` to https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl
-- We set all the scopes in all the `package.json` files to `@ull-esit-pl-2425`
+- We set all the scopes in all the workspaces [package.json](https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl/blob/main/packages/babel-parser/package.json) files to `@ull-esit-pl-2425`
 - We used workspaces option `npm version -ws patch` to update the version of the packages
 - We used the workspaces option `npm publish -ws` to publish all the packages
  

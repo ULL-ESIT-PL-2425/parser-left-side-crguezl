@@ -29,7 +29,7 @@ console.log(foo(10)); //  5
 console.log(foo(5)); // 10
 ```
 
-and runs the compiled code with `node`:
+and run the compiled code with `node`:
 
 ```
 ➜  examples git:(main) ✗ npx babel  hello.js | node                       

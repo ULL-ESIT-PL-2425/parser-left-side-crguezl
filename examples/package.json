@@ -4,7 +4,7 @@
   "description": "",
   "main": "hello.js",
   "scripts": {
-    "test": "npm i && babel hello.js --out-file hello.cjs && node hello.cjs",
+    "test": "babel hello.js --out-file hello.cjs && node hello.cjs",
     "cppabloparser": " cp ../../pablo-santana-gonzalez/babel-tanhauhau-pablo/packages/babel-parser/lib/index.js ../packages/babel-parser/lib",
     "testparser": "../packages/babel-parser/bin/babel-parser.js hello.js",
     "save": " cd .. && npm run save"

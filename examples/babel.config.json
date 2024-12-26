@@ -1,5 +1,0 @@
-{
-  "plugins": [
-    "../packages/babel-plugin-left-side/"
-  ]
-}

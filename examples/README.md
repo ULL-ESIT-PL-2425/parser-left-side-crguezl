@@ -81,6 +81,27 @@ Notice that the `package.json` in the examples folder has no dependencies:
 }
 ```
 
+Also see that if you use the JSON format for the Babel configuration, you have to use the relative path:
+
+`➜  examples git:(main) ✗ git -P show HEAD:examples/babel.config.json`
+```json
+{
+  "plugins": [
+    "../packages/babel-plugin-left-side/"
+  ]
+}%
+```
+
+But if you use the JavaScript format, you can use the workspace trick:
+
+`➜  examples git:(main) ✗ cat babel.config.js`
+```js 
+const leftSidePlugin = require("@ull-esit-pl-2425/babel-plugin-left-side");
+module.exports = {
+  "plugins": [ leftSidePlugin, ]
+};
+```
+
 ## Assignable Methods
 
 This example shows a simple example of an assignable method:

@@ -62,8 +62,8 @@ const {
 
 Notice that the `package.json` in the examples folder has no dependencies:
 
+`➜  parser-left-side-crguezl git:(main) ✗ cat examples/package.json`
 ```json 
-➜  parser-left-side-crguezl git:(main) ✗ cat examples/package.json 
 {
   "name": "examples",
   "version": "1.0.0",

@@ -5,7 +5,7 @@ const template = require("@babel/template").default;
 
 // TODO: Switch to the scoped name when publishing the package.
 const SUPPORT_TEMPLATE = template(
-  'const {assign, functionObject} = require("@ull-esit-pl/babel-plugin-left-side-support");',
+  'const {assign, functionObject} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");',
 )();
 
 // To avoid repeating code in FunctionDeclaration and FunctionExpression. Transforms the assignable function syntax to valid JS.

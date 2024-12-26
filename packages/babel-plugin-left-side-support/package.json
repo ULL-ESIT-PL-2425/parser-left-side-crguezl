@@ -1,6 +1,6 @@
 {
-  "name": "@ull-esit-pl/babel-plugin-left-side-support",
-  "version": "1.0.1",
+  "name": "@ull-esit-pl-2425/babel-plugin-left-side-support",
+  "version": "1.0.6",
   "description": "Support for the left side plugin",
   "main": "lib/index.js",
   "scripts": {
@@ -11,8 +11,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ULL-ESIT-PL/babel-tanhauhau/tree/pablo-tfg",
-    "directory": "packages/babel-plugin-left-side-support"    
+    "url": "git+https://github.com/ULL-ESIT-PL-2425/babel-plugin-left-side-support",
+    "directory": "packages/babel-plugin-left-side-support"
   },
   "publishConfig": {
     "access": "public",

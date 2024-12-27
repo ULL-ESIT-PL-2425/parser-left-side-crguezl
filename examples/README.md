@@ -122,6 +122,9 @@ x
 fighter
 ```
 
+## Empty assignments
+
+See issues [#32](https://github.com/ULL-ESIT-PL/babel-tanhauhau/issues/32) and [#31](https://github.com/ULL-ESIT-PL/babel-tanhauhau/issues/31)
 
 ## TODO
 

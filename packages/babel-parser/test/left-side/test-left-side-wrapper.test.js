@@ -10,7 +10,7 @@ for (let testFile of input) {
   describe("left-side", () => {
     test("left side function assignment " + testFile, () => {
       let fullPath = path.join(__dirname, "in", testFile);
-      console.log(`Processing input program "${fullPath}"`);
+      //console.log(`Processing input program "${fullPath}"`);
 
       expect(execOut.has(testFile)).toBeTruthy(); // Check that the output file exists in the exec_out folder
 
@@ -26,10 +26,10 @@ for (let testFile of input) {
       const execPath = path.join(__dirname, "exec_out", testFile);
       const expectedResult = fs.readFileSync(execPath, { encoding: "utf-8" }).toString().replace(/\s+/uig, "");
 
-      console.log(
+      /*console.log(
         `\nexecResult is "${execResult}" type=${typeof execResult} length=${execResult.length}\n` +
         `expectedResult is "${expectedResult}" length=${expectedResult.length} type=${typeof execResult}\n` +
-        `${expectedResult === execResult ? "They are equal" : "They are different"}`);
+        `${expectedResult === execResult ? "They are equal" : "They are different"}`);*/
 
       expect(execResult).toEqual(expectedResult);
     })

@@ -12,7 +12,7 @@ for (let testFile of input) {
       let fullPath = path.join(__dirname, "in", testFile);
       console.log(`Processing input program "${fullPath}"`);
 
-      //expect(execOut.has(testFile)).toBeTruthy(); // Check that the output file exists in the exec_out folder
+      expect(execOut.has(testFile)).toBeTruthy(); // Check that the output file exists in the exec_out folder
 
       // Compile with the left-side babel parser
       const output = execSync(`npx babel --config-file ${configFile} ${fullPath}`).toString();

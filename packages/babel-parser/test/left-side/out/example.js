@@ -8,4 +8,3 @@ const foo = functionObject(function (bar) {
 assign(foo, [10], 5);
 console.log(foo(10));
 console.log(foo(40));
-

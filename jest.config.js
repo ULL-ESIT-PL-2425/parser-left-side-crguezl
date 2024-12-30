@@ -66,9 +66,9 @@ module.exports = {
     "<rootDir>/packages/babel-parser/test/index.js",
      // WARNING CASIANO!!! OUR TESTS
     //"<rootDir>/packages/babel-parser/test/left-side.js",    
-    "<rootDir>/packages/babel-parser/test/left-side/in",
+    "<rootDir>/packages/babel-parser/test/left-side/in*",
     "<rootDir>/packages/babel-parser/test/left-side/out",
-    "<rootDir>/packages/babel-parser/test/left-side/exec_out",
+    "<rootDir>/packages/babel-parser/test/left-side/exec_*",
     "<rootDir>/packages/babel-parser/test/left-side/babel.config.js",
 
   ],

@@ -10,4 +10,3 @@ let a = {
 assign(a.foo, ["bar"], "fighter");
 console.log(a.foo("x")); // x
 console.log(a.foo("bar")); // fighter
-

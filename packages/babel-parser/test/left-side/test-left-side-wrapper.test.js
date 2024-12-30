@@ -15,7 +15,7 @@ for (let testFile of input) {
       expect(execOut.has(testFile)).toBeTruthy(); // Check that the output file exists in the exec_out folder
 
       // Compile with the left-side babel parser
-      let output = error = null;
+      let output = syntaxError = null;
       let outputPath = path.join(__dirname, "out", testFile);
       try {
         output = execSync(`npx babel --config-file ${configFile} ${fullPath} 2>${outputPath}`).toString().replace(ansiRegex, "").trim();
@@ -24,22 +24,22 @@ for (let testFile of input) {
       
         output = fs.readFileSync(outputPath, { encoding: "utf-8" }).toString().replace(ansiRegex, "").replace(/\s+/g, " ").trim();
         //console.log(`Error compiling the program ${testFile}!!!!!!`);
-        error = true;
+        syntaxError = true;
       }
       fs.writeFileSync(outputPath, output, { encoding: "utf-8" }); // Save the output program in out/
 
-      // Execute the compiled program if no error occurred
-      let execResult = null;
-      if (error) {
+      // Execute the compiled program if no syntaxError occurred
+      let execResult = runTimeError = null;
+      if (syntaxError) {
         execResult = output;
       }
       else try {
         execResult = execSync(`node ${outputPath}`).toString().replace(ansiRegex, "").replace(/\s+/g, " ").trim();
       } catch (e) {
         execResult = e.message.toString().replace(ansiRegex, "").replace(/\s+/g, " ").trim();
+        runTimeError = true;
       }
 
-      // Compare the output of the execution with the expected output of the execution
       const execPath = path.join(__dirname, "exec_out", testFile);
       let expectedResult = fs.readFileSync(execPath, { encoding: "utf-8" }).toString().replace(ansiRegex, "").replace(/\s+/g, " ").trim();
 
@@ -50,8 +50,14 @@ for (let testFile of input) {
         `${expectedResult === execResult ? "They are equal" : "They are different"}`);
       */
 
-      if (error) { 
+        // Compare the output or errors of the execution with the expected output or errors 
+      if (syntaxError) { /* TODO: improve it! */
         expect(execResult.includes("SyntaxError")).toBeTruthy();
+        return;
+      }
+
+      if (runTimeError) { /* TODO */ 
+        expect(execResult.includes("RuntimeError")).toBeTruthy();
         return;
       }
 

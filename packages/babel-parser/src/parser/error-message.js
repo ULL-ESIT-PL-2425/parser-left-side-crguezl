@@ -103,6 +103,7 @@ export const ErrorMessages = Object.freeze({
   OptionalChainingNoTemplate:
     "Tagged Template Literals are not allowed in optionalChain",
   ParamDupe: "Argument name clash",
+  ParamAssignable: "Assignable functions are restricted to one parameter", //Pablo Casiano
   PatternHasAccessor: "Object pattern can't contain getter or setter",
   PatternHasMethod: "Object pattern can't contain methods",
   PipelineBodyNoArrow:

@@ -1051,7 +1051,7 @@ export default class StatementParser extends ExpressionParser {
       this.raise(this.state.start, Errors.GeneratorInSingleStatementContext);
     }
     node.generator = this.eat(tt.star);
-    node.assignable = this.eat(tt.atat);
+    node.assignable = this.eat(tt.atat); // Pablo's assignable function
 
     if (isStatement) {
       node.id = this.parseFunctionId(requireId);
@@ -1071,6 +1071,11 @@ export default class StatementParser extends ExpressionParser {
     }
 
     this.parseFunctionParams(node);
+    console.error("parseFunctionParams", JSON.stringify(node, null,2));
+
+    if (node.assignable && node.params.length !== 1) { //Pablo Casiano
+      this.raise(node.start, Errors.ParamAssignable);
+    }
 
     // For the smartPipelines plugin: Disable topic references from outer
     // contexts within the function body. They are permitted in function

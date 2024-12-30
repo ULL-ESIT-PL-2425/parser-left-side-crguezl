@@ -1,3 +1,8 @@
+# Examples
+
+This folder is used to test ideas about the plugin. 
+Examples are first tested here before being included in the test suite.
+
 
 ## Compiling 
 
@@ -122,7 +127,24 @@ x
 fighter
 ```
 
-## Empty assignments
+## Examples containing errors
+
+### Methodology for the tests
+
+When the expected behavior of the babel compiler for the example (like `empty-assignment.js`) is to issue an error message, copy a truncated 
+version of the error message in `packages/babel-parser/test/left-side/exec_out/error-empty-assignment.js` (notice the prefix `error-`):
+
+```
+➜  parser-left-side-crguezl git:(develop) ✗ cat packages/babel-parser/test/left-side/in/error-empty-assignment.js 
+function @@ foo() {
+  return 2;
+}
+foo() = 5;
+➜  parser-left-side-crguezl git:(develop) ✗ cat packages/babel-parser/test/left-side/exec_out/error-empty-assignment.js
+SyntaxError: /Users/casianorodriguezleon
+```
+
+### Empty assignments
 
 See issues [#32](https://github.com/ULL-ESIT-PL/babel-tanhauhau/issues/32) and [#31](https://github.com/ULL-ESIT-PL/babel-tanhauhau/issues/31)
 

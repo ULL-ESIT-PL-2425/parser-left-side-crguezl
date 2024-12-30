@@ -41,7 +41,7 @@ for (let testFile of input) {
 
       // Compare the output of the execution with the expected output of the execution
       const execPath = path.join(__dirname, "exec_out", testFile);
-      const expectedResult = fs.readFileSync(execPath, { encoding: "utf-8" }).toString().replace(ansiRegex, "").replace(/\s+/g, " ").trim();
+      let expectedResult = fs.readFileSync(execPath, { encoding: "utf-8" }).toString().replace(ansiRegex, "").replace(/\s+/g, " ").trim();
 
       /*
       console.log(
@@ -50,7 +50,7 @@ for (let testFile of input) {
         `${expectedResult === execResult ? "They are equal" : "They are different"}`);
       */
 
-      if (error) {
+      if (error) { 
         expect(execResult.includes("SyntaxError")).toBeTruthy();
         return;
       }

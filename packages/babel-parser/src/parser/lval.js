@@ -460,7 +460,7 @@ export default class LValParser extends NodeUtils {
       case "CallExpression":
         // Pablo TODO: Check the method checkLVal to see if this can be more similar to the rest of the cases.
         // Casiano: Just checking error for 0 arguments
-        if (expr.arguments.length === 0) { // raise error
+        if (expr.arguments.length != 1) { // raise error
           this.raise(
             expr.start, 
             Errors.InvalidLhsBinding, 

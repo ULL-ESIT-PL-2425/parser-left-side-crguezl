@@ -132,17 +132,9 @@ fighter
 ### Methodology for the tests
 
 When the expected behavior of the babel compiler for the example (like `empty-assignment.js`) is to issue an error message, copy a truncated 
-version of the error message in `packages/babel-parser/test/left-side/exec_out/error-empty-assignment.js` (notice the prefix `error-`):
+version of the error message in `packages/babel-parser/test/left-side/exec_out/syntaxerror-empty-assignment.js` (notice the prefix `syntaxerror-`). Is not being really tested at this time. The check is just that the word `SyntaxError` appears in the output.
 
-```
-➜  parser-left-side-crguezl git:(develop) ✗ cat packages/babel-parser/test/left-side/in/error-empty-assignment.js 
-function @@ foo() {
-  return 2;
-}
-foo() = 5;
-➜  parser-left-side-crguezl git:(develop) ✗ cat packages/babel-parser/test/left-side/exec_out/error-empty-assignment.js
-SyntaxError: /Users/casianorodriguezleon
-```
+If the expected behavior is to compile but have a runtime error, copy the output in `packages/babel-parser/test/left-side/exec_out/runtime-error-empty-assignment.js` (notice the prefix `runtime-error-`). The check is just that the word `RuntimeError` appears in the output.
 
 ### Empty assignments
 

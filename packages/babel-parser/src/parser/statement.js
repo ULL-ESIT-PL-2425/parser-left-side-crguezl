@@ -1071,7 +1071,7 @@ export default class StatementParser extends ExpressionParser {
     }
 
     this.parseFunctionParams(node);
-    console.error("parseFunctionParams", JSON.stringify(node, null,2));
+    //console.error("parseFunctionParams", JSON.stringify(node, null,2)); // Pablo Casiano
 
     if (node.assignable && node.params.length !== 1) { //Pablo Casiano
       this.raise(node.start, Errors.ParamAssignable);

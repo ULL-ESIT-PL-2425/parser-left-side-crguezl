@@ -15,10 +15,6 @@ class StoreMap {
   has(key) {
     return this.store.has(key);
   }
-
-  size() {
-    return this.store.size;
-  }
 }
 
 class StoreObject {
@@ -32,12 +28,6 @@ class StoreObject {
   get(key) {
     return this.store[key];
   }
-  has(key) {
-    return key in this.store;
-  }
-  size() {
-    return Object.keys(this.store).length;
-  }
 }
 
 class FunctionObject extends CallableInstance {
@@ -49,24 +39,28 @@ class FunctionObject extends CallableInstance {
     //this.cache = new StoreObject();
     this.cache = new StoreMap();
     this.function = function (...args) {
-      if (args.length) {
-        const arg = args[0];
-        // TODO: What should we do with objects? Straight up use toString?
-        //if (arg instanceof Complex) {
-        //    arg = arg.toString();
-        //}
-        if (this?.cache && this.cache.get(arg)) {
-          if (debug) console.log(`Cached value! ${this.cache.get(arg)}`);
-          return this.cache.get(arg);
+      let currentFunctionObject = this;
+      for (let i = 0; i < args.length; ++i) {
+        const arg = args[i];
+        if (currentFunctionObject?.cache && currentFunctionObject.cache.has(arg)) {
+          if (debug) console.log(`Cached value! ${currentFunctionObject.cache.get(arg)}`);
+          if (i + 1 === args.length) {
+            if (currentFunctionObject.cache.get(arg).cache !== undefined) break; // St
+            return currentFunctionObject.cache.get(arg); // Value in cache, return it.
+          }
+          currentFunctionObject = currentFunctionObject.cache.get(arg);
+        } else {
+          break; // Default to the original rawFunction.
         }
       }
-      return a(...args);
+      //console.log(currentFunctionObject)
+      return this.rawFunction(...args);
     };
   }
 
-  _call(arg) {
-    const result = this.function(arg);
-    //console.log(arg)
+  _call(...args) {
+    const result = this.function(...args);
+    //console.log(args)
     //console.log(result);
     // Are we sure about this? If the underlying function is supposed to give undefined this would be wrong.
     //return (typeof result == 'undefined') ? null : result;

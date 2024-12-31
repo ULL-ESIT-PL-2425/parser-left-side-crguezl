@@ -6,6 +6,7 @@
   "scripts": {
     "test": "babel hello.js --out-file hello.cjs && node hello.cjs",
     "syntaxerror-many-parameters.js": "babel syntaxerror-many-parameters.js 2>&1 | less",
+    "not-working/example-nested-assignation.js": "babel not-working/example-nested-assignation.js | node",
     "not-working/multiparameter/example-multiparameter.js": "babel not-working/multiparameter/example-multiparameter.js",
     "cppabloparser": " cp ../../pablo-santana-gonzalez/babel-tanhauhau-pablo/packages/babel-parser/lib/index.js ../packages/babel-parser/lib",
     "testparser": "../packages/babel-parser/bin/babel-parser.js hello.js",

@@ -1,8 +1,8 @@
 {
   "name": "@ull-esit-pl-2425/babel-plugin-left-side-support",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Support for the left side plugin",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,6 +19,7 @@
     "registry": "https://npm.pkg.github.com"
   },
   "author": "Pablo Santana Gonzalez <alu0101480541@ull.edu.es>",
+  "contributors": [ "Casiano Rodriguez-Leon <crguezl@ull.edu.es>"],
   "license": "ISC",
   "gitHead": "df1dbf5d265ad3170234dff2e06cb385e08effc8"
 }

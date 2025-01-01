@@ -29,7 +29,8 @@
     "build": "npm run buildflow && npm run rollup",
     "cleanbuild": "cd packages/babel-parser/lib && rm -fR options.js plugin-utils.js types.js plugins util tokenizer parser",
     "rt": "flow-remove-types packages/babel-parser/src/ -d packages/babel-parser/lib/",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "patch": "npm version patch -ws && npm publish -ws"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",

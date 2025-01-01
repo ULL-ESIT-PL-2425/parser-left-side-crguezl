@@ -1,11 +1,11 @@
 const { functionObject } = require("./function-object");
 
 function assign(f, cacheArgs, cacheValue) {
-  console.log('src f', f.toString(), cacheArgs, cacheValue);
+  //console.log('src f', f.toString(), cacheArgs, cacheValue);
   //debugger;
   for (let i = 0; i < cacheArgs.length; i++) {
     const cacheArgument = cacheArgs[i];
-    if (cacheArgument == null) {
+    if (cacheArgument === null) { // Must be === to avoid undefined! See examples/undef-assignment.js
       const error = new Error(
         "Invalid null argument on left side of assignment",
       );

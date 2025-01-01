@@ -1,11 +1,1 @@
-const {
-  assign,
-  functionObject
-} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");
-const foo = functionObject(function (a) {
-  return 2 * a;
-});
-assign(foo, [undefined], 5);
-console.log(foo());
-console.log(foo(3));
-console.log(foo(undefined));
+SyntaxError: /Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/test/left-side/in/example-undef.js: Invalid identifier @@ (1:11) > 1 | function @@ foo(a) { | ^ 2 | return 2*a; 3 | } 4 | foo(undefined) = 5; at Parser._raise (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:705:17) at Parser.raiseWithData (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:699:17) at Parser.raise (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:694:17) at Parser.readWord (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:7182:12) at Parser.getTokenFromCode (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:2441:20) at Parser.nextToken (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:6328:12) at Parser.next (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:6267:10) at Parser.parseFunctionStatement (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:9475:10) at Parser.parseStatementContent (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:9234:21) at Parser.parseStatement (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:9205:17) { loc: Position { line: 1, column: 11 }, pos: 11, code: 'BABEL_PARSE_ERROR' }

@@ -1,3 +1,4 @@
+// Deprecated. To be removed in the future
 const { functionObject } = require("./function-object");
 
 function assign(f, cacheArgs, cacheValue) {

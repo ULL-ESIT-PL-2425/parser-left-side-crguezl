@@ -12,7 +12,8 @@
     "not-working/multiparameter/example-multiparameter.js": "babel not-working/multiparameter/example-multiparameter.js",
     "cppabloparser": " cp ../../pablo-santana-gonzalez/babel-tanhauhau-pablo/packages/babel-parser/lib/index.js ../packages/babel-parser/lib",
     "testparser": "../packages/babel-parser/bin/babel-parser.js hello.js",
-    "save": " cd .. && npm run save"
+    "save": " cd .. && npm run save",
+    "build": " cd .. && npm run build"
   },
   "keywords": [],
   "author": "Casiano Rodriguez Leon <crguezl@ull.edu.es> (https://crguezl.github.io/)",

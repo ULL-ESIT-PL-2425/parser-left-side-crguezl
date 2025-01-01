@@ -40,6 +40,7 @@ module.exports = function leftSidePlugin(babel) {
           const argsArray = types.arrayExpression(args);
           const assignArgs = [callee, argsArray, rvalue];
           const functionAssign = babel.types.identifier("assign");
+          //console.error(JSON.stringify(node, null, 2)); // Casiano 
           path.replaceWith(
             babel.types.callExpression(functionAssign, assignArgs),
           );

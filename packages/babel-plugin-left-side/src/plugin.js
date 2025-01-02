@@ -2,6 +2,8 @@ const parser = require("../../babel-parser/lib");
 const types = require("@babel/types");
 //import template from "@babel/template";
 const template = require("@babel/template").default;
+let { inspect } = require("util");
+ins = (x) => inspect(x, {depth: null});
 
 // TODO: Switch to the scoped name when publishing the package.
 const SUPPORT_TEMPLATE = template(
@@ -34,13 +36,19 @@ module.exports = function leftSidePlugin(babel) {
       AssignmentExpression(path) {
         const node = path.node;
         if (node.operator == "=" && node.left.type == "CallExpression") {
+
+          if (path.scope.bindings["foo"].path.node?.declarations?.[0]?.init?.callee?.name === 'functionObject') {
+            console.log('foo is a functionObject');
+          } else {
+            console.log('Error: foo is not a functionObject');
+          };     
+          
           const callee = node.left.callee;
           const args = node.left.arguments;
           const rvalue = node.right;
           const argsArray = types.arrayExpression(args);
           const assignArgs = [callee, argsArray, rvalue];
           const functionAssign = babel.types.identifier("assign");
-          //console.error(JSON.stringify(node, null, 2)); // Casiano 
           path.replaceWith(
             babel.types.callExpression(functionAssign, assignArgs),
           );

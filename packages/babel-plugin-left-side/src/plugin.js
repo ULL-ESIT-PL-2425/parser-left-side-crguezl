@@ -37,6 +37,7 @@ module.exports = function leftSidePlugin(babel) {
         const node = path.node;
         if (node.operator == "=" && node.left.type == "CallExpression") {
 
+          // How to deal whith nested assignments? f(2)(3) = 5; Casiano
           if (path.scope.bindings["foo"].path.node?.declarations?.[0]?.init?.callee?.name === 'functionObject') {
             console.log('foo is a functionObject');
           } else {

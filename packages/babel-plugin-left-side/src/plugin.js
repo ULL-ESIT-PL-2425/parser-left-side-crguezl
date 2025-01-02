@@ -5,7 +5,6 @@ const template = require("@babel/template").default;
 let { inspect } = require("util");
 ins = (x) => inspect(x, {depth: null});
 
-// TODO: Switch to the scoped name when publishing the package.
 const SUPPORT_TEMPLATE = template(
   'const {assign, functionObject} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");',
 )();
@@ -37,14 +36,16 @@ module.exports = function leftSidePlugin(babel) {
         const node = path.node;
         if (node.operator == "=" && node.left.type == "CallExpression") {
 
-          // How to deal whith nested assignments? f(2)(3) = 5; Casiano
-          if (path.scope.bindings["foo"].path.node?.declarations?.[0]?.init?.callee?.name === 'functionObject') {
-            console.log('foo is a functionObject');
-          } else {
-            console.log('Error: foo is not a functionObject');
-          };     
-          
           const callee = node.left.callee;
+
+          if (callee.type  == 'Identifier') {
+            let name = callee.name;
+            // How to deal whith nested assignments? f(2)(3) = 5; Casiano
+            if (path.scope.bindings[name].path.node?.declarations?.[0]?.init?.callee?.name !== 'functionObject') {
+              throw new Error(`TypeError: Illegal assignment to "${name}" at line ${inspect(callee.loc.start.line)}. Variable "${name}" is not an assignable function.`);
+            };     
+          }
+
           const args = node.left.arguments;
           const rvalue = node.right;
           const argsArray = types.arrayExpression(args);

@@ -1,1 +1,12 @@
-SyntaxError: /Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/test/left-side/in/example-method.js: Invalid identifier @@ (1:25) > 1 | let a = {foo: function @@ something(a) {return a}}; | ^ 2 | a.foo("bar") = "fighter"; 3 | console.log(a.foo("x")); // x 4 | console.log(a.foo("bar")); // fighter at Parser._raise (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:705:17) at Parser.raiseWithData (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:699:17) at Parser.raise (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:694:17) at Parser.readWord (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:7182:12) at Parser.getTokenFromCode (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:2441:20) at Parser.nextToken (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:6328:12) at Parser.next (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:6267:10) at Parser.parseFunctionExpression (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:8398:10) at Parser.parseExprAtom (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:8317:21) at Parser.parseExprSubscripts (/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-parser/lib/index.js:7987:23) { loc: Position { line: 1, column: 25 }, pos: 25, code: 'BABEL_PARSE_ERROR' }
+const {
+  assign,
+  functionObject
+} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");
+let a = {
+  foo: functionObject(function (a) {
+    return a;
+  })
+};
+assign(a.foo, ["bar"], "fighter");
+console.log(a.foo("x")); // x
+console.log(a.foo("bar")); // fighter

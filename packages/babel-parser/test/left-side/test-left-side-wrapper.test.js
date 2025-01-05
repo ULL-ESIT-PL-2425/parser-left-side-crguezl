@@ -23,7 +23,7 @@ for (let testFile of input) {
         //output = e.message.toString().replace(ansiRegex, "").trim();
       
         output = fs.readFileSync(outputPath, { encoding: "utf-8" }).toString().replace(ansiRegex, "").replace(/\s+/g, " ").trim();
-        //console.log(`Error compiling the program ${testFile}!!!!!!`);
+        console.log(`Error compiling the program ${testFile}!!!!!!${output.slice(0,100)}`);
         syntaxError = true;
       }
       fs.writeFileSync(outputPath, output, { encoding: "utf-8" }); // Save the output program in out/

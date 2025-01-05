@@ -70,3 +70,4 @@ packages/babel-standalone/babel.min.js
 
 examples/node_modules
 examples/*.cjs
+left-side

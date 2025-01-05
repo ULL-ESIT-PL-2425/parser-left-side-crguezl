@@ -7,6 +7,5 @@ const foo = functionObject(function (a) {
     return a + b;
   });
 });
-assign(foo, [6], foo(6));
-assign(foo(6), [2], "Another value");
+assign(foo, [6], foo(6)), assign(foo(6), [2], "Another value");
 console.log(foo(6)(2)); // "Another Value". Currently returning 8.

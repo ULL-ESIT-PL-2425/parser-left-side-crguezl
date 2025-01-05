@@ -9,6 +9,23 @@ const SUPPORT_TEMPLATE = template(
   'const {assign, functionObject} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");',
 )();
 
+// Assuming that the left side of an assignment is a CallExpression, check if the callee is an assignable function:
+// f(z) = 4 compile time error? Done
+// f(x)(y) = 5;  run time error if f(x) is not assignable?
+// a[x](y) = 5;  run time if a[x] is not asignable?
+// obj[x][y](z) = 5;  run time error if obj[x][y] is not an assignable function?
+function checkIsAssignableFunction(path, left) {
+  let bindings = path.scope.bindings;
+  let callee = left.callee;
+  // How to deal whith nested assignments? f(2)(3) = 5; Casiano
+    if (callee.type  == 'Identifier') {
+      let name = callee.name;
+      if (bindings[name].path.node?.declarations?.[0]?.init?.callee?.name !== 'functionObject') {
+        throw new Error(`TypeError: Illegal assignment to "${name}" at line ${callee.loc.start.line} column ${callee.loc.start.column}. Variable "${name}" is not an assignable function.`);
+      };     
+    }
+}
+
 // To avoid repeating code in FunctionDeclaration and FunctionExpression. Transforms the assignable function syntax to valid JS.
 // Returns a CallExpression node with the functionObject call.
 function changeAssignableFunctionToValid(node) {
@@ -36,15 +53,10 @@ module.exports = function leftSidePlugin(babel) {
         const node = path.node;
         if (node.operator == "=" && node.left.type == "CallExpression") {
 
-          const callee = node.left.callee;
 
-          if (callee.type  == 'Identifier') {
-            let name = callee.name;
-            // How to deal whith nested assignments? f(2)(3) = 5; Casiano
-            if (path.scope.bindings[name].path.node?.declarations?.[0]?.init?.callee?.name !== 'functionObject') {
-              throw new Error(`TypeError: Illegal assignment to "${name}" at line ${inspect(callee.loc.start.line)}. Variable "${name}" is not an assignable function.`);
-            };     
-          }
+          checkIsAssignableFunction(path, node.left);
+
+          const callee = node.left.callee;
 
           const args = node.left.arguments;
           const rvalue = node.right;

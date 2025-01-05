@@ -6,5 +6,6 @@ const foo = functionObject(function (a) {
   return 2 * a;
 });
 assign(foo, [undefined], 5);
+console.log(foo());
 console.log(foo(3));
 console.log(foo(undefined));

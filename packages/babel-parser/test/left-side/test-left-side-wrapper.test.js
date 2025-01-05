@@ -23,7 +23,6 @@ for (let testFile of input) {
         //output = e.message.toString().replace(ansiRegex, "").trim();
       
         output = fs.readFileSync(outputPath, { encoding: "utf-8" }).toString().replace(ansiRegex, "").replace(/\s+/g, " ").trim();
-        console.log(`Error compiling the program ${testFile}!!!!!!${output.slice(0,100)}`);
         syntaxError = true;
       }
       fs.writeFileSync(outputPath, output, { encoding: "utf-8" }); // Save the output program in out/
@@ -52,7 +51,15 @@ for (let testFile of input) {
 
         // Compare the output or errors of the execution with the expected output or errors 
       if (syntaxError) { /* TODO: improve it! */
-        expect(execResult.includes("SyntaxError")).toBeTruthy();
+        if (testFile.startsWith("syntaxerror-")) {
+          expect(execResult.includes("SyntaxError")).toBeTruthy();
+        } else if (testFile.startsWith("typeerror-")) {
+          //console.error(`Error compiling the program ${testFile}!!!!!!\n${output.slice(0,300)}`);
+          expect(execResult.includes("TypeError")).toBeTruthy();
+        } else {
+          console.error(`Error compiling the program ${testFile}!!!!!!\n${output.slice(0,300)}`);
+          expect(execResult).toEqual(expectedResult);
+        }
         return;
       }
 

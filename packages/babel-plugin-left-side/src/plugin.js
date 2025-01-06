@@ -1,6 +1,5 @@
 const parser = require("../../babel-parser/lib");
 const types = require("@babel/types");
-//import template from "@babel/template";
 const template = require("@babel/template").default;
 let { inspect } = require("util");
 ins = (x) => inspect(x, { depth: null });
@@ -42,6 +41,10 @@ function changeAssignableFunctionToValid(node) {
   return [funId, callExpression];
 }
 
+const assignTemplate = template(`
+  assign(CALLEE, ARGS, RVALUE);
+`);
+
 module.exports = function leftSidePlugin(babel) {
   return {
     parserOverride(code, opts) {
@@ -50,21 +53,14 @@ module.exports = function leftSidePlugin(babel) {
     visitor: {
       AssignmentExpression(path) {
         const node = path.node;
+        const left = node.left;
         if (node.operator == "=" && node.left.type == "CallExpression") {
+          checkIsAssignableFunction(path, left);
 
-
-          checkIsAssignableFunction(path, node.left);
-
-          const callee = node.left.callee;
-
-          const args = node.left.arguments;
-          const rvalue = node.right;
-          const argsArray = types.arrayExpression(args);
-          const assignArgs = [callee, argsArray, rvalue];
-          const functionAssign = babel.types.identifier("assign");
-          path.replaceWith(
-            babel.types.callExpression(functionAssign, assignArgs),
-          );
+          const CALLEE = left.callee;
+          const RVALUE = node.right;
+          const ARGS = types.arrayExpression(left.arguments);
+          path.replaceWith(assignTemplate({CALLEE, ARGS, RVALUE}));
         }
       },
       FunctionDeclaration(path) {

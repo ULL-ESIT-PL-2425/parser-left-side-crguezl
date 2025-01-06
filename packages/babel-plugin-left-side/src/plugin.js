@@ -4,10 +4,6 @@ const template = require("@babel/template").default;
 let { inspect } = require("util");
 ins = (x) => inspect(x, { depth: null });
 
-const SUPPORT_TEMPLATE = template(
-  'const {assign, functionObject} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");',
-)();
-
 // Assuming that the left side of an assignment is a CallExpression, check if the callee is an assignable function:
 // f(z) = 4 compile time error? Done
 // f(x)(y) = 5;  run time error if f(x) is not assignable?
@@ -41,9 +37,11 @@ function changeAssignableFunctionToValid(node) {
   return [funId, callExpression];
 }
 
-const assignTemplate = template(`
-  assign(CALLEE, ARGS, RVALUE);
-`);
+const SUPPORT_TEMPLATE = template(
+  'const {assign, functionObject} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");',
+)();
+
+const assignTemplate = template('assign(CALLEE, ARGS, RVALUE);');
 
 module.exports = function leftSidePlugin(babel) {
   return {
@@ -57,10 +55,21 @@ module.exports = function leftSidePlugin(babel) {
         if (node.operator == "=" && node.left.type == "CallExpression") {
           checkIsAssignableFunction(path, left);
 
-          const CALLEE = left.callee;
-          const RVALUE = node.right;
-          const ARGS = types.arrayExpression(left.arguments);
-          path.replaceWith(assignTemplate({CALLEE, ARGS, RVALUE}));
+          let CALLEE = left.callee;
+          let RVALUE = node.right;
+          let ARGS = types.arrayExpression(left.arguments);
+          let nestedCalls = [ assignTemplate({ CALLEE, ARGS, RVALUE }) ];
+
+          while (CALLEE.type == "CallExpression") {
+            ARGS = types.arrayExpression(CALLEE.arguments);
+            CALLEE = RVALUE = CALLEE.callee;
+            nestedCalls.unshift(assignTemplate({ CALLEE, ARGS, RVALUE }));
+          }
+          if (nestedCalls.length == 1) {
+            path.replaceWith(nestedCalls[0]);
+          } else { 
+            path.replaceWith(types.sequenceExpression(nestedCalls));
+          }
         }
       },
       FunctionDeclaration(path) {

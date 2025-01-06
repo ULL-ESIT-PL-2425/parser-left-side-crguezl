@@ -23,7 +23,6 @@
 coverage
 dist
 /.package.json
-package-lock.json
 !/.github/actions/*/package-lock.json
 
 /packages/babel-compat-data/build

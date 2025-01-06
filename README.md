@@ -1,6 +1,6 @@
 > [!CAUTION]
 > This repo is a toy/conceptual  experiment to have a minimal monorepo having the extended Babel parser and the plugin(s) for testing and publishing. It is work in progress.
-> - **Main repo**: https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl
+> - **Main repo**: https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl (with packages)
 > - **Secondary repo**: https://github.com/ULL-ESIT-PL/parser-left-side-crguezl
 
 

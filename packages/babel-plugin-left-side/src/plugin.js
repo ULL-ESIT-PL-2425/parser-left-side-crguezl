@@ -62,8 +62,9 @@ module.exports = function leftSidePlugin(babel) {
           let nestedCalls = [ assignTemplate({ CALLEE, ARGS, RVALUE }).expression ];
 
           while (CALLEE.type == "CallExpression") {
+            RVALUE = CALLEE;
             ARGS = types.arrayExpression(CALLEE.arguments);
-            CALLEE = RVALUE = CALLEE.callee;
+            CALLEE = CALLEE.callee;
             nestedCalls.unshift(assignTemplate({ CALLEE, ARGS, RVALUE }).expression);
           }
           if (nestedCalls.length == 1) {

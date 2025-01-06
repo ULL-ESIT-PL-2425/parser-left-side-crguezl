@@ -24,7 +24,8 @@ coverage
 dist
 /.package.json
 !/.github/actions/*/package-lock.json
-
+examples/package-lock.json
+packages/babel-parser/package-lock.json
 /packages/babel-compat-data/build
 
 /packages/babel-runtime/helpers/*.js

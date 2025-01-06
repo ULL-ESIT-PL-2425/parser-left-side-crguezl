@@ -29,16 +29,16 @@ function checkIsAssignableFunction(path, left) {
 // Returns a CallExpression node with the functionObject call.
 function changeAssignableFunctionToValid(node) {
   node.assignable = false;
-  const identifier = types.identifier("functionObject");
+  const functionObjectId = types.identifier("functionObject");
   const funId = node.id;
-  node.id = null;
+  //node.id = null; // Casiano Why? Is not better to keep the Id?
   // Replace the FunctionDeclaration with FunctionExpression.
   const funAsExpr = types.functionExpression(
-    null,
+    node.id,
     node.params,
     node.body,
   );
-  const callExpression = types.callExpression(identifier, [funAsExpr]);
+  const callExpression = types.callExpression(functionObjectId, [funAsExpr]);
   return [funId, callExpression];
 }
 

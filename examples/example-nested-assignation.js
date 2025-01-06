@@ -5,4 +5,4 @@ function @@ foo(a) {
 }
 
 foo(6)(2) = "Another value";
-console.log(foo(6)(2)); // "Another Value". Currently returning 8.
+console.log(foo(6)(2)); // "Another Value"

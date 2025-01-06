@@ -58,12 +58,13 @@ module.exports = function leftSidePlugin(babel) {
           let CALLEE = left.callee;
           let RVALUE = node.right;
           let ARGS = types.arrayExpression(left.arguments);
-          let nestedCalls = [ assignTemplate({ CALLEE, ARGS, RVALUE }) ];
+          let ast = assignTemplate({ CALLEE, ARGS, RVALUE });
+          let nestedCalls = [ assignTemplate({ CALLEE, ARGS, RVALUE }).expression ];
 
           while (CALLEE.type == "CallExpression") {
             ARGS = types.arrayExpression(CALLEE.arguments);
             CALLEE = RVALUE = CALLEE.callee;
-            nestedCalls.unshift(assignTemplate({ CALLEE, ARGS, RVALUE }));
+            nestedCalls.unshift(assignTemplate({ CALLEE, ARGS, RVALUE }).expression);
           }
           if (nestedCalls.length == 1) {
             path.replaceWith(nestedCalls[0]);

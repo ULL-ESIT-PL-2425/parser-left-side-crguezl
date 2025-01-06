@@ -70,4 +70,5 @@ packages/babel-standalone/babel.min.js
 
 examples/node_modules
 examples/*.cjs
-left-side
+/left-side
+packages/babel-parser/test/left-side/root

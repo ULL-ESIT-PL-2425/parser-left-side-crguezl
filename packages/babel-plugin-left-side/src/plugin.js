@@ -3,7 +3,7 @@ const types = require("@babel/types");
 //import template from "@babel/template";
 const template = require("@babel/template").default;
 let { inspect } = require("util");
-ins = (x) => inspect(x, {depth: null});
+ins = (x) => inspect(x, { depth: null });
 
 const SUPPORT_TEMPLATE = template(
   'const {assign, functionObject} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");',
@@ -17,13 +17,12 @@ const SUPPORT_TEMPLATE = template(
 function checkIsAssignableFunction(path, left) {
   let bindings = path.scope.bindings;
   let callee = left.callee;
-  // How to deal whith nested assignments? f(2)(3) = 5; Casiano
-    if (callee.type  == 'Identifier') {
-      let name = callee.name;
-      if (bindings[name].path.node?.declarations?.[0]?.init?.callee?.name !== 'functionObject') {
-        throw new Error(`TypeError: Illegal assignment to "${name}" at line ${callee.loc.start.line} column ${callee.loc.start.column}. Variable "${name}" is not an assignable function.`);
-      };     
-    }
+  if (callee.type == 'Identifier') {
+    let name = callee.name;
+    if (bindings[name].path.node?.declarations?.[0]?.init?.callee?.name !== 'functionObject') {
+      throw new Error(`TypeError: Illegal assignment to "${name}" at line ${callee.loc.start.line} column ${callee.loc.start.column}. Variable "${name}" is not an assignable function.`);
+    };
+  }
 }
 
 // To avoid repeating code in FunctionDeclaration and FunctionExpression. Transforms the assignable function syntax to valid JS.

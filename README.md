@@ -1,7 +1,7 @@
 > [!CAUTION]
 > This repo is a minimal monorepo that can be used as a template for someone 
 > having to extended the Babel parser (v7) and adding plugin(s). 
-> It automates testing and publishing.
+> It automates testing and publishing. 
 > It is work in progress.
 > - **Main repo**: https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl (with packages)
 > - **Secondary repo**: https://github.com/ULL-ESIT-PL/parser-left-side-crguezl
@@ -9,7 +9,10 @@
 
 ## Goal
 
-To be able to have a minimal monorepo with the parser and the plugin(s) of the TFGs.
+The problem: When extending the JS Language using Babel, the usual approach is to fork the Babel monorepo.
+Unfortunately, it iss huge and operations like building and testing take an unbearable amount of time.
+
+The goal is to be able to have a minimal monorepo with the parser and the plugin(s) of the TFGs.
 
 We have to use a Babel configured for flow to transpile the TFG babel parser at [packages/babel-parser](https://github.com/ULL-ESIT-PL/babel-tanhauhau/tree/pablo-tfg) and leave 
 a JS parser at `packages/babel-parser/lib`  ready to be used. 
@@ -21,19 +24,25 @@ Here is the list of project [scripts](package.json):
 `➜  parser-left-side-crguezl git:(main) npm pkg get scripts`
 ```json
 {
-  "test": "npx jest -t 'left-side'",
+  "test": "npx jest --verbose -t 'left-side'",
   "alltest": "jest",
   "example": "cd examples && npm test",
   "cleanlib": "cd packages/babel-parser/lib && rm -fR index.js options.js plugin-utils.js types.js plugins util tokenizer parser",
   "clean": "npm run cleanlib; rm -fR node_modules; rm -fR packages/babel-parser/node_modules; rm package-lock.json; npm i",
-  "save": "git ci -am save; git push",
+  "save": "git ci -am save; git push -u origin main; git push -u pl2425 main",
   "flow": "flow",
   "buildflow": "babel packages/babel-parser/src/ -d packages/babel-parser/lib/",
   "rollup": "gulp build-rollup && npm run cleanbuild",
   "build": "npm run buildflow && npm run rollup",
   "cleanbuild": "cd packages/babel-parser/lib && rm -fR options.js plugin-utils.js types.js plugins util tokenizer parser",
   "rt": "flow-remove-types packages/babel-parser/src/ -d packages/babel-parser/lib/",
-  "prepublishOnly": "npm run build"
+  "prepublishOnly": "npm run build",
+  "publishpatch": "npm version patch -ws && npm publish -ws",
+  "publishminor": "npm version minor -ws && npm publish -ws",
+  "publishmajor": "npm version major -ws && npm publish -ws",
+  "publishactionpatch": "npm version patch -ws && npm run save && gh release create",
+  "publishactionmino": "npm version minor -ws && npm run save && gh release create",
+  "publishactionmajor": "npm version major -ws && npm run save && gh release create"
 }
 ```
 

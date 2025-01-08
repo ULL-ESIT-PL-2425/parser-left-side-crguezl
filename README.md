@@ -9,7 +9,7 @@
 
 ## Goal
 
-The problem: When extending the JS Language using Babel, the usual approach is to fork the Babel monorepo.
+**The problem this template solves**: When extending the JS Language using Babel, the usual approach is to fork the Babel monorepo.
 Unfortunately, it is a huge repo and operations like building and testing take an unbearable amount of time.
 
 The goal is to be able to have a minimal monorepo with the parser and the plugin(s) of the TFGs.

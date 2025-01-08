@@ -19,6 +19,10 @@ class StoreMap {
   get size() {
     return this.store.size;
   }
+
+  toString() {
+    return JSON.stringify([...this.store]);
+  }
 }
 
 class StoreObject {
@@ -37,6 +41,10 @@ class StoreObject {
   }
   get size() {
     return Object.keys(this.store).length;
+  }
+
+  toString() {
+    return JSON.stringify(this.store);
   }
 }
 

@@ -1,0 +1,13 @@
+1
+3
+undefined
+3
+undefined
+2
+4
+undefined
+false
+true
+true
+3.141592653589793
+1

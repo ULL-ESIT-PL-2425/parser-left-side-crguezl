@@ -11,6 +11,8 @@ console.log(m(0)); // undefined
 console.log(m(1)); // 2
 console.log(m(3)); // 4
 console.log(m(-1)); // undefined
+m(0) = 5;
+console.log(m(0)); // 5
 
 // Sets
 let s = functionObject(new Set([5,9, 10])); // Potential Syntax @@ new Set([5,9,10])

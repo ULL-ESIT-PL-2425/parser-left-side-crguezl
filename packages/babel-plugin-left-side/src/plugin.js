@@ -53,7 +53,7 @@ module.exports = function leftSidePlugin(babel) {
         const node = path.node;
         const left = node.left;
         if (node.operator == "=" && node.left.type == "CallExpression") {
-          checkIsAssignableFunction(path, left);
+          //checkIsAssignableFunction(path, left);
 
           let CALLEE = left.callee;
           let RVALUE = node.right;

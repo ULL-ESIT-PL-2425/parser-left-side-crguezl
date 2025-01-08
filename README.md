@@ -227,6 +227,26 @@ To avoid collision with Pablo's packages with the same names at ULL-ESIT-PL, we 
     The `prepublishOnly` script in the `package.json` file of the packages runs `npm run build`:
 - See the branch [crguezl](https://github.com/ULL-ESIT-PL/babel-left-side-npm-test/tree/crguezl) of the repo repo https://github.com/ULL-ESIT-PL/babel-left-side-npm-test/tree/crguezl used to test that the published npm packages work. You will see there an example of use of the published packages.
 
+There are scripts to publish the packages using a GitHub action.
+
+```
+✗ npm run publishactionpatch
+> npm version patch -ws && npm run save && gh release create
+... 
+```
+
+Answer  the questions to create the release:
+
+```
+? Choose a tag Create a new tag
+? Tag name 1.0.12
+? Title (optional) 1.0.12
+? Release notes Leave blank
+? Is this a prerelease? No
+? Submit? Publish release
+https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl/releases/tag/1.0.12
+```
+
 ## Changes I remember I did
 
 - In `packages/babel-plugin-left-side/`, I  substituted the `import` in Pablo's version of the plugin by a `require`:

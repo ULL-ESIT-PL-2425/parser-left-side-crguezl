@@ -67,7 +67,7 @@ class FunctionObject extends CallableInstance {
       this.rawFunction = x => a[x];
     } 
     else {
-      throw new Error("Unsupported type for FunctionObject");
+      throw new Error(`Unsupported type for FunctionObject constructor: ${a}`);
     }
     this.cache = cache;
     this.function = function (...args) {

@@ -16,7 +16,7 @@ class StoreMap {
     return this.store.has(key);
   }
 
-  size() {
+  get size() {
     return this.store.size;
   }
 }
@@ -35,19 +35,19 @@ class StoreObject {
   has(key) {
     return key in this.store;
   }
-  size() {
+  get size() {
     return Object.keys(this.store).length;
   }
 }
 
+const DefaultClass = StoreMap; // StoreObject;
 class FunctionObject extends CallableInstance {
-  constructor(a) {
+  constructor(a, cache = new DefaultClass()) {
     // CallableInstance accepts the name of the property to use as the callable
     // method.
     super("_call");
     this.rawFunction = a;
-    //this.cache = new StoreObject();
-    this.cache = new StoreMap();
+    this.cache = cache;
     this.function = function (...args) {
       if (args.length) {
         const arg = args[0];
@@ -72,11 +72,7 @@ class FunctionObject extends CallableInstance {
     //return (typeof result == 'undefined') ? null : result;
     return result;
   }
-
-  toFunction() {
-    return this.function;
-  }
-
+  
   toString() {
     return this.function.toString();
   }
@@ -92,6 +88,10 @@ class FunctionObject extends CallableInstance {
     //}
     return this.cache.get(arg);
   }
+  get size() {
+    return this.cache.size;
+  }
+
 }
 
 function functionObject(a) {

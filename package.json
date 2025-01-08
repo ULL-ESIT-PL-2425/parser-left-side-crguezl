@@ -33,9 +33,9 @@
     "publishpatch": "npm version patch -ws && npm publish -ws",
     "publishminor": "npm version minor -ws && npm publish -ws",
     "publishmajor": "npm version major -ws && npm publish -ws",
-    "publishactionpatch": "npm version patch -ws && gh release create",
-    "publishactionmino": "npm version minor -ws && gh release create",
-    "publishactionmajor": "npm version major -ws && gh release create"
+    "publishactionpatch": "npm version patch -ws && npm run save && gh release create",
+    "publishactionmino": "npm version minor -ws && npm run save && gh release create",
+    "publishactionmajor": "npm version major -ws && npm run save && gh release create"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",

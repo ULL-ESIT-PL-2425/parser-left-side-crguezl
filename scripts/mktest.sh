@@ -2,10 +2,11 @@
 set -e
 # Error if no argument is passed
 if [ -z "$1" ]; then
-  echo "Usage: $0 <test-name>"
+  echo "Usage: $0 examples/<test-name>.js"
   exit 1
 fi
-TEST_NAME=$1
+# Extract the test name from the argument
+TEST_NAME=$(basename $1 .js)
 # Copy the test file to the test folder packages/babel-parser/test/left-side/in/
 cp examples/${TEST_NAME}.js packages/babel-parser/test/left-side/in/
 if [ $? -ne 0 ]; then

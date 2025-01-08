@@ -226,6 +226,16 @@ Time:        6.871 s
 Ran all test suites.
 ```
 
+## Adding a test
+
+Write the initial feature test in the folder `examples/feature.js`. When passing, run:
+
+```bash
+✗ scripts/mktest.sh examples/feature.js
+```
+
+this will copy the file to the appropriate folder in `packages/babel-parser/test/left-side/in` and create the expected output in, etc.
+
 ## Publishing the packages
 
 To avoid collision with Pablo's packages with the same names at ULL-ESIT-PL, we have to publish the packages with a different scope. I'm going to use `@ull-esit-pl-2425` as the scope.

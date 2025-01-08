@@ -46,7 +46,21 @@ class FunctionObject extends CallableInstance {
     // CallableInstance accepts the name of the property to use as the callable
     // method.
     super("_call");
-    this.rawFunction = a;
+    if (a instanceof Function) {
+     this.rawFunction = a;
+    } else if (a instanceof Array) {
+      this.rawFunction = a.at.bind(a);
+    } else if (a instanceof Set) {
+      this.rawFunction = a.has.bind(a);
+    } else if (a instanceof Map) {
+      this.rawFunction = a.get.bind(a);
+    }
+    else if (a instanceof Object) {
+      this.rawFunction = x => a[x];
+    } 
+    else {
+      throw new Error("Unsupported type for FunctionObject");
+    }
     this.cache = cache;
     this.function = function (...args) {
       if (args.length) {
@@ -60,7 +74,7 @@ class FunctionObject extends CallableInstance {
           return this.cache.get(arg);
         }
       }
-      return a(...args);
+      return this.rawFunction(...args);
     };
   }
 

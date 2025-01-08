@@ -234,7 +234,7 @@ Write the initial feature test in the folder `examples/feature.js`. When passing
 ✗ scripts/mktest.sh examples/feature.js
 ```
 
-this will copy the file to the appropriate folder in `packages/babel-parser/test/left-side/in` and create the expected output in, etc.
+this will copy the file to the appropriate folder in `packages/babel-parser/test/left-side/in` and create the expected output in `packages/babel-parser/test/left-side/exec_out`. Only valid for tests that do no produce errors.
 
 ## Publishing the packages
 

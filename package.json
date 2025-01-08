@@ -17,7 +17,7 @@
     "npm": ">= 10.9.0"
   },
   "scripts": {
-    "test": "npx jest -t 'left-side'",
+    "test": "npx jest --verbose -t 'left-side'",
     "alltest": "jest",
     "example": "cd examples && npm test",
     "cleanlib": "cd packages/babel-parser/lib && rm -fR index.js options.js plugin-utils.js types.js plugins util tokenizer parser",

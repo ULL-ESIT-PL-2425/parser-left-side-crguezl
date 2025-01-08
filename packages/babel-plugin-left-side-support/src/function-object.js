@@ -77,7 +77,7 @@ class FunctionObject extends CallableInstance {
         //if (arg instanceof Complex) {
         //    arg = arg.toString();
         //}
-        if (this?.cache && this.cache.get(arg)) {
+        if (this?.cache && this.cache.get(arg) !== undefined) {
           if (debug) console.log(`Cached value! ${this.cache.get(arg)}`);
           return this.cache.get(arg);
         }

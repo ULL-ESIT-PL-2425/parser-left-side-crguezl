@@ -227,7 +227,7 @@ To avoid collision with Pablo's packages with the same names at ULL-ESIT-PL, we 
     The `prepublishOnly` script in the `package.json` file of the packages runs `npm run build`:
 - See the branch [crguezl](https://github.com/ULL-ESIT-PL/babel-left-side-npm-test/tree/crguezl) of the repo repo https://github.com/ULL-ESIT-PL/babel-left-side-npm-test/tree/crguezl used to test that the published npm packages work. You will see there an example of use of the published packages.
 
-There are scripts `publishaction{patch,minor,major}` to publish the packages using a GitHub action.
+There are scripts `publishaction{patch,minor,major}` to publish the packages using a GitHub action. To configure the action, you have to set the `PUBLISH_SECRET`  with the appropriate scope for your repo:
 
 ```
 ✗ npm run publishactionpatch

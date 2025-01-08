@@ -30,7 +30,10 @@
     "cleanbuild": "cd packages/babel-parser/lib && rm -fR options.js plugin-utils.js types.js plugins util tokenizer parser",
     "rt": "flow-remove-types packages/babel-parser/src/ -d packages/babel-parser/lib/",
     "prepublishOnly": "npm run build",
-    "patch": "npm version patch -ws && npm publish -ws"
+    "patch": "npm version patch -ws && npm publish -ws",
+    "minor": "npm version minor -ws && npm publish -ws",
+    "major": "npm version major -ws && npm publish -ws",
+    "release": "gh release create"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",

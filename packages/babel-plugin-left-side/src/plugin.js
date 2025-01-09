@@ -57,6 +57,10 @@ module.exports = function leftSidePlugin(babel) {
 
           let CALLEE = left.callee;
           let RVALUE = node.right;
+          // TODO: Support multiple arguments
+          if (left.arguments.length !== 1) {
+            throw new Error(`TypeError: Illegal call expression assignment to "${CALLEE.name}" at line ${CALLEE.loc.start.line} column ${CALLEE.loc.start.column}. Assignable functions only support one argument.`);
+          }
           let ARGS = types.arrayExpression(left.arguments);
           let ast = assignTemplate({ CALLEE, ARGS, RVALUE });
           let nestedCalls = [ assignTemplate({ CALLEE, ARGS, RVALUE }).expression ];

@@ -1,6 +1,5 @@
 const debug = false;
 const CallableInstance = require("callable-instance");
-const currying = require("./currying"); 
 
 class StoreMap {
   // Implements the cache based on Map
@@ -62,6 +61,20 @@ const safeGet = function (prop) {
   } else {
     throw new Error(`Property "${prop}" does not exist in the object`);
   }
+}
+
+function currying(fn) {
+  const numParamsRequired = fn.length;
+  function curryFactory(params) {
+    return function (...args) {
+      const newParams = params.concat(args);
+      if (newParams.length >= numParamsRequired) {
+        return fn(...newParams);
+      }
+      return functionObject(curryFactory(newParams));
+    }
+  }
+  return curryFactory([]);
 }
 
 const DefaultClass = StoreMap; // StoreObject;

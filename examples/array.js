@@ -10,4 +10,7 @@ console.log(a(0));   // -3
 a(2) = 0;
 console.log(a(2));   // 0
 console.log(a.size); // 2
+a.setCache(9,1);
+console.log(a(9));   // 1
+console.log(a.getCache(9));   // 1
 

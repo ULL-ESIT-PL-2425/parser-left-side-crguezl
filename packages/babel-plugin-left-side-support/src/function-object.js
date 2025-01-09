@@ -1,5 +1,6 @@
 const debug = false;
 const CallableInstance = require("callable-instance");
+const currying = require("./currying"); 
 
 class StoreMap {
   // Implements the cache based on Map
@@ -70,7 +71,7 @@ class FunctionObject extends CallableInstance {
     // method.
     super("_call");
     if (a instanceof Function) {
-     this.rawFunction = a; // Curry function "a" and make it throw if undefined
+     this.rawFunction = currying(a); // Curry function "a" and make it throw if undefined?
     } else if (a instanceof Array) {
       this.rawFunction = safeAt.bind(a);
     } else if (a instanceof Set) {

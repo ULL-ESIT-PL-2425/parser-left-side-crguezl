@@ -48,6 +48,21 @@ class StoreObject {
   }
 }
 
+const safeAt = function(index) {
+  if (typeof index !== 'number' || isNaN(index)) {
+    throw new Error(`Invalid index "${index}"`);
+  }
+  return this.at(index); 
+};
+
+const safeGet = function (prop) {
+  if (prop in this) {
+    return this[prop];
+  } else {
+    throw new Error(`Property "${prop}" does not exist in the object`);
+  }
+}
+
 const DefaultClass = StoreMap; // StoreObject;
 class FunctionObject extends CallableInstance {
   constructor(a, cache = new DefaultClass()) {
@@ -55,16 +70,16 @@ class FunctionObject extends CallableInstance {
     // method.
     super("_call");
     if (a instanceof Function) {
-     this.rawFunction = a;
+     this.rawFunction = a; // Curry function "a" and make it throw if undefined
     } else if (a instanceof Array) {
-      this.rawFunction = a.at.bind(a);
+      this.rawFunction = safeAt.bind(a);
     } else if (a instanceof Set) {
       this.rawFunction = a.has.bind(a);
     } else if (a instanceof Map) {
       this.rawFunction = a.get.bind(a);
     }
     else if (a instanceof Object) {
-      this.rawFunction = x => a[x];
+      this.rawFunction = safeGet.bind(a);
     } 
     else {
       throw new Error(`Unsupported type for FunctionObject constructor: ${a}`);

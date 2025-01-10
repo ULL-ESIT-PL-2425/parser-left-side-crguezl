@@ -17,9 +17,10 @@
     "npm": ">= 10.9.0"
   },
   "scripts": {
-    "test": "npx jest --verbose --maxWorkers 4 -t 'left-side'",
-    "testchanged": "npx jest --verbose --maxWorkers 4 -t 'left-side' --onlyChanged",
-    "testwatch": "npx jest --verbose --maxWorkers 4 --watch",
+    "test": "jest --verbose --maxWorkers 4 -t 'left-side'",
+    "testWithObject": "export default STOREOBJECT=1 && jest --verbose --maxWorkers 4 -t 'left-side'",
+    "testchanged": "jest --verbose --maxWorkers 4 -t 'left-side' --onlyChanged",
+    "testwatch": "jest --verbose --maxWorkers 4 --watch",
     "testall": "jest",
     "example": "cd examples && npm test",
     "cleanlib": "cd packages/babel-parser/lib && rm -fR index.js options.js plugin-utils.js types.js plugins util tokenizer parser",

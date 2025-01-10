@@ -10,4 +10,4 @@ foo(10) = 5;
 
 console.log(foo.size); //  1
 
-console.log(foo.cache.toString()); //  [[10,5]]
+console.log(foo.cache.store instanceof Map || (Object.getPrototypeOf(foo.cache.store) === null)) 

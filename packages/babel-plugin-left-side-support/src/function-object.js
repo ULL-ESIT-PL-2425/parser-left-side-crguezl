@@ -44,13 +44,21 @@ class StoreMap {
   }
 }
 
+// Set environment variable STOREOBJECT to "StoreObject" to use the StoreObject implementation
 class StoreObject {
   // Implements the cache based on Object.create(null)
   constructor() {
     this.store = Object.create(null);
   }
   set(key, value) {
-    this.store[key] = value;
+    if (isValueType(key)) {
+      return this.store[key] = value;
+    } 
+    if(key instanceof Map) {
+      key.forEach((value, key) => this.store[key] = value);
+      return key; // Return the map
+    }
+    throw new Error(`Invalid left side callexpression in assignment. An "${typeof key}" can not be used as a key in an assignment.`); 
   }
   get(key) {
     return this.store[key];
@@ -66,6 +74,9 @@ class StoreObject {
     return JSON.stringify(this.store);
   }
 }
+
+const DefaultClass = process.env.STOREOBJECT? StoreObject : StoreMap; 
+//console.log(DefaultClass);
 
 const safeAt = function(index) {
   if (typeof index !== 'number' || isNaN(index)) {
@@ -96,7 +107,6 @@ function currying(fn) {
   return curryFactory([]);
 }
 
-const DefaultClass = StoreMap; // StoreObject;
 class FunctionObject extends CallableInstance {
   constructor(a, cache = new DefaultClass()) {
     // CallableInstance accepts the name of the property to use as the callable

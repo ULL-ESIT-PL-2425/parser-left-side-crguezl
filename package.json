@@ -17,8 +17,10 @@
     "npm": ">= 10.9.0"
   },
   "scripts": {
-    "test": "npx jest --verbose -t 'left-side'",
-    "alltest": "jest",
+    "test": "npx jest --verbose --maxWorkers 4 -t 'left-side'",
+    "testchanged": "npx jest --verbose --maxWorkers 4 -t 'left-side' --onlyChanged",
+    "testwatch": "npx jest --verbose --maxWorkers 4 --watch",
+    "testall": "jest",
     "example": "cd examples && npm test",
     "cleanlib": "cd packages/babel-parser/lib && rm -fR index.js options.js plugin-utils.js types.js plugins util tokenizer parser",
     "clean": "npm run cleanlib; rm -fR node_modules; rm -fR packages/babel-parser/node_modules; rm package-lock.json; npm i",

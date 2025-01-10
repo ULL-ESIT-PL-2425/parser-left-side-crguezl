@@ -83,7 +83,7 @@ class FunctionObject extends CallableInstance {
     // CallableInstance accepts the name of the property to use as the callable
     // method.
     super("_call");
-    if (a instanceof Function) {
+    if (a instanceof Function) { // TODO: Convert to a switch?
      this.rawFunction = currying(a); // Curry function "a" and make it throw if undefined?
     } else if (a instanceof Array) {
       this.rawFunction = safeAt.bind(a);
@@ -95,6 +95,12 @@ class FunctionObject extends CallableInstance {
     else if (a instanceof Object) {
       this.rawFunction = safeGet.bind(a);
     } 
+    else if (typeof a === 'string') {
+      this.rawFunction = safeGet.bind(a);
+    }
+    else if (typeof a === 'number') {
+      this.rawFunction = x => a
+    }
     else {
       throw new Error(`Unsupported type for FunctionObject constructor: ${a}`);
     }

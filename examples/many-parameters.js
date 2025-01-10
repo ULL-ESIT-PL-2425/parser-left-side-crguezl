@@ -1,4 +1,4 @@
-function @@ foo(a, b) {
+function @@ foo(a, b) { // foo gets currified automatically
   return a+b;
 }
 

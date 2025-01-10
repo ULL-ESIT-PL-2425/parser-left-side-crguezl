@@ -1,13 +1,32 @@
 const debug = false;
 const CallableInstance = require("callable-instance");
 
+function isValueType(arg) {
+  // Check if the argument is a primitive type (passed by value)
+  return (
+    typeof arg === 'number' ||
+    typeof arg === 'string' ||
+    typeof arg === 'boolean' ||
+    arg === null ||
+    arg === undefined ||
+    typeof arg === 'symbol'
+  );
+}
+
 class StoreMap {
   // Implements the cache based on Map
   constructor() {
     this.store = new Map();
   }
   set(key, value) {
-    this.store.set(key, value);
+    if (isValueType(key)) {
+      return this.store.set(key, value);
+    } 
+    if(key instanceof Map) {
+      key.forEach((value, key) => this.store.set(key, value));
+      return key;
+    }
+    throw new Error(`Invalid left side callexpression in assignment. An "${typeof key}" can not be used as a key in an assignment.`); 
   }
   get(key) {
     return this.store.get(key);

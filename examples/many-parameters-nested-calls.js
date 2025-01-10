@@ -3,6 +3,6 @@ let foo = new FunctionObject(function(a, b) {
   return a+b;
 });
 
-foo(2)(3) = 1; // The call f(2,3) is not yet implemented
+foo(2)(3) = 1; // TODO: The call f(2,3) is not yet implemented
 console.log(foo(2)(3)); // 1
 console.log(foo(2)(5)); // 7

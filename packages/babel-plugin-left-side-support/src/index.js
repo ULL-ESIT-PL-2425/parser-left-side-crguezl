@@ -1,8 +1,9 @@
 const { functionObject, FunctionObject } = require("./function-object");
-const { assign } = require("./assign");
+const { assign, mapAssign } = require("./assign");
 
 module.exports = {
   assign,
+  mapAssign,
   functionObject,
   FunctionObject,
 };

@@ -14,4 +14,20 @@ function assign(f, cacheArgs, cacheValue) {
   return cacheValue; 
 }
 
-module.exports = { assign };
+function mapAssign(f, m) { // f is a functionObject, m is a Map
+  //console.log('src f', f.toString(), cacheArgs, cacheValue);
+  //debugger;
+  
+  if (!(f instanceof FunctionObject)) {
+     // TODO: move this conditional if !(...) error to the plugin before assignment and show the line number 
+     throw `TypeError: Assigning to an ordinary Function. Convert to FunctionObject instead.`;
+  }
+  // traverse the map and assign the values to the functionObject
+  m.forEach((value, key) => {
+    f.setCache(key, value);
+  });
+  return m; 
+}
+
+
+module.exports = { assign, mapAssign };

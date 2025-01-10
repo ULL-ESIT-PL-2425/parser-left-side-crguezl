@@ -38,7 +38,7 @@ function changeAssignableFunctionToValid(node) {
 }
 
 const SUPPORT_TEMPLATE = template(
-  'const {assign, functionObject, FunctionObject} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");',
+  'const {assign, mapAssign, functionObject, FunctionObject} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");',
 )();
 
 const assignTemplate = template('assign(CALLEE, ARGS, RVALUE);');

@@ -7,7 +7,7 @@
 This is a library to give support to the Babel plugin @ull-esit-pl-2425/babel-plugin-left-side-plugin
 [published in the GitHub registry](https://github.com/orgs/ULL-ESIT-PL-2425/packages)  inside the GitHub organization [ull-esit-pl-2425](https://github.com/ULL-ESIT-PL-2425) organization. 
 
-This library provides the functions `assign` and `functionObject` that are used by the plugin to compile the code that uses the new syntax and semantics proposed in the plugin.
+This library provides the functions `assign` and `functionObject` and the class `FunctionObject`.
 
 
 ## Examples

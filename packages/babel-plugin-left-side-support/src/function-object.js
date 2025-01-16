@@ -1,4 +1,3 @@
-const debug = false;
 const CallableInstance = require("callable-instance");
 
 function isValueType(arg) {
@@ -80,7 +79,7 @@ const DefaultClass = process.env.STOREOBJECT? StoreObject : StoreMap;
 
 const safeAt = function(index) {
   if (typeof index !== 'number' || isNaN(index)) {
-    throw new Error(`Invalid index "${index}"`);
+    throw new Error(`Invalid index "${index} for array access"`);
   }
   return this.at(index); 
 };
@@ -108,10 +107,15 @@ function currying(fn) {
 }
 
 // TODO: FunctionObject constructor cache and exception parameters #5 https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl/issues/5
-class FunctionObject extends CallableInstance {
-  constructor(a, cache = new DefaultClass()) {
-    // CallableInstance accepts the name of the property to use as the callable
-    // method.
+//    cache =  new DefaultClass(),
+//    exception = /* exception handler function (x, error) => { ... } or null */ null,
+//    undef = /* undefined handler function (x, v = a(x)) => { ... } or null */ null,
+//    domain = /* domain definition function (x, v = a(x)) => { ... } that returns a boolean or null */ null,
+//    debug = false
+class FunctionObject extends CallableInstance {   // CallableInstance accepts the name of the property to use as the callable method.
+
+  constructor(a, { cache =  new DefaultClass(), exception =  null, undef =  null, domain =  null, debug = false} = {}) {
+    
     super("_call");
     if (a instanceof Function) { // TODO: Convert to a switch?
      this.rawFunction = currying(a); // Curry function "a" and make it throw if undefined?
@@ -135,25 +139,37 @@ class FunctionObject extends CallableInstance {
       throw new Error(`Unsupported type for FunctionObject constructor: ${a}`);
     }
     this.cache = cache;
+    this.exception = exception;
+    this.undef = undef;
+    this.domain = domain;
+    this.debug = debug;
+    if (debug) console.log("in functionObject: ",{ exception, cache, undef, domain, debug });
     this.function = function (...args) {
-      if (args.length) {
-        const arg = args[0];
-        // TODO: What should we do with objects? Straight up use toString?
-        //if (arg instanceof Complex) {
-        //    arg = arg.toString();
-        //}
-        if (this?.cache && this.cache.get(arg) !== undefined) {
-          if (debug) console.log(`Cached value! ${this.cache.get(arg)}`);
-          return this.cache.get(arg);
-        }
+      if (debug) console.error(`FunctionObject called with ${args}`);
+      if (args.length !== 1)  throw new Error(`An assignable function must be called with a single argument. Received: ${args.length} arguments instead`);
+      
+      const arg = args[0];
+      if (this?.cache && this.cache.get(arg) !== undefined) {
+        if (debug) console.error(`Cached value! ${this.cache.get(arg)}`);
+        return this.cache.get(arg);
       }
-      return this.rawFunction(...args);
+      
+      //return this.rawFunction(...args);
+
+      try {
+        return this.rawFunction(...args);
+      } catch (error) {
+        if (exception) {
+          return exception(arg, error);
+        }
+        throw error;
+      }
     };
   }
 
   _call(arg) {
+    if (this.debug) console.log("in call: ",arg)
     const result = this.function(arg);
-    //console.log(arg)
     //console.log(result);
     // Are we sure about this? If the underlying function is supposed to give undefined this would be wrong.
     //return (typeof result == 'undefined') ? null : result;
@@ -181,9 +197,9 @@ class FunctionObject extends CallableInstance {
 
 }
 
-function functionObject(a) {
+function functionObject(a, options) {
   if (a instanceof FunctionObject) return a;
-  return new FunctionObject(a);
+  return new FunctionObject(a, options);
 }
 
 module.exports = { functionObject, FunctionObject };

@@ -1,54 +1,109 @@
-<p align="center">
-  <a href="https://babeljs.io/">
-    <img alt="babel" src="https://raw.githubusercontent.com/babel/logo/master/babel.png" width="546">
-  </a>
-</p>
 
 ## What is this?
 
 > [!CAUTION]
-> This is a work in progress. The syntax and the semantic of the extension to JavaScript presented below is not yet fully defined and tested. The [packages](https://github.com/orgs/ULL-ESIT-PL/packages?repo_name=babel-tanhauhau) are published in the GitHub registry, but they are not ready for production.
+> This is a work in progress. 
+
+This is a library to give support to the Babel plugin @ull-esit-pl-2425/babel-plugin-left-side-plugin
+[published in the GitHub registry](https://github.com/orgs/ULL-ESIT-PL-2425/packages)  inside the GitHub organization [ull-esit-pl-2425](https://github.com/ULL-ESIT-PL/24-25) organization. 
+
+This library provides the functions `assign` and `functionObject` that are used by the plugin to compile the code that uses the new syntax and semantics proposed in the plugin.
 
 
-This is a fork of [tanhauhau/babel](https://github.com/tanhauhau/babel) which is a fork of the original Babel repo at version 7.10.  
-The packages [published in the GitHub registry](https://github.com/orgs/ULL-ESIT-PL/packages) from branch [pablo-tfg](https://github.com/ULL-ESIT-PL/babel-tanhauhau/tree/pablo-tfg) are being written by Pablo Santana inside the GitHub organization [ull-esit-pl](https://github.com/ULL-ESIT-PL/) organization as part of his Bachellor Thesis (Trabajo Fin de Grado). 
+## Examples
 
-These packages extend the JavaScript language with a new kind of functions. The packages are:
-
-- The JS parser modified: [@ull-esit-pl/parser-left-side](https://github.com/orgs/ULL-ESIT-PL/packages/npm/package/parser-left-side)
-- The AST transformation plugin: [@ull-esit-pl/babel-plugin-left-side-plugin ](https://github.com/orgs/ULL-ESIT-PL/packages/npm/package/babel-plugin-left-side-plugin) 
-- The support library: [@ull-esit-pl/babel-plugin-left-side-support](https://github.com/orgs/ULL-ESIT-PL/packages/npm/package/babel-plugin-left-side-support) 
-
-### The proposed Syntax and Semantic
-
-These packages extend JS  with a new kind of functions, the `@@` functions (we lack by now of a name for this class of functions: *assignable*? *pure*?). Here is an example of declaring an *assignable* function:
+Given the code:
 
 ```js 
-function @@ foo(bar) {
-  return bar * 2;
-}
+➜  examples git:(develop) ✗ pwd
+/Users/casianorodriguezleon/campus-virtual/2324/research/parser-left-side-crguezl/packages/babel-plugin-left-side-support/examples
+➜  examples git:(develop) ✗ cat many-parameters-nested-calls.cjs 
+const {
+  assign,
+  functionObject,
+  FunctionObject
+} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");
+
+let foo = new FunctionObject(function (a, b) {
+  return a + b;
+});
+assign(foo, [2], foo(2)), 
+assign(foo(2), [3], 1); 
+console.log(foo(2)(3)); // 1
+console.log(foo(2)(5)); // 7
+➜  examples git:(develop) ✗ node many-parameters-nested-calls.cjs
+1
+7
 ```
 
-These *assignable* functions can be later modified  using the assign expression:
+The constructor builds a function object that is a currified version of the function passed as an argument. The `assign` function is used to assign values to the function object. 
+
+The constructor `FunctionObject` can be called with a function, an array, a map, a string, a number, a boolean, or an object. Here is an example with an array:
 
 ```js
-foo(10) = 5;
-```
-
-Here is the full code for our "hello assignable functions!" left-side-plugin example:
-
-`➜  babel-npm-test git:(main) cat example.js`
-```js
-function @@ foo(bar) {
-  return bar * 2;
+➜  examples git:(develop) ✗ cat array.cjs 
+const {
+  assign,
+  functionObject,
+  FunctionObject
+} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");
+// Arrays
+let a = functionObject([1, 2, 3]); 
+console.log(a(0)); // 1
+console.log(a(2)); // 3
+console.log(a(3)); // undefined
+console.log(a(-1)); // 3
+try {
+  a("chuchu");
+} catch (e) {
+  console.log(e.message); // Invalid index "chuchu" for array access
 }
-foo(10) = 5;
-
-console.log(foo(10)); //  5
-console.log(foo(5));  // 10
+; 
+assign(a, [0], -3);
+console.log(a(0)); // -3
+assign(a, [2], 0);
+console.log(a(2)); // 0
+console.log(a.size); // 2
+a.setCache(9, 1);
+console.log(a(9)); // 1
+console.log(a.getCache(9)); // 1
 ```
 
-You can fork the example repo [ULL-ESIT-PL/babel-left-side-npm-test](https://github.com/ULL-ESIT-PL/babel-left-side-npm-test) and test the packages in your own workspace or follow the instructions below.
+The `FunctionObject` constructor can also be called with an `option` object that can contain the following properties:
+
+- `debug`: a boolean that enables debugging
+- `exception`: a function that is called when an exception is thrown. The function receives the original argument  and the error object produced by the exception. 
+The function can return a value that will be used instead of the exception.
+
+Here is an example:
+
+```js 
+➜  examples git:(develop) ✗ cat exception-array-handling.cjs 
+const {
+  assign,
+  functionObject,
+  FunctionObject
+} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");
+let a = functionObject([1, 2, 3], {
+  // A functionObject array produces exceptions when the index is not a number
+  debug: false,
+  exception: (x, e) => {
+    console.log("handler called!", e?.message);
+    if (typeof x === 'string') {
+      return x.length;
+    } else if (Array.isArray(x)) {
+      return x.map(i => a(i));
+    }
+  }
+});
+console.log(a("hello")); // 5
+console.log(a([2, 1, 0, -1, -2, -3])); // [ 3, 2, 1, 3, 2, 1 ]
+➜  examples git:(develop) ✗ node exception-array-handling.cjs 
+handler called! Invalid index "hello" for array access
+5
+handler called! Invalid index "2,1,0,-1,-2,-3" for array access
+[ 3, 2, 1, 3, 2, 1 ]
+```
 
 ## Install
 

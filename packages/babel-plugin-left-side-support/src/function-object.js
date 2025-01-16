@@ -79,7 +79,7 @@ const DefaultClass = process.env.STOREOBJECT? StoreObject : StoreMap;
 
 const safeAt = function(index) {
   if (typeof index !== 'number' || isNaN(index)) {
-    throw new Error(`Invalid index "${index} for array access"`);
+    throw new Error(`Invalid index "${index}" for array access`);
   }
   return this.at(index); 
 };

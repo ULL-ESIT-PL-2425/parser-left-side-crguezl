@@ -15,8 +15,8 @@ function isValueType(arg) {
 
 class StoreMap {
   // Implements the cache based on Map
-  constructor() {
-    this.store = new Map();
+  constructor() { // TODO: new StoreMap(Map | Object | Array | Set)
+     this.store = new Map();
   }
   set(key, value) {
     if (isValueType(key)) {
@@ -107,6 +107,7 @@ function currying(fn) {
   return curryFactory([]);
 }
 
+// TODO: FunctionObject constructor cache and exception parameters #5 https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl/issues/5
 class FunctionObject extends CallableInstance {
   constructor(a, cache = new DefaultClass()) {
     // CallableInstance accepts the name of the property to use as the callable

@@ -114,8 +114,14 @@ function currying(fn) {
 //    debug = false
 class FunctionObject extends CallableInstance {   // CallableInstance accepts the name of the property to use as the callable method.
 
-  constructor(a, { cache =  new DefaultClass(), exception =  null, undef =  null, domain =  null, debug = false} = {}) {
-    
+  constructor(a, options = {}) {
+    options = { 
+      cache : new DefaultClass(), 
+      exception:  null, 
+      undef: null, 
+      domain:  null, 
+      debug: false, ...options 
+    };
     super("_call");
     if (a instanceof Function) { // TODO: Convert to a switch?
      this.rawFunction = currying(a); // Curry function "a" and make it throw if undefined?
@@ -138,19 +144,19 @@ class FunctionObject extends CallableInstance {   // CallableInstance accepts th
     else {
       throw new Error(`Unsupported type for FunctionObject constructor: ${a}`);
     }
-    this.cache = cache;
-    this.exception = exception;
-    this.undef = undef;
-    this.domain = domain;
-    this.debug = debug;
-    if (debug) console.log("in functionObject: ",{ exception, cache, undef, domain, debug });
+    this.cache = options.cache;
+    this.exception =options.exception;
+    this.undef = options.undef;
+    this.domain = options.domain;
+    this.debug = options.debug;
+    if (this.debug) console.log("in functionObject: ", this);
     this.function = function (...args) {
-      if (debug) console.error(`FunctionObject called with ${args}`);
+      if (this.debug) console.error(`FunctionObject called with ${args}`);
       if (args.length !== 1)  throw new Error(`An assignable function must be called with a single argument. Received: ${args.length} arguments instead`);
       
       const arg = args[0];
       if (this?.cache && this.cache.get(arg) !== undefined) {
-        if (debug) console.error(`Cached value! ${this.cache.get(arg)}`);
+        if (this.debug) console.error(`Cached value! ${this.cache.get(arg)}`);
         return this.cache.get(arg);
       }
       
@@ -159,8 +165,8 @@ class FunctionObject extends CallableInstance {   // CallableInstance accepts th
       try {
         return this.rawFunction(...args);
       } catch (error) {
-        if (exception) {
-          return exception(arg, error);
+        if (this.exception) {
+          return this.exception(arg, error);
         }
         throw error;
       }

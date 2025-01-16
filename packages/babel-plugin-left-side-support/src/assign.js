@@ -14,4 +14,11 @@ function assign(f, cacheArgs, cacheValue) {
   return cacheValue; 
 }
 
-module.exports = { assign };
+function mAssign(f, cacheArgs, cacheValue) {
+  for (let i = 0; i < cacheArgs.length; i++) {
+    assign(f, [cacheArgs[i]], cacheValue);
+  }
+  return cacheValue;
+}
+
+module.exports = { assign, mAssign };

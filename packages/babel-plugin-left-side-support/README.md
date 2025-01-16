@@ -12,6 +12,8 @@ This library provides the functions `assign` and `functionObject` and the class 
 
 ## Examples
 
+### foo(2)(3) = 1
+
 Given the code:
 
 ```js 
@@ -39,6 +41,8 @@ console.log(foo(2)(5)); // 7
 The constructor builds a function object that is a currified version of the function passed as an argument. The `assign` function is used to assign values to the function object. 
 
 The constructor `FunctionObject` can be called with a function, an array, a map, a string, a number, a boolean, or an object. Here is an example with an array:
+
+### Arrays
 
 ```js
 ➜  examples git:(develop) ✗ cat array.cjs 
@@ -68,6 +72,8 @@ a.setCache(9, 1);
 console.log(a(9)); // 1
 console.log(a.getCache(9)); // 1
 ```
+
+### exception 
 
 The `FunctionObject` constructor can also be called with an `option` object that can contain the following properties:
 
@@ -103,6 +109,32 @@ handler called! Invalid index "hello" for array access
 5
 handler called! Invalid index "2,1,0,-1,-2,-3" for array access
 [ 3, 2, 1, 3, 2, 1 ]
+```
+
+### Example of assign and exception handling
+
+```js 
+➜  examples git:(main) ✗ cat negative-assign.cjs 
+const {
+  assign,
+  functionObject,
+  FunctionObject
+} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");
+let a = functionObject([1, 2, 3], {
+  debug: false,
+  exception: (x, e) => {
+    console.log("handler called!", e?.message);
+    return 1;
+  }
+});
+assign(a, [-1], 2);      // a(-1) = 2
+console.log(a(-1));      // 2
+console.log(a("hello")); // throws an error that is caught by the exception handler
+
+➜  examples git:(main) ✗ node negative-assign.cjs
+2
+handler called! Invalid index "hello" for array access
+1
 ```
 
 ## Install

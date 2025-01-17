@@ -1,7 +1,8 @@
 const {
   assign,
   functionObject,
-  FunctionObject
+  FunctionObject,
+  Storage
 } = require("@ull-esit-pl-2425/babel-plugin-left-side-support");
 // Arrays
 let a = functionObject([1, 2, 3]); // Potential Syntax @@ [1,2,3]

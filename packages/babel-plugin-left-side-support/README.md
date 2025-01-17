@@ -79,7 +79,7 @@ console.log(a.getCache(9)); // 1
 
 ### setCache
 
-You can also pass a `Map` to the `setCache` method:
+You can also pass a `Map` or an array of pairs `[key, value]` to the `setCache` method:
 
 ```js
 ➜  examples git:(main) ✗ cat functionobject-setMap.cjs

@@ -1,7 +1,8 @@
 const {
   assign,
   functionObject,
-  FunctionObject
+  FunctionObject,
+  Storage
 } = require("@ull-esit-pl-2425/babel-plugin-left-side-support");
 // May be in the future this will be a synonim of foo(a)(b) but by now let us throw an error
 let foo = new FunctionObject(function (a, b) {

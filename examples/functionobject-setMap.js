@@ -17,3 +17,5 @@ try {
 } catch (e) {
    console.log(e.message);
 }
+a.setCache(new Map([[[7,1], [8,2]]])); // Same as a([7, 1]) = [8, 2]
+console.log(a([7, 1]));   // [8, 2]

@@ -14,24 +14,20 @@ function isValueType(arg) {
 
 class StoreMap {
   // Implements the cache based on Map
-  constructor() { // TODO: new StoreMap(Map | Object | Array | Set)
-     this.store = new Map();
+  constructor(debug = false) { // TODO: new StoreMap(Map | Object | Array | Set)
+    this.store = new Map();
+    this.debug = debug;
   }
   set(key, value) {
-    if (isValueType(key)) {
-      return this.store.set(key, value);
-    } 
-    if(key instanceof Map || Array.isArray(key)) { // TODO: What of these two implementations is better in performance?
-      //key.forEach((value, key) => this.store.set(key, value)); 
-      //return this.store;
-      try {
-        return this.store = new Map([...this.store, ...key]); // This works with arrays also
-      }
-      catch (error) {
-        throw new Error(`Invalid left side callexpression in assignment. An "${key?.constructor?.name || typeof key}" can not be used as a key in an assignment.`);
-      }
+    // if more than two arguments throw an error
+    if (arguments.length > 2) {
+      throw new Error(`Invalid number of arguments on assignment. Expected 2, received ${arguments.length}`);
     }
-    throw new Error(`Invalid left side callexpression in assignment. An "${typeof key}" can not be used as a key in an assignment.`); 
+    if (isValueType(key)) {
+      if (this.debug) console.log(`Setting ${key} to ${value}`);
+      return this.store.set(key, value);
+    }
+    throw new Error(`TypeError: Invalid left side callexpression in assignment. A "${key?.constructor?.name || typeof key}" can not be used as a key in a left-side function assignment.`);
   }
   get(key) {
     return this.store.get(key);
@@ -50,6 +46,7 @@ class StoreMap {
 }
 
 // Set environment variable STOREOBJECT to "StoreObject" to use the StoreObject implementation
+// TODO: Class StoreObject is behind class StoreMap
 class StoreObject {
   // Implements the cache based on Object.create(null)
   constructor() {
@@ -58,12 +55,12 @@ class StoreObject {
   set(key, value) {
     if (isValueType(key)) {
       return this.store[key] = value;
-    } 
-    if(key instanceof Map) {
+    }
+    if (key instanceof Map) {
       key.forEach((value, key) => this.store[key] = value);
       return key; // Return the map
     }
-    throw new Error(`Invalid left side callexpression in assignment. An "${typeof key}" can not be used as a key in an assignment.`); 
+    throw new Error(`Invalid left side callexpression in assignment. An "${typeof key}" can not be used as a key in an assignment.`);
   }
   get(key) {
     return this.store[key];
@@ -80,10 +77,10 @@ class StoreObject {
   }
 }
 
-const DefaultClass = process.env.STOREOBJECT? StoreObject : StoreMap; 
-//console.log(DefaultClass);
+const Storage = process.env.STOREOBJECT ? StoreObject : StoreMap;
+//console.log(Storage);
 
-const safeAt = function(index) {
+const safeAt = function (index) {
   if (!Number.isInteger(index)) {
     throw new Error(`Index "${index}" is not an integer`);
   }
@@ -92,7 +89,7 @@ const safeAt = function(index) {
     throw new Error(`Index "${index}" is out of bounds`);
   }
   */
-  return this.at(index); 
+  return this.at(index);
 };
 
 const safeGet = function (prop) {
@@ -118,7 +115,7 @@ function currying(fn) {
 }
 
 // TODO: FunctionObject constructor cache and exception parameters #5 https://github.com/ULL-ESIT-PL-2425/parser-left-side-crguezl/issues/5
-//    cache =  new DefaultClass(),
+//    cache =  new Storage(),
 //    exception = /* exception handler function (x, error) => { ... } or null */ null,
 //    undef = /* undefined handler function (x, v = a(x)) => { ... } or null */ null,
 //    domain = /* domain definition function (x, v = a(x)) => { ... } that returns a boolean or null */ null,
@@ -127,9 +124,9 @@ class FunctionObject extends CallableInstance {   // CallableInstance accepts th
 
   constructor(a, options = {}) {
     options = { // Default options
-      cache : new DefaultClass(), 
-      exception:  null, 
-      undef: null, 
+      cache: new Storage(),
+      exception: null,
+      undef: null,
       primitive: null,
       // TODO: domain:  null, 
       // TODO: original: the original object that is being wrapped?
@@ -138,7 +135,7 @@ class FunctionObject extends CallableInstance {   // CallableInstance accepts th
     };
     super("_call");
     if (a instanceof Function) { // TODO: Convert to a switch?
-     this.rawFunction = currying(a); // Curry function "a" and make it throw if undefined?
+      this.rawFunction = currying(a); // Curry function "a" and make it throw if undefined?
     } else if (a instanceof Array) {
       this.rawFunction = safeAt.bind(a);
       this.primitive = a;
@@ -150,7 +147,7 @@ class FunctionObject extends CallableInstance {   // CallableInstance accepts th
     }
     else if (a instanceof Object) {
       this.rawFunction = safeGet.bind(a);
-    } 
+    }
     else if (typeof a === 'string') {
       this.rawFunction = safeGet.bind(a);
     }
@@ -161,21 +158,22 @@ class FunctionObject extends CallableInstance {   // CallableInstance accepts th
       throw new Error(`Unsupported type for FunctionObject constructor: ${a}`);
     }
     this.cache = options.cache;
-    this.exception =options.exception;
+    this.exception = options.exception;
     this.undef = options.undef;
     this.domain = options.domain;
     this.debug = options.debug;
-    if (this.debug) console.log("in functionObject: ", this);
+    this.cache.debug = this.debug;
+    //if (this.debug) console.log("in functionObject: ", this);
     this.function = function (...args) {
-      if (this.debug) console.error(`FunctionObject called with ${args}`);
-      if (args.length !== 1)  throw new Error(`An assignable function must be called with a single argument. Received: ${args.length} arguments instead`);
-      
+      //if (this.debug) console.error(`FunctionObject called with ${args}`);
+      if (args.length !== 1) throw new Error(`An assignable function must be called with a single argument. Received: ${args.length} arguments instead`);
+
       const arg = args[0];
       if (this?.cache && this.cache.get(arg) !== undefined) {
-        if (this.debug) console.error(`Cached value! ${this.cache.get(arg)}`);
+        //if (this.debug) console.error(`Cached value! ${this.cache.get(arg)}`);
         return this.cache.get(arg);
       }
-      
+
       //return this.rawFunction(...args);
 
       try {
@@ -194,14 +192,14 @@ class FunctionObject extends CallableInstance {   // CallableInstance accepts th
   }
 
   _call(arg) {
-    if (this.debug) console.log("in call: ",arg)
+    //if (this.debug) console.log("in call: ",arg)
     const result = this.function(arg);
     //console.log(result);
     // Are we sure about this? If the underlying function is supposed to give undefined this would be wrong.
     //return (typeof result == 'undefined') ? null : result;
     return result;
   }
-  
+
   toString() {
     return this.function.toString();
   }
@@ -228,4 +226,4 @@ function functionObject(a, options) {
   return new FunctionObject(a, options);
 }
 
-module.exports = { functionObject, FunctionObject };
+module.exports = { functionObject, FunctionObject, Storage };

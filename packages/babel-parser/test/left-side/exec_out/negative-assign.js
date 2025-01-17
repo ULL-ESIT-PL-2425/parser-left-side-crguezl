@@ -1,3 +1,3 @@
 2
-handler called! Invalid index "hello" for array access
+handler called! Index "hello" is not an integer
 1

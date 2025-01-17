@@ -73,6 +73,30 @@ console.log(a(9)); // 1
 console.log(a.getCache(9)); // 1
 ```
 
+You can also pass a `Map` to the `setCache` method:
+
+```js
+➜  examples git:(main) ✗ cat functionobject-setMap.cjs 
+const {
+  assign,
+  functionObject,
+  FunctionObject
+} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");
+// Arrays
+let a = functionObject([1, 2, 3]); // Potential Syntax @@ [1,2,3]
+a.setCache(new Map([[3, 1], [4, 2], [5, 3]]));
+console.log(a(3)); // 1
+console.log(a.getCache(4)); // 2
+```
+
+Here is the output:
+
+```
+➜  examples git:(main) ✗ node functionobject-setMap.cjs 
+1
+2
+```
+
 ### exception handler example
 
 The `FunctionObject` constructor can also be called with an `option` object that can contain the following properties:

@@ -2,7 +2,7 @@
 3
 undefined
 3
-Invalid index "chuchu" for array access
+Index "chuchu" is not an integer
 -3
 0
 2

@@ -78,9 +78,14 @@ const DefaultClass = process.env.STOREOBJECT? StoreObject : StoreMap;
 //console.log(DefaultClass);
 
 const safeAt = function(index) {
-  if (typeof index !== 'number' || isNaN(index)) {
-    throw new Error(`Invalid index "${index}" for array access`);
+  if (!Number.isInteger(index)) {
+    throw new Error(`Index "${index}" is not an integer`);
   }
+  /*
+  if (index < -this.length || index >= this.length) {
+    throw new Error(`Index "${index}" is out of bounds`);
+  }
+  */
   return this.at(index); 
 };
 
@@ -118,10 +123,11 @@ class FunctionObject extends CallableInstance {   // CallableInstance accepts th
     options = { // Default options
       cache : new DefaultClass(), 
       exception:  null, 
-      // TODO: undef: null, 
+      undef: null, 
+      primitive: null,
       // TODO: domain:  null, 
       // TODO: original: the original object that is being wrapped?
-      debug: false, 
+      debug: false, // just for developers
       ...options // Override default options with user options
     };
     super("_call");
@@ -129,8 +135,10 @@ class FunctionObject extends CallableInstance {   // CallableInstance accepts th
      this.rawFunction = currying(a); // Curry function "a" and make it throw if undefined?
     } else if (a instanceof Array) {
       this.rawFunction = safeAt.bind(a);
+      this.primitive = a;
     } else if (a instanceof Set) {
       this.rawFunction = a.has.bind(a);
+
     } else if (a instanceof Map) {
       this.rawFunction = a.get.bind(a);
     }
@@ -165,10 +173,14 @@ class FunctionObject extends CallableInstance {   // CallableInstance accepts th
       //return this.rawFunction(...args);
 
       try {
-        return this.rawFunction(...args);
+        let result = this.rawFunction(...args);
+        if (result === undefined && this.undef) {
+          result = this.undef(arg, this.primitive);
+        }
+        return result;
       } catch (error) {
         if (this.exception) {
-          return this.exception(arg, error);
+          return this.exception(arg, error, this.primitive);
         }
         throw error;
       }

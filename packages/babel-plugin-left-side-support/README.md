@@ -52,13 +52,13 @@ const {
   FunctionObject
 } = require("@ull-esit-pl-2425/babel-plugin-left-side-support");
 // Arrays
-let a = functionObject([1, 2, 3]); 
+let a = functionObject([1, 2, 3]); // Function "a" behaves like "a.at"
 console.log(a(0)); // 1
 console.log(a(2)); // 3
 console.log(a(3)); // undefined
 console.log(a(-1)); // 3
 try {
-  a("chuchu");
+  a("chuchu");   // For strings "a" throws an exception
 } catch (e) {
   console.log(e.message); // Invalid index "chuchu" for array access
 }
@@ -73,7 +73,7 @@ console.log(a(9)); // 1
 console.log(a.getCache(9)); // 1
 ```
 
-### exception example
+### exception handler example
 
 The `FunctionObject` constructor can also be called with an `option` object that can contain the following properties:
 
@@ -143,6 +143,56 @@ console.log(a.cache.toString()); // [[-1,2],[3,4]]
 2
 [[-1,2],[3,4]]
 ```
+
+## The undef handler
+
+The `undef` property of the `option` argument of the `FunctionObject` constructor 
+can contain a function that will be called when the `rawFunction`  returns an `undefined` value. 
+The function receives the original argument and the `primitive` object used for construction.
+
+Here is an example:
+
+`➜  examples git:(main) ✗ cat undef-handler-example.cjs`
+```js
+const {
+  assign,
+  functionObject,
+  FunctionObject
+} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");
+let a = functionObject([1, 2, 3], {
+  // A functionObject array produces exceptions when the index is not a number
+  debug: false, // for developers
+  undef: (x, primitive) => { // primitive is the array [1,2,3]
+    throw new Error("Error accesing index '" + x + "' in array " + JSON.stringify(primitive));
+  },
+  exception: (x, e, primitive) => {
+    if (typeof x === 'string' && primitive[x] !== undefined) {
+      return primitive[x];
+    } else if (Array.isArray(x)) {
+      return x.map(i => a(i));
+    } else throw e;
+  }
+});
+console.log(a([2, 1, 0, -1, -2, -3])); // [ 3, 2, 1, 3, 2, 1 ]
+console.log(a(-1)); // 3 the function object of "a" behaves as "a.at"
+try {
+  console.log(a(9));
+} catch (e) {
+  console.log(e.message);
+}; // Error accesing index '9' in array [1,2,3]
+console.log(a("length")); // 3
+```
+
+Here is the output:
+
+```
+➜  examples git:(main) ✗ node undef-handler-example.cjs 
+[ 3, 2, 1, 3, 2, 1 ]
+3
+Error accesing index '9' in array [1,2,3]
+3
+```
+
 
 ## Install
 

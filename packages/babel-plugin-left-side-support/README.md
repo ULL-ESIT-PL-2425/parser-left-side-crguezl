@@ -77,10 +77,12 @@ console.log(a(9)); // 1
 console.log(a.getCache(9)); // 1
 ```
 
+### setCache
+
 You can also pass a `Map` to the `setCache` method:
 
 ```js
-➜  examples git:(main) ✗ cat functionobject-setMap.cjs 
+➜  examples git:(main) ✗ cat functionobject-setMap.cjs
 const {
   assign,
   functionObject,
@@ -88,9 +90,23 @@ const {
 } = require("@ull-esit-pl-2425/babel-plugin-left-side-support");
 // Arrays
 let a = functionObject([1, 2, 3]); // Potential Syntax @@ [1,2,3]
+
+// With Map
 a.setCache(new Map([[3, 1], [4, 2], [5, 3]]));
 console.log(a(3)); // 1
 console.log(a.getCache(4)); // 2
+
+// With Array [ [pairs] ... [pairs] ]
+a.setCache([[5, 1], [6, 2], [7, 3]]);
+console.log(a(5)); // 1
+console.log(a.getCache(6)); // 2
+
+// Invalid left side callexpression in assignment. An "Array" can not be used as a key in an assignment.
+try {
+  a.setCache([7, 1], [8, 2]);
+} catch (e) {
+  console.log(e.message);
+}
 ```
 
 Here is the output:
@@ -99,9 +115,13 @@ Here is the output:
 ➜  examples git:(main) ✗ node functionobject-setMap.cjs 
 1
 2
+1
+2
+Invalid left side callexpression in assignment. An "Array" can not be used as a key in an assignment.
 ```
 
-### exception handler example
+
+### The exception handler 
 
 The `FunctionObject` constructor can also be called with an `option` object that can contain the following properties:
 

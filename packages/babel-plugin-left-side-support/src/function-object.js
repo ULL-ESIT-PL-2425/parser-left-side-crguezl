@@ -21,9 +21,15 @@ class StoreMap {
     if (isValueType(key)) {
       return this.store.set(key, value);
     } 
-    if(key instanceof Map) {
-      key.forEach((value, key) => this.store.set(key, value));
-      return key;
+    if(key instanceof Map || Array.isArray(key)) { // TODO: What of these two implementations is better in performance?
+      //key.forEach((value, key) => this.store.set(key, value)); 
+      //return this.store;
+      try {
+        return this.store = new Map([...this.store, ...key]); // This works with arrays also
+      }
+      catch (error) {
+        throw new Error(`Invalid left side callexpression in assignment. An "${key?.constructor?.name || typeof key}" can not be used as a key in an assignment.`);
+      }
     }
     throw new Error(`Invalid left side callexpression in assignment. An "${typeof key}" can not be used as a key in an assignment.`); 
   }

@@ -11,6 +11,7 @@ const foo = functionObject(function foo(a) {
     });
   });
 });
+// TODO: foo(2) is computed twice! It is urgent to optimize the assign function!!!!
 assign(foo, [2], foo(2)), assign(foo(2), [3], foo(2)(3)), assign(foo(2)(3), [5], "Another value");
 console.log(foo(2)(3)(5)); // "Another Value"
 console.log(foo(2)(3)(6)); // 11

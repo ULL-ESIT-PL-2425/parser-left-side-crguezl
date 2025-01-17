@@ -9,8 +9,8 @@
 
 ## See also
 
-- The library support documentation packages/babel-plugin-left-side-support/README.md 
-- The plugin documentation packages/babel-plugin-left-side/README.md
+- [The library support documentation]](/packages/babel-plugin-left-side-support/README.md)
+- [The plugin documentation](/packages/babel-plugin-left-side/README.md)
 
 ## Goal
 

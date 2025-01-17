@@ -7,6 +7,11 @@
 > - **Secondary repo**: https://github.com/ULL-ESIT-PL/parser-left-side-crguezl
 
 
+## See also
+
+- The library support documentation packages/babel-plugin-left-side-support/README.md 
+- The plugin documentation packages/babel-plugin-left-side/README.md
+
 ## Goal
 
 **The problem this template solves**: When extending the JS Language using Babel, the usual approach is to fork the Babel monorepo.
@@ -21,11 +26,14 @@ a JS parser at `packages/babel-parser/lib`  ready to be used.
 
 Here is the list of project [scripts](package.json):
 
-`➜  parser-left-side-crguezl git:(main) npm pkg get scripts`
+`➜  parser-left-side-crguezl git:(main) ✗ npm pkg get scripts`
 ```json
 {
-  "test": "npx jest --verbose -t 'left-side'",
-  "alltest": "jest",
+  "test": "jest --verbose --maxWorkers 4 -t 'left-side'",
+  "testWithObject": "export default STOREOBJECT=1 && jest --verbose --maxWorkers 4 -t 'left-side'",
+  "testchanged": "jest --verbose --maxWorkers 4 -t 'left-side' --onlyChanged",
+  "testwatch": "jest --verbose --maxWorkers 4 --watch",
+  "testall": "jest",
   "example": "cd examples && npm test",
   "cleanlib": "cd packages/babel-parser/lib && rm -fR index.js options.js plugin-utils.js types.js plugins util tokenizer parser",
   "clean": "npm run cleanlib; rm -fR node_modules; rm -fR packages/babel-parser/node_modules; rm package-lock.json; npm i",
@@ -41,7 +49,7 @@ Here is the list of project [scripts](package.json):
   "publishminor": "npm version minor -ws && npm publish -ws",
   "publishmajor": "npm version major -ws && npm publish -ws",
   "publishactionpatch": "npm version patch -ws && npm run save && gh release create",
-  "publishactionmino": "npm version minor -ws && npm run save && gh release create",
+  "publishactionminor": "npm version minor -ws && npm run save && gh release create",
   "publishactionmajor": "npm version major -ws && npm run save && gh release create"
 }
 ```

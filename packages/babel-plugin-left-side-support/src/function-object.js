@@ -115,13 +115,14 @@ function currying(fn) {
 class FunctionObject extends CallableInstance {   // CallableInstance accepts the name of the property to use as the callable method.
 
   constructor(a, options = {}) {
-    options = { 
+    options = { // Default options
       cache : new DefaultClass(), 
       exception:  null, 
       // TODO: undef: null, 
       // TODO: domain:  null, 
-      debug: false, ...options 
       // TODO: original: the original object that is being wrapped?
+      debug: false, 
+      ...options // Override default options with user options
     };
     super("_call");
     if (a instanceof Function) { // TODO: Convert to a switch?

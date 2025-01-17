@@ -8,7 +8,8 @@ This is a library to give support to the Babel plugin @ull-esit-pl-2425/babel-pl
 [published in the GitHub registry](https://github.com/orgs/ULL-ESIT-PL-2425/packages)  inside the GitHub organization [ull-esit-pl-2425](https://github.com/ULL-ESIT-PL-2425) organization. 
 
 This library provides the functions `assign` and `functionObject` and the class `FunctionObject`.
-The basic idea behind this library is that functions are also a data structure and any other data structure 
+The basic idea behind this library is that functions as an abstraction can be considered a very 
+special data structure and that any other data structure 
 (arrays, maps, objects, numbers, strings, booleans, and any combination of them)
 can be represented via a function data structure.
 

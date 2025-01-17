@@ -118,9 +118,10 @@ class FunctionObject extends CallableInstance {   // CallableInstance accepts th
     options = { 
       cache : new DefaultClass(), 
       exception:  null, 
-      undef: null, 
-      domain:  null, 
+      // TODO: undef: null, 
+      // TODO: domain:  null, 
       debug: false, ...options 
+      // TODO: original: the original object that is being wrapped?
     };
     super("_call");
     if (a instanceof Function) { // TODO: Convert to a switch?
@@ -139,7 +140,7 @@ class FunctionObject extends CallableInstance {   // CallableInstance accepts th
       this.rawFunction = safeGet.bind(a);
     }
     else if (typeof a === 'number') {
-      this.rawFunction = x => a
+      this.rawFunction = _ => a
     }
     else {
       throw new Error(`Unsupported type for FunctionObject constructor: ${a}`);

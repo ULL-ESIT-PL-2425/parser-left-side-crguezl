@@ -73,7 +73,7 @@ console.log(a(9)); // 1
 console.log(a.getCache(9)); // 1
 ```
 
-### exception 
+### exception example
 
 The `FunctionObject` constructor can also be called with an `option` object that can contain the following properties:
 
@@ -114,27 +114,34 @@ handler called! Invalid index "2,1,0,-1,-2,-3" for array access
 ### Example of assign and exception handling
 
 ```js 
-➜  examples git:(main) ✗ cat negative-assign.cjs 
+➜  examples git:(main) ✗ cat array-function-length.cjs 
 const {
   assign,
   functionObject,
   FunctionObject
 } = require("@ull-esit-pl-2425/babel-plugin-left-side-support");
-let a = functionObject([1, 2, 3], {
+const b = [3, 2, 1];
+let a = functionObject(b, {
   debug: false,
   exception: (x, e) => {
-    console.log("handler called!", e?.message);
-    return 1;
+    if (typeof x == "string" && b[x] !== undefined) {
+      return b[x];
+    }
   }
 });
-assign(a, [-1], 2);      // a(-1) = 2
-console.log(a(-1));      // 2
-console.log(a("hello")); // throws an error that is caught by the exception handler
-
-➜  examples git:(main) ✗ node negative-assign.cjs
+assign(a, [-1], 2);
+console.log(a(-1)); // 2
+console.log(a("length")); // 3
+assign(a, [3], 4);
+console.log(a("length")); // 3 since "b" has not changed
+console.log(a.cache.size); // 2
+console.log(a.cache.toString()); // [[-1,2],[3,4]]
+➜  examples git:(main) ✗ node array-function-length.cjs   
 2
-handler called! Invalid index "hello" for array access
-1
+3
+3
+2
+[[-1,2],[3,4]]
 ```
 
 ## Install

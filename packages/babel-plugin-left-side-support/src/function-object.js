@@ -19,6 +19,7 @@ class StoreMap {
     this.debug = debug;
   }
   set(key, value) {
+    // TODO: These checks should be done in the setCache method of FunctionObject
     // if more than two arguments throw an error
     if (arguments.length > 2) {
       throw new Error(`Invalid number of arguments on assignment. Expected 2, received ${arguments.length}`);

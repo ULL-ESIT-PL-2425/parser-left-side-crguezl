@@ -29,7 +29,7 @@ function mAssign(f, cacheArgs, cacheValue) {
     if (next == cacheArgs.length) { // the end
       //console.log("last iteration ",next, cacheArgument, cacheValue)
       if (!f.cache) {
-        console.log(`TypeError: Assigning to an ordinary Function. Convert to FunctionObject instead.`);
+        throw `TypeError: Assigning to an ordinary Function. Convert to FunctionObject instead.`;
         // warning f pointer modification
         f = functionObject(f);
       }
@@ -43,7 +43,7 @@ function mAssign(f, cacheArgs, cacheValue) {
       f.setCache(cacheArgument, newFunctionObject);
       auxF = f.getCache(cacheArgument);
     } else if (!(auxF instanceof FunctionObject)) { // If auxF is not a FunctionObject, turn it into one. Always fallback to the original rawFunction.
-      console.log(`TypeError: Assigning to an ordinary Function. Convert to FunctionObject instead.`);
+      throw `TypeError: Assigning to an ordinary Function. Convert to FunctionObject instead.`;
 
       auxF = functionObject(f.rawFunction ? f.rawFunction : f)
     }

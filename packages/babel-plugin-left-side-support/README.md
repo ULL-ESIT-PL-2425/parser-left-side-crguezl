@@ -16,7 +16,31 @@ can be represented via a function data structure.
 
 ## Examples
 
-### foo(2)(3) = 1
+### foo(2)(3) = 1 mAssign
+
+```js 
+➜  examples git:(develop) ✗ cat massign.cjs 
+const {
+  assign,
+  mAssign,
+  functionObject,
+  FunctionObject,
+  Storage
+} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");
+const foo = functionObject(function foo(a) {
+  return functionObject(function bar(b) {
+    return a + b;
+  }, {debug: false});
+}, {debug: false});
+mAssign(foo, [6, 2], "Another value");
+console.log(foo(6)(2)); // "Another Value"
+console.log(foo(2)(3)); // 5
+➜  examples git:(develop) ✗ node massign.cjs
+Another value
+5
+```
+
+### foo(2)(3) = 1 assign
 
 Given the code:
 

@@ -1,6 +1,5 @@
 const {
   assign,
-  mAssign,
   functionObject,
   FunctionObject,
   Storage
@@ -8,8 +7,8 @@ const {
 const foo = functionObject(function foo(a) {
   return functionObject(function bar(b) {
     return a + b;
-  }, {debug: false});
-}, {debug: false});
-mAssign(foo, [6, 2], "Another value");
+  });
+});
+assign(foo, [6], foo(6)), assign(foo(6), [2], "Another value");
 console.log(foo(6)(2)); // "Another Value"
 console.log(foo(2)(3)); // 5

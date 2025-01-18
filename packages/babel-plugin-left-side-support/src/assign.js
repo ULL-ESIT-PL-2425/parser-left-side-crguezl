@@ -14,7 +14,7 @@ function assign(f, cacheArgs, cacheValue) {
 }
 
 function mAssign(f, cacheArgs, cacheValue) {
-  //console.log('f', f.toString(), cacheArgs, cacheValue);
+  //if (f.debug) console.log('f', cacheArgs, cacheValue);
   //debugger;
   for (let i = 0; i < cacheArgs.length; i++) {
     const cacheArgument = cacheArgs[i];
@@ -27,11 +27,11 @@ function mAssign(f, cacheArgs, cacheValue) {
     }*/
     const next = i + 1;
     if (next == cacheArgs.length) { // the end
-      //console.log(cacheArgs)
-      if (!f instanceof FunctionObject) {
-        throw `TypeError: Assigning to an ordinary Function. Convert to FunctionObject instead.`;
+      //console.log("last iteration ",next, cacheArgument, cacheValue)
+      if (!f.cache) {
+        //throw `TypeError: Assigning to an ordinary Function. Convert to FunctionObject instead.`;
         // warning f pointer modification
-        // f = functionObject(f);
+        f = functionObject(f);
       }
       f.setCache(cacheArgument, cacheValue);
       return cacheValue;

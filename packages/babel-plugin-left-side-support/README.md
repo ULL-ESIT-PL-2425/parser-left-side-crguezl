@@ -16,7 +16,7 @@ can be represented via a function data structure.
 
 ## Examples
 
-### foo(2)(3) = 1 mAssign
+### foo(2)(3) = 1 with mAssign
 
 ```js 
 ➜  examples git:(develop) ✗ cat massign.cjs 
@@ -40,7 +40,33 @@ Another value
 5
 ```
 
-### foo(2)(3) = 1 assign
+### foo(2)(3) = 1 with mAssign and currying 
+
+```js
+➜  examples git:(develop) ✗ cat massign-and-curry.cjs 
+const {
+  assign,
+  functionObject,
+  FunctionObject,
+  mAssign
+} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");
+
+let foo = new FunctionObject(function (a, b) {
+  return a + b;
+});
+//assign(foo, [2], foo(2)), 
+//assign(foo(2), [3], 1); // The call f(2,3) is not yet implemented
+mAssign(foo, [2, 3], "other value") 
+console.log(foo(2)(3)); // "other value"
+console.log(foo(2)(9)(0)); // 9
+console.log(foo(3)(2)); // 5
+➜  examples git:(develop) ✗ node massign-and-curry.cjs 
+other value
+9
+5
+```
+
+### foo(2)(3) = 1 with assign
 
 Given the code:
 

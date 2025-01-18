@@ -136,7 +136,8 @@ class FunctionObject extends CallableInstance {   // CallableInstance accepts th
     };
     super("_call");
     if (a instanceof Function) { // TODO: Convert to a switch?
-      this.rawFunction = currying(a); // Curry function "a" and make it throw if undefined?
+      if (a.length >1) this.rawFunction = currying(a); // Curry function "a" and make it throw if undefined?
+      else this.rawFunction = a;
     } else if (a instanceof Array) {
       this.rawFunction = safeAt.bind(a);
       this.primitive = a;

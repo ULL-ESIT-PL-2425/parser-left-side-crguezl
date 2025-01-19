@@ -14,24 +14,13 @@ function assign(f, cacheArgs, cacheValue) {
 }
 
 function mAssign(f, cacheArgs, cacheValue) {
-  debugger;
-  //if (f.debug) console.log('f', cacheArgs, cacheValue);
-  //debugger;
+  // debugger;
   for (let i = 0; i < cacheArgs.length; i++) {
     const cacheArgument = cacheArgs[i];
-    /* It is a possibility to assign both null and undefined argument values.
-    if (cacheArgument == null) {
-      const error = new Error(
-        "Invalid null argument on left side of assignment",
-      );
-      throw error;
-    }*/
     const next = i + 1;
     if (next == cacheArgs.length) { // the end
-      //console.log("last iteration ",f, next, cacheArgument, cacheValue)
       if (!(f instanceof FunctionObject)) {
         throw `TypeError: Assigning to an ordinary Function. Convert to FunctionObject instead.`;
-        // warning f pointer modification f = functionObject(f);
       }
       f.setCache(cacheArgument, cacheValue);
       return cacheValue;
@@ -39,13 +28,9 @@ function mAssign(f, cacheArgs, cacheValue) {
     // If there are more arguments
     let auxF = f.getCache(cacheArgument);
     if (!f?.cache?.has(cacheArgument)) { 
-      const newFunctionObject = functionObject(f(cacheArgument));
-      f.setCache(cacheArgument, newFunctionObject);
-      auxF = f.getCache(cacheArgument);
-    } else if (!(auxF instanceof FunctionObject)) { // If auxF is not a FunctionObject, turn it into one. Always fallback to the original rawFunction.
+      f.setCache(cacheArgument, auxF = f(cacheArgument));
+    } else if (!(auxF instanceof FunctionObject)) { 
       throw `TypeError: Assigning to an ordinary Function. Convert to FunctionObject instead.`;
-
-      auxF = functionObject(f)
     }
     f = auxF;
   }

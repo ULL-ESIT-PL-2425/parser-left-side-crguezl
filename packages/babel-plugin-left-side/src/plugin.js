@@ -35,8 +35,67 @@ const SUPPORT_TEMPLATE = template(
   'const {assign, mAssign, functionObject, FunctionObject, Storage} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");',
 )();
 
-const assignTemplate = template('assign(CALLEE, ARGS, RVALUE);');
+const assignTemplate = template('mAssign(FUN, ARGS, RVALUE);');
 
+module.exports = function leftSidePlugin(babel) {
+  return {
+    parserOverride(code, opts) {
+      return parser.parse(code, opts);
+    },
+    visitor: {
+      AssignmentExpression(path) {
+        const node = path.node;
+        const left = node.left;
+        if (node.operator == "=" && left.type == "CallExpression") {
+          let RVALUE = node.right;
+          let errorArgs = false;
+          //checkIsAssignableFunction(path, left);
+
+          let callee = left.callee;
+          if (left.arguments.length !== 1) {  errorArgs = true; }
+          let argumentList = [ left.arguments.at(-1) ];
+          while (callee.type == "CallExpression") {
+            //console.log(callee.type);
+            argumentList.unshift(callee.arguments.at(-1));
+            if (callee.arguments.length !== 1) { errorArgs = true; }
+            callee = callee.callee;
+          }
+          let FUN = callee;
+          //console.log(FUN.type);
+          let ARGS = types.arrayExpression(argumentList);
+          let ast = assignTemplate({ FUN, ARGS, RVALUE }).expression;
+          //console.log("AST", ast);
+          if (errorArgs) {
+            throw new Error(`TypeError: Illegal call expression assignment at line ${callee.loc.start.line} column ${callee.loc.start.column}. Assignable functions only support one argument.`);
+          }
+          path.replaceWith(ast);
+        }
+      },
+      FunctionDeclaration(path) {
+        const node = path.node;
+        if (node.assignable) {
+          const [funId, callExpression] = changeAssignableFunctionToValid(node);
+          const varDeclarator = types.variableDeclarator(funId, callExpression);
+          path.replaceWith(types.variableDeclaration("const", [varDeclarator]));
+        }
+      },
+      FunctionExpression(path) {
+        const node = path.node;
+        if (node.assignable) {
+          const [_, callExpression] = changeAssignableFunctionToValid(node);
+          path.replaceWith(callExpression);
+        }
+      },
+      Program(path) {
+        const node = path.node;
+        // Perhaps checking when it's actually needed? Write on exit if an assignable function was created.
+        node.body.unshift(SUPPORT_TEMPLATE);
+      },
+    },
+  };
+};
+
+/*
 module.exports = function leftSidePlugin(babel) {
   return {
     parserOverride(code, opts) {
@@ -95,3 +154,4 @@ module.exports = function leftSidePlugin(babel) {
     },
   };
 };
+*/

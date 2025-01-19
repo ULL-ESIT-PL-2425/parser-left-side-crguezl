@@ -15,7 +15,7 @@ const foo = functionObject(function foo(a) {
 // It is urgent to optimize the assign function!!!!
 // TODO: foo(2)(3) is computed twice! 
 // More efficient translation of foo(2)(3)(5) = "Another value"
-let uid1, uid2; // Declare n-1 variable with unique identifiers in the local scope
+let uid1, uid2; // Declare n-1 variables with unique identifiers in the local scope
 
 assign(foo, [2], uid1 = foo(2)),              // uid1 is a function
 assign(uid1, [3], uid2 = uid1(3)),            // Save the function uid2=foo(2)(3) in the cache of uid1 = foo(2)

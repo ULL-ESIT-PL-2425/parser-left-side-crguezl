@@ -1,6 +1,6 @@
 {
   "name": "@ull-esit-pl-2425/babel-plugin-left-side",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Support plugin for the assignable functions",
   "main": "src/plugin.js",
   "scripts": {

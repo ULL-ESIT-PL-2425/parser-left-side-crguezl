@@ -1,27 +1,19 @@
-const parser = require("../../babel-parser/lib");
+//const parser = require("../../babel-parser/lib"); 
+const parser = require("@ull-esit-pl-2425/babel-parser");
 const types = require("@babel/types");
 const template = require("@babel/template").default;
 let { inspect } = require("util");
 ins = (x) => inspect(x, { depth: null });
 
-// Assuming that the left side of an assignment is a CallExpression, check if the callee is an assignable function:
+// Assuming that the left side of an assignment is a CallExpression, checking if the callee is an assignable function can not be done
+// at compile time.
 // f(z) = 4 compile time error? Done
 // f(x)(y) = 5;  run time error if f(x) is not assignable?
 // a[x](y) = 5;  run time if a[x] is not asignable?
 // obj[x][y](z) = 5;  run time error if obj[x][y] is not an assignable function?
-function checkIsAssignableFunction(path, left) {
-  let bindings = path.scope.bindings;
-  let callee = left.callee;
-  if (callee.type == 'Identifier') {
-    let name = callee.name;
-    if (bindings[name].path.node?.declarations?.[0]?.init?.callee?.name !== 'functionObject') {
-      throw new Error(`TypeError: Illegal assignment to "${name}" at line ${callee.loc.start.line} column ${callee.loc.start.column}. Variable "${name}" is not an assignable function.`);
-    };
-  }
-}
 
 // To avoid repeating code in FunctionDeclaration and FunctionExpression. Transforms the assignable function syntax to valid JS.
-// Returns a CallExpression node with the functionObject call.
+// Returns a CallExpression node with the functionObject call. "function foo() {}" -> "foo = functionObject(function foo() {})"
 function changeAssignableFunctionToValid(node) {
   node.assignable = false;
   const functionObjectId = types.identifier("functionObject");
@@ -29,7 +21,7 @@ function changeAssignableFunctionToValid(node) {
   //node.id = null; // Casiano Why? Is not better to keep the Id?
   // Replace the FunctionDeclaration with FunctionExpression.
   const funAsExpr = types.functionExpression(
-    node.id,
+    funId,
     node.params,
     node.body,
   );

@@ -12,7 +12,7 @@ let ob = functionObject({
 });
 console.log(ob("x")); // 4 
 console.log(ob("y")); // 5
-assign(ob, ["z"], 0);
+mAssign(ob, ["z"], 0);
 console.log(ob instanceof FunctionObject); // true
 console.log(ob("z")); // 0
 console.log(ob.length); // 1 Number of parameters of the function

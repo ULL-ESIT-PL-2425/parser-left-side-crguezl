@@ -12,6 +12,6 @@ let a = functionObject([1, 2, 3], {
     return 1;
   }
 });
-assign(a, [-1], 2);
+mAssign(a, [-1], 2);
 console.log(a(-1));
 console.log(a("hello"));

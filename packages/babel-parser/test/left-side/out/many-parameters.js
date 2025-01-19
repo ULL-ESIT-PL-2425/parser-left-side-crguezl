@@ -9,6 +9,6 @@ const {
 const foo = functionObject(function foo(a, b) {
   return a + b;
 });
-assign(foo, [2], foo(2)), assign(foo(2), [3], 5); // The call f(2,5) is not yet implemented
+mAssign(foo, [2, 3], 5); // The call f(2,5) is not yet implemented
 console.log(foo(2)(3)); // 5
 console.log(foo(2)(5)); // 7

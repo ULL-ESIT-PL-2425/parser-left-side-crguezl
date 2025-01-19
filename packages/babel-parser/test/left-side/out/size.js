@@ -13,7 +13,7 @@ console.log(foo instanceof FunctionObject); //  [class FunctionObject extends Ca
 
 console.log(foo.size); //  0
 
-assign(foo, [10], 5);
+mAssign(foo, [10], 5);
 console.log(foo.size); //  1
 
 console.log(foo.cache.store instanceof Map || Object.getPrototypeOf(foo.cache.store) === null);

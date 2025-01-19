@@ -11,5 +11,5 @@ console.log(m(0)); // undefined
 console.log(m(1)); // 2
 console.log(m(3)); // 4
 console.log(m(-1)); // undefined
-assign(m, [0], 5);
+mAssign(m, [0], 5);
 console.log(m(0)); // 5

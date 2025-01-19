@@ -13,6 +13,6 @@ let a = {
     });
   })
 };
-assign(a.foo, [2], a.foo(2)), assign(a.foo(2), [3], "fighter");
+mAssign(a.foo, [2, 3], "fighter");
 console.log(a.foo(2)(3)); // "fighter"
 console.log(a.foo(2)(5)); // 7

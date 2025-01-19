@@ -10,6 +10,6 @@ let a = {
     return a;
   })
 };
-assign(a.foo, ["bar"], "fighter");
+mAssign(a.foo, ["bar"], "fighter");
 console.log(a.foo("x")); // x
 console.log(a.foo("bar")); // fighter

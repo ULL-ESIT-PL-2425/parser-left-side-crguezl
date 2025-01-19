@@ -137,7 +137,7 @@ class FunctionObject extends CallableInstance {   // CallableInstance accepts th
     super("_call");
     if (a instanceof Function) { // TODO: Convert to a switch?
       if (a.length >1) this.rawFunction = currying(a); // Curry function "a" and make it throw if undefined?
-      else if (a.length === 0) throw new Error(`An assignable function must have at least one parameter.`);
+      //else if (a.length === 0) throw new Error(`An assignable function must have at least one parameter.`);
       else this.rawFunction = a;
     } else if (a instanceof Array) {
       this.rawFunction = safeAt.bind(a);

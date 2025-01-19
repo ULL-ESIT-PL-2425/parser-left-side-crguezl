@@ -1,5 +1,6 @@
 const {
   assign,
+  mAssign,
   functionObject,
   FunctionObject,
   Storage

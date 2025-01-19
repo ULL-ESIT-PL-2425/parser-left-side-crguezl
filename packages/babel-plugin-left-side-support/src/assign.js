@@ -14,6 +14,7 @@ function assign(f, cacheArgs, cacheValue) {
 }
 
 function mAssign(f, cacheArgs, cacheValue) {
+  debugger;
   //if (f.debug) console.log('f', cacheArgs, cacheValue);
   //debugger;
   for (let i = 0; i < cacheArgs.length; i++) {
@@ -27,11 +28,10 @@ function mAssign(f, cacheArgs, cacheValue) {
     }*/
     const next = i + 1;
     if (next == cacheArgs.length) { // the end
-      //console.log("last iteration ",next, cacheArgument, cacheValue)
-      if (!f.cache) {
+      //console.log("last iteration ",f, next, cacheArgument, cacheValue)
+      if (!(f instanceof FunctionObject)) {
         throw `TypeError: Assigning to an ordinary Function. Convert to FunctionObject instead.`;
-        // warning f pointer modification
-        f = functionObject(f);
+        // warning f pointer modification f = functionObject(f);
       }
       f.setCache(cacheArgument, cacheValue);
       return cacheValue;
@@ -39,13 +39,13 @@ function mAssign(f, cacheArgs, cacheValue) {
     // If there are more arguments
     let auxF = f.getCache(cacheArgument);
     if (!f?.cache?.has(cacheArgument)) { 
-      const newFunctionObject = functionObject(f.rawFunction === undefined ? f : f.rawFunction);
+      const newFunctionObject = functionObject(f(cacheArgument));
       f.setCache(cacheArgument, newFunctionObject);
       auxF = f.getCache(cacheArgument);
     } else if (!(auxF instanceof FunctionObject)) { // If auxF is not a FunctionObject, turn it into one. Always fallback to the original rawFunction.
       throw `TypeError: Assigning to an ordinary Function. Convert to FunctionObject instead.`;
 
-      auxF = functionObject(f.rawFunction ? f.rawFunction : f)
+      auxF = functionObject(f)
     }
     f = auxF;
   }

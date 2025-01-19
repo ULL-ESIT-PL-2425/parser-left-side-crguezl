@@ -137,6 +137,7 @@ class FunctionObject extends CallableInstance {   // CallableInstance accepts th
     super("_call");
     if (a instanceof Function) { // TODO: Convert to a switch?
       if (a.length >1) this.rawFunction = currying(a); // Curry function "a" and make it throw if undefined?
+      else if (a.length === 0) throw new Error(`An assignable function must have at least one parameter.`);
       else this.rawFunction = a;
     } else if (a instanceof Array) {
       this.rawFunction = safeAt.bind(a);
@@ -167,19 +168,22 @@ class FunctionObject extends CallableInstance {   // CallableInstance accepts th
     this.cache.debug = this.debug;
     //if (this.debug) console.log("in functionObject: ", this);
     this.function = function (...args) {
-      //if (this.debug) console.error(`FunctionObject called with ${args}`);
+      //console.error(`FunctionObject called with ${args}`);
       if (args.length !== 1) throw new Error(`An assignable function must be called with a single argument. Received: ${args.length} arguments instead`);
 
       const arg = args[0];
       if (this?.cache && this.cache.get(arg) !== undefined) {
-        //if (this.debug) console.error(`Cached value! ${this.cache.get(arg)}`);
+        //console.error(`Cached value! ${typeof this.cache.get(arg)}`);
         return this.cache.get(arg);
+      } else {
+        //console.error(`${arg} is not cached!`);
       }
 
       //return this.rawFunction(...args);
 
       try {
         let result = this.rawFunction(...args);
+        //console.error(`Result: ${result}`);
         if (result === undefined && this.undef) {
           result = this.undef(arg, this.primitive);
         }

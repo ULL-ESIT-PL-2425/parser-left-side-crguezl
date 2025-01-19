@@ -29,6 +29,8 @@ function changeAssignableFunctionToValid(node) {
   return [funId, callExpression];
 }
 
+
+// TODO: export only used functions
 const SUPPORT_TEMPLATE = template(
   'const {assign, mAssign, functionObject, FunctionObject, Storage} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");',
 )();

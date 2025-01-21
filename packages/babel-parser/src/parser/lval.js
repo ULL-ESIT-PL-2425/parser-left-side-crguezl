@@ -461,13 +461,13 @@ export default class LValParser extends NodeUtils {
         // Pablo TODO: Check the method checkLVal to see if this can be more similar to the rest of the cases.
         // Casiano: Just checking error for 0 arguments
         // console.error("Pablo: checkLVal CallExpression", expr); // Pablo Casiano
-        if (expr.arguments.length != 1) { // raise error
-          this.raise(
-            expr.start, 
-            Errors.InvalidLhsBinding, 
-            (expr?.callee?.type === "Identifier")? `"${expr.callee.name}"`: "", 
-          ); // See InvalidLhsBinding at error-message.js
-        }
+        // if (expr.arguments.length != 1) { // raise error
+        //   this.raise(
+        //     expr.start, 
+        //     Errors.InvalidLhsBinding, 
+        //     (expr?.callee?.type === "Identifier")? `"${expr.callee.name}"`: "", 
+        //   ); // See InvalidLhsBinding at error-message.js
+        // }
         this.checkLVal(
           expr.callee,
           bindingType,

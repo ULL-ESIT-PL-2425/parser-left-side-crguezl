@@ -37,6 +37,7 @@ const SUPPORT_TEMPLATE = template(
 
 const assignTemplate = template('mAssign(FUN, ARGS, RVALUE);');
 
+// TODO:  Support expressions like f(2, 3)()(5) = 9 => mAssign(f, [[2, 3], [], [5]], 9)
 module.exports = function leftSidePlugin(babel) {
   return {
     parserOverride(code, opts) {
@@ -52,12 +53,20 @@ module.exports = function leftSidePlugin(babel) {
           //checkIsAssignableFunction(path, left);
 
           let callee = left.callee;
-          if (left.arguments.length !== 1) {  errorArgs = true; }
-          let argumentList = [ left.arguments.at(-1) ];
+          let argumentList = [];
+          if (left.arguments.length !== 1) {  
+            argumentList = [ types.arrayExpression(left.arguments) ];
+             errorArgs = true; 
+          } 
+          else argumentList = [ left.arguments.at(-1) ];
+
           while (callee.type == "CallExpression") {
             //console.log(callee.type);
-            argumentList.unshift(callee.arguments.at(-1));
-            if (callee.arguments.length !== 1) { errorArgs = true; }
+            if (callee.arguments.length !== 1) { 
+              errorArgs = true; 
+              argumentList.unshift(types.arrayExpression(callee.arguments));
+            }
+            else argumentList.unshift(callee.arguments.at(-1));
             callee = callee.callee;
           }
           let FUN = callee;
@@ -66,7 +75,8 @@ module.exports = function leftSidePlugin(babel) {
           let ast = assignTemplate({ FUN, ARGS, RVALUE }).expression;
           //console.log("AST", ast);
           if (errorArgs) {
-            throw new Error(`TypeError: Illegal call expression assignment at line ${callee.loc.start.line} column ${callee.loc.start.column}. Assignable functions only support one argument.`);
+            // console.log(argumentList);
+            //throw new Error(`TypeError: Illegal call expression assignment at line ${callee.loc.start.line} column ${callee.loc.start.column}. Assignable functions only support one argument.`);
           }
           path.replaceWith(ast);
         }

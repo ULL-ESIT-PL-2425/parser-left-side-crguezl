@@ -76,7 +76,7 @@ module.exports = function leftSidePlugin(babel) {
           //console.log("AST", ast);
           if (errorArgs) {
             // console.log(argumentList);
-            //throw new Error(`TypeError: Illegal call expression assignment at line ${callee.loc.start.line} column ${callee.loc.start.column}. Assignable functions only support one argument.`);
+            throw new Error(`TypeError: Illegal call expression assignment at line ${callee.loc.start.line} column ${callee.loc.start.column}. Assignable functions only support one argument.`);
           }
           path.replaceWith(ast);
         }

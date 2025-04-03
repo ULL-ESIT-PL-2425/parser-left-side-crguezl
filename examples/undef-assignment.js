@@ -3,6 +3,6 @@ function @@ foo(a) {
 }
 foo(undefined) = 5;
 
-console.log(foo());
-console.log(foo(3));
-console.log(foo(undefined));
+console.log(foo());          // 5
+console.log(foo(3));         // 6
+console.log(foo(undefined)); // 5

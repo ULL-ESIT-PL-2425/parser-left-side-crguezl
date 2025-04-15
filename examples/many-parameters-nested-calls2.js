@@ -1,8 +1,7 @@
-// May be in the future this will be a synonim of foo(a)(b) but by now let us throw an error
-function @@ foo(a, b) {
+function @@ foo(a, b) { // FunctionObjects are currified and must be called as foo(a)(b) 
   return a+b;
 }
 
-foo(2)(3) = 1; // TODO: The call f(2,3) is implemented via massign
+foo(2)(3) = 1; // TODO: The call f(2,3) must be implemented
 console.log(foo(2)(3)); // 1
 console.log(foo(2)(5)); // 7

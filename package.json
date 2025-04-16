@@ -23,7 +23,6 @@
     "testwatch": "jest --verbose --maxWorkers 4 --watch",
     "testall": "jest",
     "transpile": "cd examples && npm run transpile",
-    "start": "cd examples && npm run start",
     "run": "cd examples && npm run run",
     "example": "cd examples && npm test",
     "cleanlib": "cd packages/babel-parser/lib && rm -fR index.js options.js plugin-utils.js types.js plugins util tokenizer parser",

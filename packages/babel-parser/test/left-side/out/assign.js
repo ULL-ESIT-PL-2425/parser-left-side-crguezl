@@ -1,9 +1,6 @@
 const {
-  assign,
-  mAssign,
   functionObject,
-  FunctionObject,
-  Storage
+  assign
 } = require("@ull-esit-pl-2425/babel-plugin-left-side-support");
 const f = functionObject(function f(x) {
   return 2 * x;

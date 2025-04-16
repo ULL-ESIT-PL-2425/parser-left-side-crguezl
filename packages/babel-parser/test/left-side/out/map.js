@@ -1,9 +1,6 @@
 const {
-  assign,
-  mAssign,
-  functionObject,
   FunctionObject,
-  Storage
+  mAssign
 } = require("@ull-esit-pl-2425/babel-plugin-left-side-support");
 // Maps
 let m = new FunctionObject(new Map([[1, 2], [3, 4]])); // Potential Syntax @@ new Map([[1,2],[3,4]])

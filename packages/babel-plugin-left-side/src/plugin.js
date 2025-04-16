@@ -12,6 +12,8 @@ ins = (x) => inspect(x, { depth: null });
 // a[x](y) = 5;  run time if a[x] is not asignable?
 // obj[x][y](z) = 5;  run time error if obj[x][y] is not an assignable function?
 
+const supportLibraryKeys = Object.keys(require("@ull-esit-pl-2425/babel-plugin-left-side-support"));
+
 // To avoid repeating code in FunctionDeclaration and FunctionExpression. Transforms the assignable function syntax to valid JS.
 // Returns a CallExpression node with the functionObject call. "function foo() {}" -> "foo = functionObject(function foo() {})"
 function changeAssignableFunctionToValid(node) {
@@ -30,15 +32,14 @@ function changeAssignableFunctionToValid(node) {
 }
 
 
-// TODO: export only used functions
-const SUPPORT_TEMPLATE = template(
-  'const {assign, mAssign, functionObject, FunctionObject, Storage} = require("@ull-esit-pl-2425/babel-plugin-left-side-support");',
-)();
-
+// Export only used functions
+let supportTemplate = args => `const { ${args} } = require("@ull-esit-pl-2425/babel-plugin-left-side-support");`
 const assignTemplate = template('mAssign(FUN, ARGS, RVALUE);');
 
 // TODO:  Support expressions like f(2, 3)()(5) = 9 => mAssign(f, [[2, 3], [], [5]], 9)
 module.exports = function leftSidePlugin(babel) {
+  //const { types: t } = babel;
+  let needed = new Set();
   return {
     parserOverride(code, opts) {
       return parser.parse(code, opts);
@@ -96,72 +97,20 @@ module.exports = function leftSidePlugin(babel) {
           path.replaceWith(callExpression);
         }
       },
-      Program(path) {
-        const node = path.node;
-        // Perhaps checking when it's actually needed? Write on exit if an assignable function was created.
-        node.body.unshift(SUPPORT_TEMPLATE);
+      Identifier(path) {
+        const name = path.node.name;
+        if (supportLibraryKeys.includes(name)) { needed.add(name) } 
+      },
+      Program: { 
+        exit(path) {
+          if (needed.size == 0) return; // No need for support functions
+          let functionNeededStr = supportTemplate(Array.from(needed).join(","));
+          let SUPPORT = template(functionNeededStr)();
+          const node = path.node;
+          node.body.unshift(SUPPORT);
+        }
       },
     },
   };
 };
 
-/*
-module.exports = function leftSidePlugin(babel) {
-  return {
-    parserOverride(code, opts) {
-      return parser.parse(code, opts);
-    },
-    visitor: {
-      AssignmentExpression(path) {
-        const node = path.node;
-        const left = node.left;
-        if (node.operator == "=" && node.left.type == "CallExpression") {
-          //checkIsAssignableFunction(path, left);
-
-          let CALLEE = left.callee;
-          let RVALUE = node.right;
-          // TODO: Support multiple arguments
-          if (left.arguments.length !== 1) {
-            throw new Error(`TypeError: Illegal call expression assignment to "${CALLEE.name}" at line ${CALLEE.loc.start.line} column ${CALLEE.loc.start.column}. Assignable functions only support one argument.`);
-          }
-          let ARGS = types.arrayExpression(left.arguments);
-          let ast = assignTemplate({ CALLEE, ARGS, RVALUE });
-          let nestedCalls = [ assignTemplate({ CALLEE, ARGS, RVALUE }).expression ];
-
-          while (CALLEE.type == "CallExpression") {
-            RVALUE = CALLEE;
-            ARGS = types.arrayExpression(CALLEE.arguments);
-            CALLEE = CALLEE.callee;
-            nestedCalls.unshift(assignTemplate({ CALLEE, ARGS, RVALUE }).expression);
-          }
-          if (nestedCalls.length == 1) {
-            path.replaceWith(nestedCalls[0]);
-          } else { 
-            path.replaceWith(types.sequenceExpression(nestedCalls));
-          }
-        }
-      },
-      FunctionDeclaration(path) {
-        const node = path.node;
-        if (node.assignable) {
-          const [funId, callExpression] = changeAssignableFunctionToValid(node);
-          const varDeclarator = types.variableDeclarator(funId, callExpression);
-          path.replaceWith(types.variableDeclaration("const", [varDeclarator]));
-        }
-      },
-      FunctionExpression(path) {
-        const node = path.node;
-        if (node.assignable) {
-          const [_, callExpression] = changeAssignableFunctionToValid(node);
-          path.replaceWith(callExpression);
-        }
-      },
-      Program(path) {
-        const node = path.node;
-        // Perhaps checking when it's actually needed? Write on exit if an assignable function was created.
-        node.body.unshift(SUPPORT_TEMPLATE);
-      },
-    },
-  };
-};
-*/
